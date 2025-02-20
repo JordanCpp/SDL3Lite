@@ -24,57 +24,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#define OPENGL_IMPLEMENTATION
-#include "OpenGL.h"
-#include <SDL3/SDL.h>
-#include <stdio.h>
+#include <assert.h>
+#include <SDL3Lite/Platforms/Win32/WinError.hpp>
+#include <SDL3Lite/Platforms/Win32/Win32.hpp>
 
-int main()
+using namespace SDL;
+
+const std::string& WindowError::GetErrorMessage()
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    DWORD ident = GetLastError();
+    assert(ident != 0);
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL Window", 640, 480, SDL_WINDOW_OPENGL);
+    LPSTR buffer = NULL;
 
-    if (window == NULL)
-    {
-        printf("Create window error: %s\n", SDL_GetError());
-        return;
-    }
+    size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, ident, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&buffer, 0, NULL);
 
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
+    _message.append(buffer, size);
 
-    if (context == NULL)
-    {
-        printf("Create context error: %s\n", SDL_GetError());
-        return;
-    }
+    LocalFree(buffer);
 
-    OpenGL_Compatibility_Init(1, 2);
-
-    bool done = false;
-
-    while (!done)
-    {
-        SDL_Event event;
-
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT)
-            {
-                done = true;
-            }
-        }
-
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        SDL_GL_SwapWindow(window);
-    }
-
-    SDL_GL_DestroyContext(context);
-    SDL_DestroyWindow(window);
-    
-    SDL_Quit();
-
-    return 0;
+    return _message;
 }

@@ -24,57 +24,45 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#define OPENGL_IMPLEMENTATION
-#include "OpenGL.h"
-#include <SDL3/SDL.h>
-#include <stdio.h>
+#ifndef SDL3Lite_Win32_MainWindow_hpp
+#define SDL3Lite_Win32_MainWindow_hpp
 
-int main()
+
+#include <SDL3Lite/BaseWindow.hpp>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+#include <SDL3Lite/Platforms/Win32/WinError.hpp>
+#include <SDL3Lite/Platforms/Win32/Win32.hpp>
+
+namespace SDL
 {
-    SDL_Init(SDL_INIT_VIDEO);
-
-    SDL_Window* window = SDL_CreateWindow("OpenGL Window", 640, 480, SDL_WINDOW_OPENGL);
-
-    if (window == NULL)
-    {
-        printf("Create window error: %s\n", SDL_GetError());
-        return;
-    }
-
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
-
-    if (context == NULL)
-    {
-        printf("Create context error: %s\n", SDL_GetError());
-        return;
-    }
-
-    OpenGL_Compatibility_Init(1, 2);
-
-    bool done = false;
-
-    while (!done)
-    {
-        SDL_Event event;
-
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT)
-            {
-                done = true;
-            }
-        }
-
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        SDL_GL_SwapWindow(window);
-    }
-
-    SDL_GL_DestroyContext(context);
-    SDL_DestroyWindow(window);
-    
-    SDL_Quit();
-
-    return 0;
+	class MainWindow
+	{
+	public:
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		~MainWindow();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		void PollEvents();
+	public:
+		HWND GetHwnd();
+		HDC GetHdc();
+	private:
+		LRESULT CALLBACK Handler(UINT Message, WPARAM WParam, LPARAM LParam);
+		static LRESULT CALLBACK WndProc(HWND Hwnd, UINT Message, WPARAM WParam, LPARAM LParam);
+		Result*       _result;
+		EventHandler* _eventHandler;
+		HWND          _hwnd;
+		HDC           _hdc;
+		WindowError   _windowError;
+		MSG           _message;
+		BaseWindow    _baseWindow;
+		WNDCLASSA     _windowClass;
+	};
 }
+
+#endif

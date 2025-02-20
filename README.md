@@ -23,7 +23,7 @@ Boost Software License - Version 1.0 - August 17th, 2003
 
 # Support compillers
 
-# Example OpenGL 1.2 - Screen color
+# OpenGL 1.2 - Screen color
 
 ```c++
 #define OPENGL_IMPLEMENTATION
