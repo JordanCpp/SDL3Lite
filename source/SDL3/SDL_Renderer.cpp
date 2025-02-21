@@ -29,7 +29,12 @@ DEALINGS IN THE SOFTWARE.
 
 extern SDL::Application MainApplication;
 
-SDL_Renderer * SDL_CreateRenderer(SDL_Window *window, const char *name)
+SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
 	return NULL;
+}
+
+void SDL_DestroyRenderer(SDL_Renderer* renderer)
+{
+
 }

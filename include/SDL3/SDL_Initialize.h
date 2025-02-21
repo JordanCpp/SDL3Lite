@@ -24,21 +24,42 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_SDL_Initialize_h
+#define SDL3Lite_SDL_Initialize_h
+
+#include <SDL3/SDL_Types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
+	/**
+	 * Initialization flags for SDL_Init and/or SDL_InitSubSystem
+	 *
+	 * These are the flags which may be passed to SDL_Init(). You should specify
+	 * the subsystems which you will be using in your application.
+	 *
+	 * \since This datatype is available since SDL 3.2.0.
+	 *
+	 * \sa SDL_Init
+	 * \sa SDL_Quit
+	 * \sa SDL_InitSubSystem
+	 * \sa SDL_QuitSubSystem
+	 * \sa SDL_WasInit
+	 */
+	typedef Uint32 SDL_InitFlags;
+
+#define SDL_INIT_AUDIO      0x00000010u /**< `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS` */
+#define SDL_INIT_VIDEO      0x00000020u /**< `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS`, should be initialized on the main thread */
+#define SDL_INIT_JOYSTICK   0x00000200u /**< `SDL_INIT_JOYSTICK` implies `SDL_INIT_EVENTS`, should be initialized on the same thread as SDL_INIT_VIDEO on Windows if you don't set SDL_HINT_JOYSTICK_THREAD */
+#define SDL_INIT_HAPTIC     0x00001000u
+#define SDL_INIT_GAMEPAD    0x00002000u /**< `SDL_INIT_GAMEPAD` implies `SDL_INIT_JOYSTICK` */
+#define SDL_INIT_EVENTS     0x00004000u
+#define SDL_INIT_SENSOR     0x00008000u /**< `SDL_INIT_SENSOR` implies `SDL_INIT_EVENTS` */
+#define SDL_INIT_CAMERA     0x00010000u /**< `SDL_INIT_CAMERA` implies `SDL_INIT_EVENTS` */
+
+	extern SDL_DECLSPEC int SDLCALL SDL_Init(SDL_InitFlags flags);
+	extern SDL_DECLSPEC void SDLCALL SDL_Quit();
 
 #ifdef __cplusplus
 }

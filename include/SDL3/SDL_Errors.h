@@ -24,21 +24,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_SDL_Errors_h
+#define SDL3Lite_SDL_Errors_h
+
+#include <SDL3/SDL_Types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
+extern SDL_DECLSPEC const char* SDLCALL SDL_GetError();
 
 #ifdef __cplusplus
 }
