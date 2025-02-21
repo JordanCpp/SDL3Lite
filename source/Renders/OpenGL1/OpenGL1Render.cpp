@@ -31,7 +31,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-OpenGL1Render::OpenGL1Render(OpenGL1Window& window) :
+OpenGL1Render::OpenGL1Render(IWindow* window) :
     _window(window)
 {
     OpenGL_Compatibility_Init(1, 2);
@@ -39,7 +39,7 @@ OpenGL1Render::OpenGL1Render(OpenGL1Window& window) :
 
 void OpenGL1Render::Present()
 {
-    _window.Present();
+    _window->Present();
 }
 
 void OpenGL1Render::SetColor(const Color& color)
@@ -50,8 +50,8 @@ void OpenGL1Render::SetColor(const Color& color)
 void OpenGL1Render::Clear()
 {
     GLclampf r = _color.r / 255.0f;
-    GLclampf g = _color.r / 255.0f;
-    GLclampf b = _color.r / 255.0f;
+    GLclampf g = _color.g / 255.0f;
+    GLclampf b = _color.b / 255.0f;
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

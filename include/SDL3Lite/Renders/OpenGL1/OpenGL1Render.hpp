@@ -40,13 +40,13 @@ namespace SDL
 	class OpenGL1Render : public IRender
 	{
 	public:
-	    OpenGL1Render(OpenGL1Window& window);
+	    OpenGL1Render(IWindow* window);
 		void Present();
 		void SetColor(const Color& color);
 		void Clear();
 	private:
-	    OpenGL1Window& _window;
-	    Color          _color;
+	    IWindow* _window;
+	    Color    _color;
 	};
 }
 

@@ -37,6 +37,9 @@ typedef struct SDL_Renderer SDL_Renderer;
 
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateRenderer(SDL_Window* window, const char* name);
 extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* renderer);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPresent(SDL_Renderer* renderer);
+extern SDL_DECLSPEC bool          SDLCALL SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderClear(SDL_Renderer* renderer);
 
 #ifdef __cplusplus
 }

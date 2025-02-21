@@ -31,16 +31,25 @@ int main()
 {
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window*   window   = SDL_CreateWindow("Renderer", 640, 480, 0);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    SDL_Window* window = SDL_CreateWindow("Renderer", 640, 480, SDL_WINDOW_OPENGL);
 
     if (window == NULL)
     {
         printf("Create window error: %s\n", SDL_GetError());
         return 1;
     }
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    
+    if (renderer == NULL)
+    {
+        printf("Create renderer error: %s\n", SDL_GetError());
+        return 1;
+    }
     
     bool done = false;
+
+    SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
 
     while (!done)
     {
@@ -53,6 +62,9 @@ int main()
                 done = true;
             }
         }
+
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
     }
 
     SDL_DestroyRenderer(renderer);

@@ -39,6 +39,61 @@ Boost Software License - Version 1.0 - August 17th, 2003
 
 # Support compillers
 
+![renderer](/screenshots/SDL_Renderer.jpg)
+
+# Renderer - Screen color
+```c++
+#include <SDL3/SDL.h>
+#include <stdio.h>
+
+int main()
+{
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SDL_Window* window = SDL_CreateWindow("Renderer", 640, 480, SDL_WINDOW_OPENGL);
+
+    if (window == NULL)
+    {
+        printf("Create window error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    
+    if (renderer == NULL)
+    {
+        printf("Create renderer error: %s\n", SDL_GetError());
+        return 1;
+    }
+    
+    bool done = false;
+
+    SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
+
+    while (!done)
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                done = true;
+            }
+        }
+
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
+    }
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+}
+```
+
 # OpenGL 1.2 - Screen color
 
 ```c++
@@ -49,14 +104,16 @@ Boost Software License - Version 1.0 - August 17th, 2003
 
 int main()
 {
+    OpenGL_Compatibility_Init(1, 2);
+
     SDL_Init(SDL_INIT_VIDEO);
 
-	SDL_Window* window = SDL_CreateWindow("Window 1", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
 
     if (window == NULL)
     {
         printf("Create window error: %s\n", SDL_GetError());
-        return;
+        return 1;
     }
 
     SDL_GLContext* context = SDL_GL_CreateContext(window);
@@ -64,20 +121,18 @@ int main()
     if (context == NULL)
     {
         printf("Create context error: %s\n", SDL_GetError());
-        return;
+        return 1;
     }
-
-    OpenGL_Compatibility_Init(1, 2);
-
+    
     bool done = false;
-     
-    while (!done) 
+
+    while (!done)
     {
         SDL_Event event;
 
-        while (SDL_PollEvent(&event)) 
+        while (SDL_PollEvent(&event))
         {
-            if (event.type == SDL_EVENT_QUIT) 
+            if (event.type == SDL_EVENT_QUIT)
             {
                 done = true;
             }
@@ -85,7 +140,7 @@ int main()
 
         glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
+
         SDL_GL_SwapWindow(window);
     }
 
@@ -93,8 +148,11 @@ int main()
     SDL_DestroyWindow(window);
     
     SDL_Quit();
-    
+
     return 0;
 }
 
 ```
+
+
+

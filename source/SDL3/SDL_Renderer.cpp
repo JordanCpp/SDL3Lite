@@ -25,16 +25,52 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/RenderCreator.hpp>
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
+#include <SDL3Lite/SDL3/SDL_Window.hpp>
 
 extern SDL::Application MainApplication;
 
+SDL_Renderer::SDL_Renderer(SDL::IRender* render) :
+	_render(render)
+{
+}
+
+SDL::IRender* SDL_Renderer::GetRender()
+{
+	return _render;
+}
+
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
-	return NULL;
+	SDL::IRender* render = new SDL::OpenGL1Render(window->GetWindow());
+
+	return new SDL_Renderer(render);
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)
 {
+	delete renderer;
+}
 
+bool SDL_RenderPresent(SDL_Renderer* renderer)
+{
+	renderer->GetRender()->Present();
+
+	return true;
+}
+
+bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	renderer->GetRender()->SetColor(SDL::Color(r, g, b, a));
+
+	return true;
+}
+
+bool SDL_RenderClear(SDL_Renderer* renderer)
+{
+	renderer->GetRender()->Clear();
+
+	return true;
 }

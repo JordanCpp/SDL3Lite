@@ -32,7 +32,10 @@ DEALINGS IN THE SOFTWARE.
 struct SDL_Renderer
 {
 public:
+	SDL_Renderer(SDL::IRender* render);
+	SDL::IRender* GetRender();
 private:
+	SDL::IRender*      _render;
     SDL::RenderCreator _renderCreator;
 	std::string        _name;
 };
