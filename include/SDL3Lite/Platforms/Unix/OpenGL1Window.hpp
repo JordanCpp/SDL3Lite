@@ -24,19 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Unix_OpenGL1Window_hpp
+#define SDL3Lite_Unix_OpenGL1Window_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/OpenGLAttributes.hpp>
+#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
+#include <SDL3Lite/Platforms/Unix/GLX.hpp>
 
 namespace SDL
 {
-	class IRender
+	class OpenGL1Window : public IWindow
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+		OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		~OpenGL1Window();
+		bool Present();
+		void PollEvents();
+	private:
+		OpenGLAttributes* _openGLAttributes;
+		Result*           _result;
+		MainWindow        _mainWindow;
+		XVisualInfo*      _Visual;
+		GLXContext        _Context;
 	};
 }
 

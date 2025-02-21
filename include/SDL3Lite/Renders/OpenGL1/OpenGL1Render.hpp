@@ -24,19 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
+#define SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/IRender.hpp>
+
+#if defined(_WIN32)
+    #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
+#elif defined (__unix__)
+    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
+#endif
 
 namespace SDL
 {
-	class IRender
+	class OpenGL1Render : public IRender
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+	    OpenGL1Render(OpenGL1Window& window);
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+	private:
+	    OpenGL1Window& _window;
+	    Color          _color;
 	};
 }
 

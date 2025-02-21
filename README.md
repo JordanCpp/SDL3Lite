@@ -9,11 +9,13 @@ To support old and new systems, architectures, and operating systems.
 # Library Features
 
 # Build for Linux
+sudo apt install libx11-dev
+sudo apt-get install libgl1-mesa-dev
 
 # Integration into your project (CMake Linux or Windows)
 
 # Support platforms.
-
+Windows 
 # Support graphics API.
 
 # Support 2D renders.

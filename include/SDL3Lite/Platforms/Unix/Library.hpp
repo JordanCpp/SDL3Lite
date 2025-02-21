@@ -24,19 +24,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Unix_Library_hpp
+#define SDL3Lite_Unix_Library_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <string>
+#include <dlfcn.h>
+#include <SDL3/SDL.h>
 
 namespace SDL
 {
-	class IRender
+	class Library
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+		Library();
+		~Library();
+		bool Open(const std::string& path);
+		void Close();
+		SDL_FunctionPointer GetFunction(const std::string& name);
+	private:
+	    void* _library;
 	};
 }
 

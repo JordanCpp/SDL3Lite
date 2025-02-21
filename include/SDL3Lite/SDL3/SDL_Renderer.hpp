@@ -24,20 +24,17 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_SDL3_SDL_Renderer_hpp
+#define SDL3Lite_SDL3_SDL_Renderer_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/RenderCreator.hpp>
 
-namespace SDL
+struct SDL_Renderer
 {
-	class IRender
-	{
-	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
-	};
-}
+public:
+private:
+    SDL::RenderCreator _renderCreator;
+	std::string        _name;
+};
 
 #endif

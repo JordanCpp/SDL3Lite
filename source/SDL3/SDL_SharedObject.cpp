@@ -25,7 +25,13 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
-#include <SDL3Lite/Platforms/Win32/Library.hpp>
+
+#if defined(_WIN32)
+    #include <SDL3Lite/Platforms/Win32/Library.hpp>
+#elif defined (__unix__)
+    #include <SDL3Lite/Platforms/Unix/Library.hpp>
+#endif
+
 #include <assert.h>
 
 extern SDL::Application MainApplication;

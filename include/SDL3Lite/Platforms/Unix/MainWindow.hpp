@@ -24,19 +24,47 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Unix_MainWindow_hpp
+#define SDL3Lite_Unix_MainWindow_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/BaseWindow.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
 
 namespace SDL
 {
-	class IRender
+	class MainWindow
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		~MainWindow();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		void PollEvents();
+	private:
+		Result*       _result;
+		EventHandler* _eventHandler;
+		BaseWindow    _baseWindow;
+		Display*      _Display;
+	    int           _Screen;
+	    Window        _Root;
+	    Window        _Window;
+	    size_t        _EventMask;
+	public:
+	    Display* GetDisplay();
+	    int GetScreen();
+	    Window GetRoot();
+	    Window GetWindow();
+		void SetWindow(Window window);
+		size_t GetEventMask();
 	};
 }
 

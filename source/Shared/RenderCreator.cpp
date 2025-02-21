@@ -26,11 +26,19 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/RenderCreator.hpp>
 
+#if defined(_WIN32)
+    #include <SDL3Lite/Platforms/Win32/SoftwareWindow.hpp>
+    #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
+#elif defined (__unix__)
+    #include <SDL3Lite/Platforms/Unix/SoftwareWindow.hpp>
+    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
+#endif
+
 using namespace SDL;
 
 IRender* RenderCreator::Create()
 {
-	return nullptr;
+	return NULL;
 }
 
 void RenderCreator::Destroy(IRender* render)

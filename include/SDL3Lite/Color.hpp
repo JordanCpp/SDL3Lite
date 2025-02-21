@@ -24,19 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Shared_Color_hpp
+#define SDL3Lite_Shared_Color_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3/pstdint.h>
 
 namespace SDL
 {
-	class IRender
+	class Color
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+	    Color();
+		Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+	    uint8_t r;
+		uint8_t g;
+		uint8_t b;
+		uint8_t a;
 	};
 }
 

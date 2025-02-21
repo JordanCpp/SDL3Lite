@@ -24,20 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
-
 #include <SDL3Lite/Color.hpp>
 
-namespace SDL
+using namespace SDL;
+
+Color::Color() :
+    r(0),
+	g(0),
+	b(0),
+	a(255)
 {
-	class IRender
-	{
-	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
-	};
 }
 
-#endif
+Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) :
+    r(r),
+    g(g),
+    b(b),
+    a(a)
+{
+}

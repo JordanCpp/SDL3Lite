@@ -4155,12 +4155,12 @@ extern void (*glXGetProcAddress(const GLubyte* procname))(void);
 
 bool OpenGL_LoadLibrary()
 {
+	return true;
 }
 
 OpenGL_Function_Pointer OpenGL_Load(const char* name)
 {
 	OpenGL_Function_Pointer result = (OpenGL_Function_Pointer)glXGetProcAddress((const GLubyte*)name);
-
 
 	if (result == NULL)
 	{

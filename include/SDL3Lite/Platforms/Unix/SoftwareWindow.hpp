@@ -24,19 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_Unix_SoftwareWindow_hpp
+#define SDL3Lite_Unix_SoftwareWindow_hpp
 
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 
 namespace SDL
 {
-	class IRender
+	class SoftwareWindow : public IWindow
 	{
 	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
+		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		bool Present();
+		void PollEvents();
+	private:
+		MainWindow _mainWindow;
 	};
 }
 

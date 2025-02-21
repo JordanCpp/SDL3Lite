@@ -24,20 +24,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 
-#include <SDL3Lite/Color.hpp>
+extern SDL::Application MainApplication;
 
-namespace SDL
+SDL_Renderer * SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
-	class IRender
-	{
-	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
-	};
+	return NULL;
 }
-
-#endif

@@ -24,20 +24,35 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 
-#include <SDL3Lite/Color.hpp>
+#define OPENGL_IMPLEMENTATION
+#include <SDL3Lite/Renders/OpenGL1/OpenGL.h>
 
-namespace SDL
+using namespace SDL;
+
+OpenGL1Render::OpenGL1Render(OpenGL1Window& window) :
+    _window(window)
 {
-	class IRender
-	{
-	public:
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
-	};
+    OpenGL_Compatibility_Init(1, 2);
 }
 
-#endif
+void OpenGL1Render::Present()
+{
+    _window.Present();
+}
+
+void OpenGL1Render::SetColor(const Color& color)
+{
+    _color = color;
+}
+
+void OpenGL1Render::Clear()
+{
+    GLclampf r = _color.r / 255.0f;
+    GLclampf g = _color.r / 255.0f;
+    GLclampf b = _color.r / 255.0f;
+
+    glClearColor(r, g, b, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}

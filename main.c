@@ -31,6 +31,8 @@ DEALINGS IN THE SOFTWARE.
 
 int main()
 {
+    OpenGL_Compatibility_Init(1, 2);
+
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window* window = SDL_CreateWindow("OpenGL Window", 640, 480, SDL_WINDOW_OPENGL);
@@ -38,7 +40,7 @@ int main()
     if (window == NULL)
     {
         printf("Create window error: %s\n", SDL_GetError());
-        return;
+        return 1;
     }
 
     SDL_GLContext* context = SDL_GL_CreateContext(window);
@@ -46,11 +48,9 @@ int main()
     if (context == NULL)
     {
         printf("Create context error: %s\n", SDL_GetError());
-        return;
+        return 1;
     }
-
-    OpenGL_Compatibility_Init(1, 2);
-
+    
     bool done = false;
 
     while (!done)

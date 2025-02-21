@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_RenderCreator_hpp
 #define SDL3Lite_Shared_RenderCreator_hpp
 
-#include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
+#include <SDL3Lite/IRender.hpp>
 
 namespace SDL
 {

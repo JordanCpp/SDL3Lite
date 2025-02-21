@@ -31,7 +31,7 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
-	class SoftwareRender : IRender
+	class SoftwareRender : public IRender
 	{
 	public:
 	private:
