@@ -36,11 +36,12 @@ const size_t eventMask =
   | KeyPressMask
   | KeyReleaseMask;
 
-MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode) :
+MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_result(&result),
 	_eventHandler(&eventHandler),
 	_baseWindow(pos, size, title),
-	_EventMask(eventMask)
+	_EventMask(eventMask),
+	_windowFlags(mode)
 {
 	_Display = XOpenDisplay(NULL);
 
@@ -84,6 +85,11 @@ const std::string& MainWindow::GetTitle()
 void MainWindow::SetTitle(const std::string& title)
 {
 	_baseWindow.SetTitle(title);
+}
+
+SDL_WindowFlags MainWindow::GetWindowFlags()
+{
+	return _windowFlags;
 }
 
 void MainWindow::PollEvents()

@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode) :
+OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_openGLAttributes(&openGLAttributes),
 	_result(&result),
 	_mainWindow(result, eventHandler, pos, size, title, mode)
@@ -124,6 +124,11 @@ bool OpenGL1Window::Present()
 	glXSwapBuffers(_mainWindow.GetDisplay(), _mainWindow.GetWindow());
 
 	return true;
+}
+
+SDL_WindowFlags OpenGL1Window::GetWindowFlags()
+{
+	return _mainWindow.GetWindowFlags();
 }
 
 void OpenGL1Window::PollEvents()

@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_MainWindow_hpp
 #define SDL3Lite_Unix_MainWindow_hpp
 
+#include <SDL3/SDL_Window.h>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/BaseWindow.hpp>
 #include <SDL3Lite/EventHandler.hpp>
@@ -40,7 +41,7 @@ namespace SDL
 	class MainWindow
 	{
 	public:
-		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		~MainWindow();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
@@ -49,15 +50,17 @@ namespace SDL
 		const std::string& GetTitle();
 		void SetTitle(const std::string& title);
 		void PollEvents();
+		SDL_WindowFlags GetWindowFlags();
 	private:
-		Result*       _result;
-		EventHandler* _eventHandler;
-		BaseWindow    _baseWindow;
-		Display*      _Display;
-	    int           _Screen;
-	    Window        _Root;
-	    Window        _Window;
-	    size_t        _EventMask;
+		Result*         _result;
+		EventHandler*   _eventHandler;
+		BaseWindow      _baseWindow;
+		Display*        _Display;
+	    int             _Screen;
+	    Window          _Root;
+	    Window          _Window;
+	    size_t          _EventMask;
+		SDL_WindowFlags _windowFlags;
 	public:
 	    Display* GetDisplay();
 	    int GetScreen();

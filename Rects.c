@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <time.h>
 #include <stdlib.h>
 
-int random(unsigned int min, unsigned int max)
+int RandomValue(int min, int max)
 {
     return min + rand() % (max - min);
 }
@@ -78,14 +78,14 @@ int main()
 
         for (size_t i = 0; i < 300; i++)
         {
-            SDL_SetRenderDrawColor(renderer, random(0, 255), random(0, 255), random(0, 255), 0);
+            SDL_SetRenderDrawColor(renderer, RandomValue(0, 255), RandomValue(0, 255), RandomValue(0, 255), 0);
 
             SDL_FRect rect;
 
-            rect.x = (float)random(0, WINDOW_WIDTH);
-            rect.y = (float)random(0, WINDOW_HEIGTH);
-            rect.w = (float)random(25, 50);
-            rect.h = (float)random(25, 50);
+            rect.x = (float)RandomValue(0, WINDOW_WIDTH);
+            rect.y = (float)RandomValue(0, WINDOW_HEIGTH);
+            rect.w = (float)RandomValue(25, 50);
+            rect.h = (float)RandomValue(25, 50);
 
             SDL_RenderFillRect(renderer, &rect);
         }
