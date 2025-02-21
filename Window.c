@@ -24,25 +24,38 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/SDL.h>
+#include <stdio.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+int main()
+{
+    SDL_Init(SDL_INIT_VIDEO);
 
-#include <stdbool.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
+    SDL_Window* window = SDL_CreateWindow("Window", 640, 480, 0);
 
-#ifdef __cplusplus
+    if (window == NULL)
+    {
+        printf("Create window error: %s\n", SDL_GetError());
+        return 1;
+    }
+    
+    bool done = false;
+
+    while (!done)
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                done = true;
+            }
+        }
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
 }
-#endif
-
-#endif

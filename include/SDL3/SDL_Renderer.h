@@ -35,8 +35,8 @@ extern "C" {
 
 typedef struct SDL_Renderer SDL_Renderer;
 
-SDL_Renderer* SDL_CreateRenderer(SDL_Window* window, const char* name);
-void SDL_DestroyRenderer(SDL_Renderer* renderer);
+extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateRenderer(SDL_Window* window, const char* name);
+extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* renderer);
 
 #ifdef __cplusplus
 }

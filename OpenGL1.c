@@ -35,7 +35,7 @@ int main()
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL Window", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
 
     if (window == NULL)
     {

@@ -35,5 +35,11 @@ FILE(GLOB SHARED_SOURCES
 add_library(SDL3 SHARED ${SHARED_SOURCES} ${PLATFORM_SOURCES})
 target_link_libraries(SDL3 ${libs} )
 
-add_executable(main "main.c")
-target_link_libraries(main SDL3)
+add_executable(OpenGL1 "OpenGL1.c")
+target_link_libraries(OpenGL1 SDL3)
+
+add_executable(Renderer "Renderer.c")
+target_link_libraries(Renderer SDL3)
+
+add_executable(Window "Window.c")
+target_link_libraries(Window SDL3)
