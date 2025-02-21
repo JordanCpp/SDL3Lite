@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 
 #define OPENGL_IMPLEMENTATION
-#include <SDL3Lite/Renders/OpenGL1/OpenGL.h>
+#include <OpenGL.h>
 
 using namespace SDL;
 

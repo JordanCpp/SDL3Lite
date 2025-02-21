@@ -17,6 +17,7 @@ elseif (UNIX AND NOT APPLE)
 endif()
 
 include_directories("include")
+include_directories("dependencies")
 
 if (WIN32)
     FILE(GLOB PLATFORM_SOURCES "source/Platforms/Win32/*.cpp")
