@@ -10,17 +10,24 @@ To support old and new systems, architectures, and operating systems.
 
 # Build for Linux
 sudo apt-get install libx11-dev
+
 sudo apt-get install libgl1-mesa-dev
+
 git clone https://github.com/JordanCpp/SDL3Lite.git
+
 cd SDL3Lite
+
 cmake -Bout
+
 cd out
+
 make
 
 # Integration into your project (CMake Linux or Windows)
 
 # Support platforms.
 Windows 95 and higher
+
 Linux (XLib) Debian 3 and higher
 
 # Support graphics API.
