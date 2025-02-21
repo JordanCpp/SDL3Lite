@@ -27,17 +27,15 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
 
-extern SDL::Application MainApplication;
-
 SDL_Window::SDL_Window(SDL::WindowCreator& windowCreator, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, size_t mode) :
 	_window(NULL),
 	_windowCreator(windowCreator)
 {
-	_window = MainApplication.GetWindowCreator().Create(MainApplication.GetResult(), MainApplication.GetEventHandler(), pos, size, title, mode);
+	_window = SDL::GetApplication().GetWindowCreator().Create(SDL::GetApplication().GetResult(), SDL::GetApplication().GetEventHandler(), pos, size, title, mode);
 
 	if (_window)
 	{
-		MainApplication.Attach(_window);
+		SDL::GetApplication().Attach(_window);
 	}
 }
 
@@ -53,10 +51,10 @@ SDL::WindowCreator& SDL_Window::GetWindowCreator()
 
 SDL_Window* SDL_CreateWindow(const char* title, int w, int h, size_t flags)
 {
-	return new SDL_Window(MainApplication.GetWindowCreator(), SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
+	return new SDL_Window(SDL::GetApplication().GetWindowCreator(), SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
 }
 
 void SDL_DestroyWindow(SDL_Window* window)
 {
-	MainApplication.GetWindowCreator().Destroy(window->GetWindow());
+	SDL::GetApplication().GetWindowCreator().Destroy(window->GetWindow());
 }

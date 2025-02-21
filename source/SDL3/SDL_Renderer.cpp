@@ -30,8 +30,6 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
 
-extern SDL::Application MainApplication;
-
 SDL_Renderer::SDL_Renderer(SDL::IRender* render) :
 	_render(render)
 {

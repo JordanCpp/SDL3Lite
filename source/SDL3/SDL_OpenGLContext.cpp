@@ -28,8 +28,6 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_OpenGLContext.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
 
-extern SDL::Application MainApplication;
-
 SDL_GLContext* SDL_GL_CreateContext(SDL_Window* window)
 {
 	return new SDL_GLContext();

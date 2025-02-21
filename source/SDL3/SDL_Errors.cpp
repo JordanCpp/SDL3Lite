@@ -26,9 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/Application.hpp>
 
-extern SDL::Application MainApplication;
-
 const char* SDL_GetError()
 {
-	return MainApplication.GetResult().Message().c_str();
+	return SDL::GetApplication().GetResult().Message().c_str();
 }

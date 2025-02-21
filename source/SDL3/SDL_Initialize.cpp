@@ -26,8 +26,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/Application.hpp>
 
-SDL::Application MainApplication;
-
 int SDL_Init(SDL_InitFlags flags)
 {
 	return 0;

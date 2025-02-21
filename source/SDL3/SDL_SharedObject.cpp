@@ -34,8 +34,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <assert.h>
 
-extern SDL::Application MainApplication;
-
 struct SDL_SharedObject
 {
 public:
@@ -58,7 +56,7 @@ SDL_SharedObject* SDL_LoadObject(const char* sofile)
 		return sharedObject;
 	}
 
-	MainApplication.GetResult().Message("Could not load library: " + std::string(sofile));
+	SDL::GetApplication().GetResult().Message("Could not load library: " + std::string(sofile));
 
 	return NULL;
 }

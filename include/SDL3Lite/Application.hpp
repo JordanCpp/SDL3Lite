@@ -58,6 +58,8 @@ namespace SDL
 		RenderCreator         _renderCreator;
 		OpenGLAttributes      _openGLAttributes;
 	};
+
+	Application& GetApplication();
 }
 
 #endif

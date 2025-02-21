@@ -28,6 +28,8 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
+SDL::Application MainApplication;
+
 Application::Application() :
 	_windowCreator(_openGLAttributes)
 {
@@ -81,4 +83,9 @@ bool Application::PollEvent(SDL_Event& dest)
 	}
 
 	return false;
+}
+
+Application& SDL::GetApplication()
+{
+	return MainApplication;
 }
