@@ -9,13 +9,20 @@ To support old and new systems, architectures, and operating systems.
 # Library Features
 
 # Build for Linux
-sudo apt install libx11-dev
+sudo apt-get install libx11-dev
 sudo apt-get install libgl1-mesa-dev
+git clone https://github.com/JordanCpp/SDL3Lite.git
+cd SDL3Lite
+cmake -Bout
+cd out
+make
 
 # Integration into your project (CMake Linux or Windows)
 
 # Support platforms.
-Windows 
+Windows 95 and higher
+Linux (XLib) Debian 3 and higher
+
 # Support graphics API.
 
 # Support 2D renders.
@@ -77,10 +84,10 @@ int main()
 
     SDL_GL_DestroyContext(context);
     SDL_DestroyWindow(window);
-
-	SDL_Quit();
-
-	return 0;
+    
+    SDL_Quit();
+    
+    return 0;
 }
 
 ```
