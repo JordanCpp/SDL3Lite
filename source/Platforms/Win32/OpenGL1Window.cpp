@@ -89,6 +89,36 @@ OpenGL1Window::~OpenGL1Window()
 	wglDeleteContext(_renderContext);
 }
 
+const Vec2i& OpenGL1Window::GetPos()
+{
+	return _mainWindow.GetPos();
+}
+
+void OpenGL1Window::SetPos(const Vec2i& pos)
+{
+	_mainWindow.SetPos(pos);
+}
+
+const Vec2i& OpenGL1Window::GetSize()
+{
+	return _mainWindow.GetSize();
+}
+
+void OpenGL1Window::SetSize(const Vec2i& size)
+{
+	_mainWindow.SetSize(size);
+}
+
+const std::string& OpenGL1Window::GetTitle()
+{
+	return _mainWindow.GetTitle();
+}
+
+void OpenGL1Window::SetTitle(const std::string& title)
+{
+	_mainWindow.SetTitle(title);
+}
+
 bool OpenGL1Window::Present()
 {
 	return SwapBuffers(_mainWindow.GetHdc());

@@ -34,6 +34,36 @@ SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const
 {
 }
 
+const Vec2i& SoftwareWindow::GetPos()
+{
+	return _mainWindow.GetPos();
+}
+
+void SoftwareWindow::SetPos(const Vec2i& pos)
+{
+	_mainWindow.SetPos(pos);
+}
+
+const Vec2i& SoftwareWindow::GetSize()
+{
+	return _mainWindow.GetSize();
+}
+
+void SoftwareWindow::SetSize(const Vec2i& size)
+{
+	_mainWindow.SetSize(size);
+}
+
+const std::string& SoftwareWindow::GetTitle()
+{
+	return _mainWindow.GetTitle();
+}
+
+void SoftwareWindow::SetTitle(const std::string& title)
+{
+	_mainWindow.SetTitle(title);
+}
+
 bool SoftwareWindow::Present()
 {
 	return false;

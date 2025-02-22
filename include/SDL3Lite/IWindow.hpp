@@ -27,11 +27,20 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_IWindow_hpp
 #define SDL3Lite_Shared_IWindow_hpp
 
+#include <string>
+#include <SDL3Lite/Vec2.hpp>
+
 namespace SDL
 {
 	class IWindow
 	{
 	public:
+		virtual const Vec2i& GetPos() = 0;
+		virtual void SetPos(const Vec2i& pos) = 0;
+		virtual const Vec2i& GetSize() = 0;
+		virtual void SetSize(const Vec2i& size) = 0;
+		virtual const std::string& GetTitle() = 0;
+		virtual void SetTitle(const std::string& title) = 0;
 		virtual void PollEvents() = 0;
 		virtual bool Present() = 0;
 	};
