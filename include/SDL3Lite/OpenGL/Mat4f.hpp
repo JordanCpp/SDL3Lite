@@ -27,18 +27,20 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_OpenGL_Mat4f_hpp
 #define SDL3Lite_OpenGL_Mat4f_hpp
 
+#include <string.h>
+
 namespace SDL
 {
 	template<class T>
 	class Mat4
 	{
 	public:
-		Mat4::Mat4()
+		Mat4()
 		{
 			Identity();
 		}
 
-		Mat4<T>& Mat4::operator=(const Mat4<T>& source)
+		Mat4<T>& operator=(const Mat4<T>& source)
 		{
 			if (this == &source)
 			{
@@ -50,12 +52,12 @@ namespace SDL
 			return *this;
 		}
 
-		T* Mat4::Values()
+		T* Values()
 		{
 			return _values;
 		}
 
-		void Mat4::Identity()
+		void Identity()
 		{
 			_values[0] = 1;
 			_values[1] = 0;
@@ -75,7 +77,7 @@ namespace SDL
 			_values[15] = 1;
 		}
 
-		Mat4<T> Mat4::operator * (const Mat4<T>& m) const {
+		Mat4<T> operator * (const Mat4<T>& m) const {
 			Mat4<T> ret;
 
 			ret._values[0] = ((_values[0] * m._values[0]) + (_values[1] * m._values[4]) + (_values[2] * m._values[8]) + (_values[3] * m._values[12]));
@@ -101,9 +103,7 @@ namespace SDL
 			return ret;
 		}
 
-
-
-		float _values[16];
+		T _values[16];
 	};
 
 	template<class T>
