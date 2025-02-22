@@ -35,6 +35,21 @@ OpenGL1Render::OpenGL1Render(IWindow* window) :
     _window(window)
 {
     OpenGL_Compatibility_Init(1, 2);
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
+    Vec2i size = _window->GetSize();
+    
+    glViewport(0, 0, (GLsizei)size.x, (GLsizei)size.y);
+
+    _projection = Ortho(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(_projection.Values());
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(_modelView.Values());
 }
 
 void OpenGL1Render::Present()
@@ -55,4 +70,25 @@ void OpenGL1Render::Clear()
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
+{
+    GLclampf r = _color.r / 255.0f;
+    GLclampf g = _color.g / 255.0f;
+    GLclampf b = _color.b / 255.0f;
+
+    glColor3f(r, g, b);
+
+    GLfloat x = pos.x;
+    GLfloat y = pos.y;
+    GLfloat w = size.x;
+    GLfloat h = size.y;
+
+    glBegin(GL_QUADS);
+    glVertex2f(x, y + h);
+    glVertex2f(x, y);
+    glVertex2f(x + w, y);
+    glVertex2f(x + w, y + h);
+    glEnd();
 }

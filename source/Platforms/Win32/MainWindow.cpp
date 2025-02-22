@@ -28,12 +28,13 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode) :
+MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_result(&result),
 	_eventHandler(&eventHandler),
 	_hdc(NULL),
 	_hwnd(NULL),
-	_baseWindow(pos, size, title)
+	_baseWindow(pos, size, title),
+	_WindowFlags(mode)
 {
 	memset(&_message    , 0, sizeof(MSG));
 	memset(&_windowClass, 0, sizeof(WNDCLASSA));
@@ -124,6 +125,13 @@ const std::string& MainWindow::GetTitle()
 void MainWindow::SetTitle(const std::string& title)
 {
 	_baseWindow.SetTitle(title);
+
+	SetWindowText(GetHwnd(), _baseWindow.GetTitle().c_str());
+}
+
+SDL_WindowFlags SDL::MainWindow::GetWindowFlags()
+{
+	return _WindowFlags;
 }
 
 void MainWindow::PollEvents()

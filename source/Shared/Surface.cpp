@@ -28,7 +28,10 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-Surface::Surface(const Vec2i& size)
+Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_bpp(3),
+	_size(size),
+	_pixelFormat(pixelFormat)
 {
-	_pixels.resize(size.x * size.y);
+	_pixels.resize(_size.x * _size.y * _bpp);
 }

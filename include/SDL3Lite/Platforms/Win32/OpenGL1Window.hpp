@@ -36,7 +36,7 @@ namespace SDL
 	class OpenGL1Window : public IWindow
 	{
 	public:
-		OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		~OpenGL1Window();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
@@ -44,6 +44,7 @@ namespace SDL
 		void SetSize(const Vec2i& size);
 		const std::string& GetTitle();
 		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetWindowFlags();
 		bool Present();
 		void PollEvents();
 	private:

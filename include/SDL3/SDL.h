@@ -32,6 +32,7 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <SDL3/SDL_Rect.h>
 #include <SDL3/SDL_Types.h>
 #include <SDL3/SDL_SharedObject.h>
 #include <SDL3/SDL_Initialize.h>
@@ -40,6 +41,7 @@ extern "C" {
 #include <SDL3/SDL_Events.h>
 #include <SDL3/SDL_Errors.h>
 #include <SDL3/SDL_GLContext.h>
+#include <SDL3/SDL_Surface.h>
 
 #ifdef __cplusplus
 }

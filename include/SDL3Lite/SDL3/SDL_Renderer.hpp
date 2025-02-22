@@ -34,11 +34,12 @@ struct SDL_Renderer
 {
 public:
 	SDL_Renderer(SDL::Application& application, SDL::IRender* render);
+	~SDL_Renderer();
+public:
 	SDL::IRender* GetRender();
 private:
 	SDL::Application&  _application;
 	SDL::IRender*      _render;
-    SDL::RenderCreator _renderCreator;
 	std::string        _name;
 };
 

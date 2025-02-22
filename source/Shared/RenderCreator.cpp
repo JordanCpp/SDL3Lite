@@ -25,20 +25,25 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/RenderCreator.hpp>
-
-#if defined(_WIN32)
-    #include <SDL3Lite/Platforms/Win32/SoftwareWindow.hpp>
-    #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
-#elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/SoftwareWindow.hpp>
-    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
-#endif
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
+#include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
 
 using namespace SDL;
 
-IRender* RenderCreator::Create()
+IRender* RenderCreator::Create(IWindow* window)
 {
-	return NULL;
+	IRender* render = NULL;
+		
+	if (window->GetWindowFlags() == SDL_WINDOW_OPENGL)
+	{
+		render = new SDL::OpenGL1Render(window);
+	}
+	else
+	{
+		render = new SDL::SoftwareRender(window);
+	}
+
+	return render;
 }
 
 void RenderCreator::Destroy(IRender* render)

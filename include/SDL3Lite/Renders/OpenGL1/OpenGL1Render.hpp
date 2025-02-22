@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
 
 #include <SDL3Lite/IRender.hpp>
+#include <SDL3Lite/OpenGL/Mat4f.hpp>
 
 #if defined(_WIN32)
     #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
@@ -44,9 +45,12 @@ namespace SDL
 		void Present();
 		void SetColor(const Color& color);
 		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
 	private:
 	    IWindow* _window;
 	    Color    _color;
+		Mat4f    _projection;
+		Mat4f    _modelView;
 	};
 }
 

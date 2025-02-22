@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Win32_MainWindow_hpp
 
 
+#include <SDL3/SDL_Window.h>
 #include <SDL3Lite/BaseWindow.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
@@ -39,7 +40,7 @@ namespace SDL
 	class MainWindow
 	{
 	public:
-		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		~MainWindow();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
@@ -47,6 +48,7 @@ namespace SDL
 		void SetSize(const Vec2i& size);
 		const std::string& GetTitle();
 		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetWindowFlags();
 		void PollEvents();
 	public:
 		HWND GetHwnd();
@@ -54,14 +56,15 @@ namespace SDL
 	private:
 		LRESULT CALLBACK Handler(UINT Message, WPARAM WParam, LPARAM LParam);
 		static LRESULT CALLBACK WndProc(HWND Hwnd, UINT Message, WPARAM WParam, LPARAM LParam);
-		Result*       _result;
-		EventHandler* _eventHandler;
-		HWND          _hwnd;
-		HDC           _hdc;
-		WindowError   _windowError;
-		MSG           _message;
-		BaseWindow    _baseWindow;
-		WNDCLASSA     _windowClass;
+		Result*         _result;
+		EventHandler*   _eventHandler;
+		HWND            _hwnd;
+		HDC             _hdc;
+		WindowError     _windowError;
+		MSG             _message;
+		BaseWindow      _baseWindow;
+		WNDCLASSA       _windowClass;
+		SDL_WindowFlags _WindowFlags;
 	};
 }
 

@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode) :
+OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_openGLAttributes(&openGLAttributes),
 	_result(&result),
 	_renderContext(NULL),
@@ -117,6 +117,11 @@ const std::string& OpenGL1Window::GetTitle()
 void OpenGL1Window::SetTitle(const std::string& title)
 {
 	_mainWindow.SetTitle(title);
+}
+
+SDL_WindowFlags SDL::OpenGL1Window::GetWindowFlags()
+{
+	return _mainWindow.GetWindowFlags();
 }
 
 bool OpenGL1Window::Present()

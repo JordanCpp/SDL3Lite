@@ -38,6 +38,9 @@ target_link_libraries(SDL3 ${libs} )
 add_executable(OpenGL1 "OpenGL1.c")
 target_link_libraries(OpenGL1 SDL3)
 
+add_executable(Rects "Rects.c")
+target_link_libraries(Rects SDL3)
+
 add_executable(Renderer "Renderer.c")
 target_link_libraries(Renderer SDL3)
 

@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_IRender_hpp
 #define SDL3Lite_Shared_IRender_hpp
 
+#include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Color.hpp>
 
 namespace SDL
@@ -37,6 +38,7 @@ namespace SDL
 	    virtual void Present() = 0;
 		virtual void SetColor(const Color& color) = 0;
 		virtual void Clear() = 0;
+		virtual void FillRect(const Vec2f& pos, const Vec2f& size) = 0;
 	};
 }
 

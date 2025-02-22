@@ -40,6 +40,7 @@ extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* rend
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPresent(SDL_Renderer* renderer);
 extern SDL_DECLSPEC bool          SDLCALL SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderClear(SDL_Renderer* renderer);
+extern SDL_DECLSPEC void          SDLCALL SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect);
 
 #ifdef __cplusplus
 }

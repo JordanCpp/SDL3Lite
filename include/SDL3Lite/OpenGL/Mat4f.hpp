@@ -24,25 +24,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Surface_hpp
-#define SDL3Lite_Shared_Surface_hpp
-
-#include <SDL3/SDL_Surface.h>
-#include "Vec2.hpp"
-#include <vector>
+#ifndef SDL3Lite_OpenGL_Mat4f_hpp
+#define SDL3Lite_OpenGL_Mat4f_hpp
 
 namespace SDL
 {
-	class Surface
+	class Mat4f
 	{
 	public:
-		Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
-	private:
-		uint8_t              _bpp;
-		SDL_PixelFormat      _pixelFormat;
-		Vec2i                _size;
-		std::vector<uint8_t> _pixels;
+		Mat4f();
+		Mat4f& operator=(const Mat4f& source);
+		float* Values();
+		void Identity();
+		Mat4f operator * (const Mat4f& m) const;
+		float _values[16];
 	};
+
+	Mat4f Ortho(float left, float right, float bottom, float top, float farv, float nearv);
 }
 
 #endif

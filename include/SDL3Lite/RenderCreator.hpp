@@ -28,13 +28,14 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Shared_RenderCreator_hpp
 
 #include <SDL3Lite/IRender.hpp>
+#include <SDL3Lite/IWindow.hpp>
 
 namespace SDL
 {
 	class RenderCreator
 	{
 	public:
-		IRender* Create();
+		IRender* Create(IWindow* window);
 		void Destroy(IRender* render);
 	private:
 	};

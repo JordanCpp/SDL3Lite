@@ -28,12 +28,18 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Renders_Software_SoftwareRender_hpp
 
 #include <SDL3Lite/IRender.hpp>
+#include <SDL3Lite/IWindow.hpp>
 
 namespace SDL
 {
 	class SoftwareRender : public IRender
 	{
 	public:
+		SoftwareRender(IWindow*  window);
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
 	private:
 	};
 }

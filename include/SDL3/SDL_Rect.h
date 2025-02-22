@@ -24,25 +24,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Surface_hpp
-#define SDL3Lite_Shared_Surface_hpp
+#ifndef SDL3Lite_SDL_Rect_h
+#define SDL3Lite_SDL_Rect_h
 
-#include <SDL3/SDL_Surface.h>
-#include "Vec2.hpp"
-#include <vector>
+#include <SDL3/SDL_Types.h>
 
-namespace SDL
-{
-	class Surface
-	{
-	public:
-		Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
-	private:
-		uint8_t              _bpp;
-		SDL_PixelFormat      _pixelFormat;
-		Vec2i                _size;
-		std::vector<uint8_t> _pixels;
-	};
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    typedef struct SDL_FRect
+    {
+        float x;
+        float y;
+        float w;
+        float h;
+    } SDL_FRect;
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif

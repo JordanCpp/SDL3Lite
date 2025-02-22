@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include <SDL3Lite/Vec2.hpp>
+#include <SDL3/SDL_Window.h>
 
 namespace SDL
 {
@@ -41,6 +42,7 @@ namespace SDL
 		virtual void SetSize(const Vec2i& size) = 0;
 		virtual const std::string& GetTitle() = 0;
 		virtual void SetTitle(const std::string& title) = 0;
+		virtual SDL_WindowFlags GetWindowFlags() = 0;
 		virtual void PollEvents() = 0;
 		virtual bool Present() = 0;
 	};

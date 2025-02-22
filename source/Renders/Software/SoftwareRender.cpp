@@ -27,3 +27,23 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
 
 using namespace SDL;
+
+SoftwareRender::SoftwareRender(IWindow* window)
+{
+}
+
+void SoftwareRender::Present()
+{
+}
+
+void SoftwareRender::SetColor(const Color& color)
+{
+}
+
+void SoftwareRender::Clear()
+{
+}
+
+void SoftwareRender::FillRect(const Vec2f& pos, const Vec2f& size)
+{
+}
