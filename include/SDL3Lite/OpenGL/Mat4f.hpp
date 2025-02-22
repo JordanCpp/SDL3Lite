@@ -29,18 +29,99 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
-	class Mat4f
+	template<class T>
+	class Mat4
 	{
 	public:
-		Mat4f();
-		Mat4f& operator=(const Mat4f& source);
-		float* Values();
-		void Identity();
-		Mat4f operator * (const Mat4f& m) const;
+		Mat4::Mat4()
+		{
+			Identity();
+		}
+
+		Mat4<T>& Mat4::operator=(const Mat4<T>& source)
+		{
+			if (this == &source)
+			{
+				return *this;
+			}
+
+			memcpy(&_values, source._values, sizeof(_values));
+
+			return *this;
+		}
+
+		T* Mat4::Values()
+		{
+			return _values;
+		}
+
+		void Mat4::Identity()
+		{
+			_values[0] = 1;
+			_values[1] = 0;
+			_values[2] = 0;
+			_values[3] = 0;
+			_values[4] = 0;
+			_values[5] = 1;
+			_values[6] = 0;
+			_values[7] = 0;
+			_values[8] = 0;
+			_values[9] = 0;
+			_values[10] = 1;
+			_values[11] = 0;
+			_values[12] = 0;
+			_values[13] = 0;
+			_values[14] = 0;
+			_values[15] = 1;
+		}
+
+		Mat4<T> Mat4::operator * (const Mat4<T>& m) const {
+			Mat4<T> ret;
+
+			ret._values[0] = ((_values[0] * m._values[0]) + (_values[1] * m._values[4]) + (_values[2] * m._values[8]) + (_values[3] * m._values[12]));
+			ret._values[1] = ((_values[0] * m._values[1]) + (_values[1] * m._values[5]) + (_values[2] * m._values[9]) + (_values[3] * m._values[13]));
+			ret._values[2] = ((_values[0] * m._values[2]) + (_values[1] * m._values[6]) + (_values[2] * m._values[10]) + (_values[3] * m._values[14]));
+			ret._values[3] = ((_values[0] * m._values[3]) + (_values[1] * m._values[7]) + (_values[2] * m._values[11]) + (_values[3] * m._values[15]));
+
+			ret._values[4] = ((_values[4] * m._values[0]) + (_values[5] * m._values[4]) + (_values[6] * m._values[8]) + (_values[7] * m._values[12]));
+			ret._values[5] = ((_values[4] * m._values[1]) + (_values[5] * m._values[5]) + (_values[6] * m._values[9]) + (_values[7] * m._values[13]));
+			ret._values[6] = ((_values[4] * m._values[2]) + (_values[5] * m._values[6]) + (_values[6] * m._values[10]) + (_values[7] * m._values[14]));
+			ret._values[7] = ((_values[4] * m._values[3]) + (_values[5] * m._values[7]) + (_values[6] * m._values[11]) + (_values[7] * m._values[15]));
+
+			ret._values[8] = ((_values[8] * m._values[0]) + (_values[9] * m._values[4]) + (_values[10] * m._values[8]) + (_values[11] * m._values[12]));
+			ret._values[9] = ((_values[8] * m._values[1]) + (_values[9] * m._values[5]) + (_values[10] * m._values[9]) + (_values[11] * m._values[13]));
+			ret._values[10] = ((_values[8] * m._values[2]) + (_values[9] * m._values[6]) + (_values[10] * m._values[10]) + (_values[11] * m._values[14]));
+			ret._values[11] = ((_values[8] * m._values[3]) + (_values[9] * m._values[7]) + (_values[10] * m._values[11]) + (_values[11] * m._values[15]));
+
+			ret._values[12] = ((_values[12] * m._values[0]) + (_values[13] * m._values[4]) + (_values[14] * m._values[8]) + (_values[15] * m._values[12]));
+			ret._values[13] = ((_values[12] * m._values[1]) + (_values[13] * m._values[5]) + (_values[14] * m._values[9]) + (_values[15] * m._values[13]));
+			ret._values[14] = ((_values[12] * m._values[2]) + (_values[13] * m._values[6]) + (_values[14] * m._values[10]) + (_values[15] * m._values[14]));
+			ret._values[15] = ((_values[12] * m._values[3]) + (_values[13] * m._values[7]) + (_values[14] * m._values[11]) + (_values[15] * m._values[15]));
+
+			return ret;
+		}
+
+
+
 		float _values[16];
 	};
 
-	Mat4f Ortho(float left, float right, float bottom, float top, float farv, float nearv);
+	template<class T>
+	Mat4<T> Ortho(float left, float right, float bottom, float top, float farv, float nearv)
+	{
+		Mat4<T> result;
+
+		result._values[0] = (2.0f / (right - left));
+		result._values[5] = (2.0f / (top - bottom));
+		result._values[10] = (-1.0);
+		result._values[12] = (-(right + left) / (right - left));
+		result._values[13] = (-(top + bottom) / (top - bottom));
+		result._values[14] = (-(farv + nearv) / (farv - nearv));
+
+		return result;
+	}
+
+	typedef Mat4<float> Mat4f;
 }
 
 #endif

@@ -44,7 +44,7 @@ OpenGL1Render::OpenGL1Render(IWindow* window) :
     
     glViewport(0, 0, (GLsizei)size.x, (GLsizei)size.y);
 
-    _projection = Ortho(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
+    _projection = Ortho<float>(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(_projection.Values());
 
