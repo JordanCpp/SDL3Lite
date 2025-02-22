@@ -27,18 +27,29 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/SDL3/SDL_OpenGLContext.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
+#include <assert.h>
 
 SDL_GLContext* SDL_GL_CreateContext(SDL_Window* window)
 {
-	return new SDL_GLContext();
+	assert(window);
+
+	SDL_GLContext* context = new SDL_GLContext();
+	assert(context);
+
+	return context;
 }
 
 void SDL_GL_DestroyContext(SDL_GLContext* context)
 {
+	assert(context);
+
 	delete context;
 }
 
 bool SDL_GL_SwapWindow(SDL_Window* window)
 {
+	assert(window);
+	assert(window->GetWindow());
+
 	return window->GetWindow()->Present();
 }

@@ -29,8 +29,10 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
+#include <assert.h>
 
-SDL_Renderer::SDL_Renderer(SDL::IRender* render) :
+SDL_Renderer::SDL_Renderer(SDL::Application& application, SDL::IRender* render) :
+	_application(application),
 	_render(render)
 {
 }
@@ -43,17 +45,26 @@ SDL::IRender* SDL_Renderer::GetRender()
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
 	SDL::IRender* render = new SDL::OpenGL1Render(window->GetWindow());
+	assert(render);
 
-	return new SDL_Renderer(render);
+	SDL_Renderer* result = new SDL_Renderer(SDL::GetApplication(), render);
+	assert(result);
+
+	return result;
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)
 {
+	assert(renderer);
+
 	delete renderer;
 }
 
 bool SDL_RenderPresent(SDL_Renderer* renderer)
 {
+	assert(renderer);
+	assert(renderer->GetRender());
+
 	renderer->GetRender()->Present();
 
 	return true;
@@ -61,6 +72,9 @@ bool SDL_RenderPresent(SDL_Renderer* renderer)
 
 bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
+	assert(renderer);
+	assert(renderer->GetRender());
+
 	renderer->GetRender()->SetColor(SDL::Color(r, g, b, a));
 
 	return true;
@@ -68,6 +82,9 @@ bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, U
 
 bool SDL_RenderClear(SDL_Renderer* renderer)
 {
+	assert(renderer);
+	assert(renderer->GetRender());
+
 	renderer->GetRender()->Clear();
 
 	return true;

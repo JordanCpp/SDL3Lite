@@ -27,14 +27,16 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL3_SDL_Renderer_hpp
 #define SDL3Lite_SDL3_SDL_Renderer_hpp
 
+#include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/RenderCreator.hpp>
 
 struct SDL_Renderer
 {
 public:
-	SDL_Renderer(SDL::IRender* render);
+	SDL_Renderer(SDL::Application& application, SDL::IRender* render);
 	SDL::IRender* GetRender();
 private:
+	SDL::Application&  _application;
 	SDL::IRender*      _render;
     SDL::RenderCreator _renderCreator;
 	std::string        _name;

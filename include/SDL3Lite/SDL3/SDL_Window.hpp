@@ -27,18 +27,17 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL3_SDL3_Window_hpp
 #define SDL3Lite_SDL3_SDL3_Window_hpp
 
-#include <SDL3Lite/IWindow.hpp>
-#include <SDL3Lite/WindowCreator.hpp>
+#include <SDL3Lite/Application.hpp>
 
 struct SDL_Window
 {
 public:
-	SDL_Window(SDL::WindowCreator& windowCreate, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, size_t mode);
+	SDL_Window(SDL::Application& application, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, size_t mode);
 	SDL::IWindow* GetWindow();
 	SDL::WindowCreator& GetWindowCreator();
 private:
-	SDL::IWindow*       _window;
-	SDL::WindowCreator& _windowCreator;
+	SDL::IWindow*     _window;
+	SDL::Application& _application;
 };
 
 #endif
