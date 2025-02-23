@@ -52,6 +52,9 @@ typedef void (*OpenGL_Function_Pointer)(void);
 bool OpenGL_LoadLibrary();
 OpenGL_Function_Pointer OpenGL_Load(const char* name);
 void OpenGL_UnLoad();
+void OpenGL_Assert(const char* file, int line, const char* expression);
+
+#define GL_ASSERT(expression) OpenGL_Assert(__FILE__, __LINE__, #expression)
 
 /********************************************************************************************************************************
 														 Defines
@@ -4110,6 +4113,42 @@ OPENGL_API_ENTRY PFNGLMULTIDRAWELEMENTSINDIRECTCOUNTPROC glMultiDrawElementsIndi
 OPENGL_API_ENTRY PFNGLPOLYGONOFFSETCLAMPPROC glPolygonOffsetClamp;
 
 #if defined(OPENGL_IMPLEMENTATION)
+
+void OpenGL_Assert(const char* file, int line, const char* expression)
+{
+	GLenum code = glGetError();
+
+	char format[] = "OpenGL error: %s expression: %s file: %s line: %d \n";
+
+	if (code != GL_NO_ERROR)
+	{
+		switch (code)
+		{
+		case GL_INVALID_ENUM:
+			printf(format, "GL_INVALID_ENUM", expression, file, line);
+			break;
+		case GL_INVALID_VALUE:
+			printf(format, "GL_INVALID_VALUE", expression, file, line);
+			break;
+		case GL_INVALID_OPERATION:
+			printf(format, "GL_INVALID_OPERATION", expression, file, line);
+			break;
+		case GL_STACK_OVERFLOW:
+			printf(format, "GL_STACK_OVERFLOW", expression, file, line);
+			break;
+		case GL_STACK_UNDERFLOW:
+			printf(format, "GL_STACK_UNDERFLOW", expression, file, line);
+			break;
+		case GL_OUT_OF_MEMORY:
+			printf(format, "GL_OUT_OF_MEMORY", expression, file, line);
+			break;
+		default:
+			printf(format, "Unknown error", expression, file, line);
+		}
+
+		abort();
+	}
+}
 
 #if defined(_WIN32)
 

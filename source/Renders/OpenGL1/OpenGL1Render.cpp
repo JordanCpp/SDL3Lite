@@ -24,10 +24,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
-
 #define OPENGL_IMPLEMENTATION
 #include <OpenGL.h>
+
+#include <SDL3Lite/OpenGL/GLUtils.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 
 using namespace SDL;
 
@@ -42,7 +43,7 @@ OpenGL1Render::OpenGL1Render(IWindow* window) :
 
     Vec2i size = _window->GetSize();
     
-    glViewport(0, 0, (GLsizei)size.x, (GLsizei)size.y);
+    GL_ASSERT(glViewport(0, 0, (GLsizei)size.x, (GLsizei)size.y));
 
     _projection = Ortho<float>(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
@@ -64,9 +65,11 @@ void OpenGL1Render::SetColor(const Color& color)
 
 void OpenGL1Render::Clear()
 {
-    GLclampf r = _color.r / 255.0f;
-    GLclampf g = _color.g / 255.0f;
-    GLclampf b = _color.b / 255.0f;
+    GLclampf r = 0;
+    GLclampf g = 0;
+    GLclampf b = 0;
+
+    Normalize(_color, r, g, b);
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -74,9 +77,11 @@ void OpenGL1Render::Clear()
 
 void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
 {
-    GLclampf r = _color.r / 255.0f;
-    GLclampf g = _color.g / 255.0f;
-    GLclampf b = _color.b / 255.0f;
+    GLclampf r = 0;
+    GLclampf g = 0;
+    GLclampf b = 0;
+
+    Normalize(_color, r, g, b);
 
     glColor3f(r, g, b);
 
