@@ -27,14 +27,14 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_Application_hpp
 #define SDL3Lite_Shared_Application_hpp
 
-#include <SDL3/SDL.h>
 #include <vector>
+#include <SDL3/SDL.h>
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
 #include <SDL3Lite/WindowCreator.hpp>
 #include <SDL3Lite/RenderCreator.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
+#include <SDL3Lite/TextureCreator.hpp>
 
 namespace SDL
 {
@@ -42,7 +42,7 @@ namespace SDL
 	{
 	public:
 		Application();
-		void Attach(IWindow* window);
+		std::vector<IWindow*>& GetWindows();
 		EventHandler& GetEventHandler();
 		WindowCreator& GetWindowCreator();
 		RenderCreator& GetRenderCreator();
@@ -51,12 +51,13 @@ namespace SDL
 		void PollEvents();
 		bool PollEvent(SDL_Event& dest);
 	private:
+		OpenGLAttributes      _openGLAttributes;
 		Result                _result;
 		std::vector<IWindow*> _windows;
 		EventHandler          _eventHandler;
 		WindowCreator         _windowCreator;
 		RenderCreator         _renderCreator;
-		OpenGLAttributes      _openGLAttributes;
+		TextureCreator        _textureCreator;
 	};
 
 	Application& GetApplication();

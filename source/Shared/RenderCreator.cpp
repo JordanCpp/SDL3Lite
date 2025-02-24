@@ -34,7 +34,7 @@ IRender* RenderCreator::Create(IWindow* window)
 {
 	IRender* render = NULL;
 		
-	if (window->GetWindowFlags() == SDL_WINDOW_OPENGL)
+	if (window->GetFlags() == SDL_WINDOW_OPENGL)
 	{
 		render = new SDL::OpenGL1Render(window);
 	}

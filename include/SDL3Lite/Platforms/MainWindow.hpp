@@ -24,22 +24,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#ifndef SDL3Lite_Platforms_MainWindow_hpp
+#define SDL3Lite_Platforms_MainWindow_hpp
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
-
-namespace SDL
-{
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
-}
+#if defined(_WIN32)
+#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
+#elif defined (__unix__)
+#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
+#endif
 
 #endif

@@ -27,14 +27,31 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
 #define SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
 
+#include <SDL3/pstdint.h>
+#include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/ITexture.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
+#include <OpenGL.h>
 
 namespace SDL
 {
+	class OpenGL1Render;
+
 	class OpenGL1Texture : public ITexture
 	{
 	public:
+		~OpenGL1Texture();
+		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp);
+		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels);
+		const Vec2i& GetSize();
+		const Vec2i& GetQuad();
+	public:
+		GLuint GetTexture();
 	private:
+		OpenGL1Render& _render;
+		GLuint         _texture;
+		Vec2i          _size;
+		Vec2i          _quad;
 	};
 }
 

@@ -119,9 +119,9 @@ void OpenGL1Window::SetTitle(const std::string& title)
 	_mainWindow.SetTitle(title);
 }
 
-SDL_WindowFlags SDL::OpenGL1Window::GetWindowFlags()
+SDL_WindowFlags SDL::OpenGL1Window::GetFlags()
 {
-	return _mainWindow.GetWindowFlags();
+	return _mainWindow.GetFlags();
 }
 
 bool OpenGL1Window::Present()

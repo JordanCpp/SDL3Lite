@@ -24,22 +24,19 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#include <SDL3Lite/SurfaceCreator.hpp>
+#include <assert.h>
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
+using namespace SDL;
 
-namespace SDL
+Surface* SurfaceCreator::Create(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat)
 {
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+	return new Surface(size, pixelFormat);
 }
 
-#endif
+void SurfaceCreator::Destroy(Surface* surface)
+{
+	assert(surface != NULL);
+
+	delete surface;
+}

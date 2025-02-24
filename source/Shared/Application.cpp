@@ -31,13 +31,13 @@ using namespace SDL;
 SDL::Application MainApplication;
 
 Application::Application() :
-	_windowCreator(_openGLAttributes)
+	_windowCreator(_openGLAttributes, _result, _eventHandler)
 {
 }
 
-void Application::Attach(IWindow* window)
+std::vector<IWindow*>& SDL::Application::GetWindows()
 {
-	_windows.push_back(window);
+	return _windows;
 }
 
 EventHandler& Application::GetEventHandler()

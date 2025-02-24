@@ -33,14 +33,16 @@ DEALINGS IN THE SOFTWARE.
 struct SDL_Renderer
 {
 public:
-	SDL_Renderer(SDL::Application& application, SDL::IRender* render);
+	SDL_Renderer(SDL::RenderCreator& renderCreator, SDL::IRender* render);
 	~SDL_Renderer();
 public:
 	SDL::IRender* GetRender();
 private:
-	SDL::Application&  _application;
-	SDL::IRender*      _render;
-	std::string        _name;
+	SDL::IRender*       _render;
+	std::string         _name;
+	SDL::RenderCreator& _renderCreator;
 };
+
+SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator, SDL_Window* window, const char* name);
 
 #endif

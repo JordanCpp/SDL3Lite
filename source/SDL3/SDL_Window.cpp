@@ -25,17 +25,19 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
+#include <SDL3Lite/Application.hpp>
 #include <assert.h>
 
-SDL_Window::SDL_Window(SDL::Application& application, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, size_t mode) :
+SDL_Window::SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_window(NULL),
-	_application(application)
+	_windowCreator(windowCreator),
+	_windows(windows)
 {
-	_window = _application.GetWindowCreator().Create(_application.GetResult(), _application.GetEventHandler(), pos, size, title, mode);
+	_window = _windowCreator.Create(pos, size, title, mode);
 
 	if (_window)
 	{
-		_application.Attach(_window);
+		_windows.push_back(_window);
 	}
 }
 
@@ -46,16 +48,19 @@ SDL::IWindow* SDL_Window::GetWindow()
 
 SDL::WindowCreator& SDL_Window::GetWindowCreator()
 {
-	return _application.GetWindowCreator();
+	return _windowCreator;
+}
+
+SDL_Window* SDL_CreateWindowImplementation(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const char* title, int w, int h, size_t flags)
+{
+	SDL_Window* window = new SDL_Window(windowCreator, windows, SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
+
+	return window;
 }
 
 SDL_Window* SDL_CreateWindow(const char* title, int w, int h, size_t flags)
 {
-	SDL_Window* window = new SDL_Window(SDL::GetApplication(), SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
-
-	assert(window);
-
-	return window;
+	return SDL_CreateWindowImplementation(SDL::GetApplication().GetWindowCreator(), SDL::GetApplication().GetWindows(), title, w, h, flags);
 }
 
 void SDL_DestroyWindow(SDL_Window* window)

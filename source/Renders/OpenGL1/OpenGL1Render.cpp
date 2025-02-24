@@ -97,3 +97,10 @@ void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
     glVertex2f(x + w, y + h);
     glEnd();
 }
+
+void OpenGL1Render::Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
+{
+    OpenGL1Texture* tex = (OpenGL1Texture*)texture;
+
+    DrawTexture(dstPos, dstSize, srcPos, srcSize, tex->GetTexture());
+}

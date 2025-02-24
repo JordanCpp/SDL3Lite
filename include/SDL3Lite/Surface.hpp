@@ -37,8 +37,12 @@ namespace SDL
 	{
 	public:
 		Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
+		int GetBpp();
+		SDL_PixelFormat GetPixelFormat();
+		const Vec2i& GetSize();
+		std::vector<uint8_t> GetPixels();
 	private:
-		uint8_t              _bpp;
+		int                  _bpp;
 		SDL_PixelFormat      _pixelFormat;
 		Vec2i                _size;
 		std::vector<uint8_t> _pixels;

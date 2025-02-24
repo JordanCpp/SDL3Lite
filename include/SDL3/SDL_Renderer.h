@@ -28,12 +28,14 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_SDL_Renderer_h
 
 #include <SDL3/SDL_Window.h>
+#include <SDL3/SDL_Texture.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct SDL_Renderer SDL_Renderer;
+typedef struct SDL_Texture  SDL_Texture;
 
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateRenderer(SDL_Window* window, const char* name);
 extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* renderer);
@@ -41,6 +43,7 @@ extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPresent(SDL_Renderer* render
 extern SDL_DECLSPEC bool          SDLCALL SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderClear(SDL_Renderer* renderer);
 extern SDL_DECLSPEC void          SDLCALL SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_FRect* srcrect, const SDL_FRect* dstrect);
 
 #ifdef __cplusplus
 }

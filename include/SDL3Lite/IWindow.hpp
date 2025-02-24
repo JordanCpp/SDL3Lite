@@ -42,7 +42,7 @@ namespace SDL
 		virtual void SetSize(const Vec2i& size) = 0;
 		virtual const std::string& GetTitle() = 0;
 		virtual void SetTitle(const std::string& title) = 0;
-		virtual SDL_WindowFlags GetWindowFlags() = 0;
+		virtual SDL_WindowFlags GetFlags() = 0;
 		virtual void PollEvents() = 0;
 		virtual bool Present() = 0;
 	};

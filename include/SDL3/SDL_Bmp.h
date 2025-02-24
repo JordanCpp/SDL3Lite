@@ -24,22 +24,19 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#ifndef SDL3Lite_SDL_Bmp_h
+#define SDL3Lite_SDL_Bmp_h
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
+#include <SDL3/SDL_Surface.h>
 
-namespace SDL
-{
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_LoadBMP(const char* file);
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif

@@ -64,9 +64,9 @@ void SoftwareWindow::SetTitle(const std::string& title)
 	_mainWindow.SetTitle(title);
 }
 
-SDL_WindowFlags SDL::SoftwareWindow::GetWindowFlags()
+SDL_WindowFlags SDL::SoftwareWindow::GetFlags()
 {
-	return _mainWindow.GetWindowFlags();
+	return _mainWindow.GetFlags();
 }
 
 bool SoftwareWindow::Present()

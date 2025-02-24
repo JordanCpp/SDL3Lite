@@ -48,7 +48,7 @@ namespace SDL
 		void SetSize(const Vec2i& size);
 		const std::string& GetTitle();
 		void SetTitle(const std::string& title);
-		SDL_WindowFlags GetWindowFlags();
+		SDL_WindowFlags GetFlags();
 		void PollEvents();
 	public:
 		HWND GetHwnd();

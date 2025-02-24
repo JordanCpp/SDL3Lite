@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/ITexture.hpp>
 
 namespace SDL
 {
@@ -39,6 +40,7 @@ namespace SDL
 		virtual void SetColor(const Color& color) = 0;
 		virtual void Clear() = 0;
 		virtual void FillRect(const Vec2f& pos, const Vec2f& size) = 0;
+		virtual void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize) = 0;
 	};
 }
 

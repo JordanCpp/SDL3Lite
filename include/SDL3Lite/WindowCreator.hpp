@@ -38,11 +38,13 @@ namespace SDL
 	class WindowCreator
 	{
 	public:
-		WindowCreator(OpenGLAttributes& openGLAttributes);
-		IWindow* Create(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode);
+		WindowCreator(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler);
+		IWindow* Create(const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		void Destroy(IWindow* window);
 	private:
 		OpenGLAttributes _openGLAttributes;
+		Result           _result;
+		EventHandler&    _eventHandler;
 	};
 }
 

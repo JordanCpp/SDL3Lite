@@ -28,11 +28,12 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/RenderCreator.hpp>
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
+#include <SDL3Lite/SDL3/SDL_Texture.hpp>
 #include <assert.h>
 
-SDL_Renderer::SDL_Renderer(SDL::Application& application, SDL::IRender* render) :
-	_application(application),
-	_render(render)
+SDL_Renderer::SDL_Renderer(SDL::RenderCreator& renderCreator, SDL::IRender* render) :
+	_render(render),
+	_renderCreator(renderCreator)
 {
 }
 
@@ -46,17 +47,22 @@ SDL::IRender* SDL_Renderer::GetRender()
 	return _render;
 }
 
-SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
+SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator, SDL_Window* window, const char* name)
 {
 	assert(window);
 
-	SDL::IRender* render = SDL::GetApplication().GetRenderCreator().Create(window->GetWindow());
+	SDL::IRender* render = renderCreator.Create(window->GetWindow());
 	assert(render);
 
-	SDL_Renderer* result = new SDL_Renderer(SDL::GetApplication(), render);
+	SDL_Renderer* result = new SDL_Renderer(renderCreator, render);
 	assert(result);
 
 	return result;
+}
+
+SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
+{
+	return SDL_CreateRendererImplementation(SDL::GetApplication().GetRenderCreator(), window, name);
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)
@@ -102,4 +108,27 @@ void SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect)
 	assert(renderer->GetRender());
 
 	renderer->GetRender()->FillRect(SDL::Vec2f(rect->x, rect->y), SDL::Vec2f(rect->w, rect->h));
+}
+
+bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_FRect* srcrect, const SDL_FRect* dstrect)
+{
+	assert(renderer);
+	assert(renderer->GetRender());
+
+	assert(texture);
+	assert(texture->GetTexture());
+
+	SDL::Vec2f dstPos;
+	SDL::Vec2f dstSize;
+	SDL::Vec2f srcPos;
+	SDL::Vec2f srcSize;
+
+	renderer->GetRender()->Draw(
+		texture->GetTexture(),
+		SDL::Vec2f(dstrect->x, dstrect->y),
+		SDL::Vec2f(dstrect->w, dstrect->h),
+		SDL::Vec2f(srcrect->x, srcrect->y),
+		SDL::Vec2f(srcrect->w, srcrect->h));
+		
+	return true;
 }

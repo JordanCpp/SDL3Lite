@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/IRender.hpp>
 #include <SDL3Lite/OpenGL/Mat4f.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 
 #if defined(_WIN32)
     #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
@@ -38,6 +39,8 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
+	class OpenGL1Texture;
+
 	class OpenGL1Render : public IRender
 	{
 	public:
@@ -46,6 +49,7 @@ namespace SDL
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
 	private:
 	    IWindow* _window;
 	    Color    _color;

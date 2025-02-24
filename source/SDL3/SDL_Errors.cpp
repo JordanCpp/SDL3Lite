@@ -25,8 +25,14 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL3/SDL_Errors.hpp>
+
+const char* SDL_GetErrorImplementation(SDL::Application& application)
+{
+	return application.GetResult().Message().c_str();
+}
 
 const char* SDL_GetError()
 {
-	return SDL::GetApplication().GetResult().Message().c_str();
+	return SDL_GetErrorImplementation(SDL::GetApplication());
 }

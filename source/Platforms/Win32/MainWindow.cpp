@@ -129,7 +129,7 @@ void MainWindow::SetTitle(const std::string& title)
 	SetWindowText(GetHwnd(), _baseWindow.GetTitle().c_str());
 }
 
-SDL_WindowFlags SDL::MainWindow::GetWindowFlags()
+SDL_WindowFlags SDL::MainWindow::GetFlags()
 {
 	return _WindowFlags;
 }

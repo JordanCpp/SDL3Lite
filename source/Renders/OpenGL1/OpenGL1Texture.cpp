@@ -25,5 +25,56 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <SDL3Lite/OpenGL/GLUtils.hpp>
 
 using namespace SDL;
+
+OpenGL1Texture::~OpenGL1Texture()
+{
+	DestroyTexture(_texture);
+}
+
+OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp) :
+	_render(render),
+	_texture(0),
+	_size(size)
+{
+	GLint format = BppToFormat(bpp);
+
+	int sz = SelectTextureSize(_size);
+
+	_quad = Vec2i(sz, sz);
+
+	_texture = CreateTexture(_quad.x, _quad.y, format);
+}
+
+OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels) :
+	_render(render),
+	_texture(0),
+	_size(size)
+{
+	GLint format = BppToFormat(bpp);
+
+	int sz = SelectTextureSize(_size);
+
+	_quad = Vec2i(sz, sz);
+
+	_texture = CreateTexture(_quad.x, _quad.y, format);
+
+	CopyTexture(Vec2i(0, 0), _size, pixels, bpp);
+}
+
+const Vec2i& OpenGL1Texture::GetSize()
+{
+	return _size;
+}
+
+const Vec2i& OpenGL1Texture::GetQuad()
+{
+	return _quad;
+}
+
+GLuint OpenGL1Texture::GetTexture()
+{
+	return _texture;
+}

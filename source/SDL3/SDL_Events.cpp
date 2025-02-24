@@ -25,19 +25,25 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL3/SDL_Events.hpp>
 
-int SDL_PollEvent(SDL_Event* dest)
+int SDL_PollEventInmplementation(SDL::Application& application, SDL_Event* dest)
 {
 	SDL_Event event;
-	
-	if (SDL::GetApplication().PollEvent(event))
+
+	if (application.PollEvent(event))
 	{
 		memcpy(dest, &event, sizeof(SDL_Event));
 
 		return 1;
 	}
 
-	SDL::GetApplication().PollEvents();
+	application.PollEvents();
 
 	return 0;
+}
+
+int SDL_PollEvent(SDL_Event* dest)
+{
+	return SDL_PollEventInmplementation(SDL::GetApplication(), dest);
 }

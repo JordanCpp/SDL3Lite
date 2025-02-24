@@ -24,22 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#ifndef SDL3Lite_Shared_TextureCreator_hpp
+#define SDL3Lite_Shared_TextureCreator_hpp
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/ITexture.hpp>
+#include <SDL3Lite/IRender.hpp>
 
 namespace SDL
 {
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+	class TextureCreator
+	{
+	public:
+		ITexture* Create(IRender* render, const Vec2i& size, int bpp);
+		ITexture* Create(IRender* render, const Vec2i& size, int bpp, uint8_t* pixels);
+		void Destroy(ITexture* texture);
+	private:
+	};
 }
 
 #endif

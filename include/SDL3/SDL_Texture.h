@@ -24,22 +24,32 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#ifndef SDL3Lite_SDL_Texture_h
+#define SDL3Lite_SDL_Texture_h
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
+#include <SDL3/SDL_Types.h>
+#include <SDL3/SDL_Surface.h>
+#include <SDL3/SDL_Renderer.h>
 
-namespace SDL
-{
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    typedef enum SDL_TextureAccess
+    {
+        SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
+        SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
+        SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
+    } SDL_TextureAccess;
+
+typedef struct SDL_Texture  SDL_Texture;
+typedef struct SDL_Renderer SDL_Renderer;
+
+extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h);
+extern SDL_DECLSPEC void         SDLCALL SDL_DestroyTexture(SDL_Texture* texture);
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif

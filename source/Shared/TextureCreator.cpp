@@ -24,22 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_OpenGL_GLUtils_hpp
-#define SDL3Lite_OpenGL_GLUtils_hpp
+#include <SDL3Lite/TextureCreator.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 
-#include <OpenGL.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
+using namespace SDL;
 
-namespace SDL
+ITexture* TextureCreator::Create(IRender* render, const Vec2i& size, int bpp)
 {
-	int SelectTextureSize(const Vec2i& size);
-	void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
-	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
-	void DestroyTexture(GLint id);
-	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+	return new OpenGL1Texture((OpenGL1Render&)render, size, bpp);
 }
 
-#endif
+ITexture* TextureCreator::Create(IRender* render, const Vec2i& size, int bpp, uint8_t* pixels)
+{
+	return new OpenGL1Texture((OpenGL1Render&)render, size, bpp, pixels);
+}
+
+void TextureCreator::Destroy(ITexture* texture)
+{
+	delete texture;
+}

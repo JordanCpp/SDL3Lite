@@ -42,6 +42,7 @@ extern "C" {
 #include <SDL3/SDL_Errors.h>
 #include <SDL3/SDL_GLContext.h>
 #include <SDL3/SDL_Surface.h>
+#include <SDL3/SDL_Texture.h>
 
 #ifdef __cplusplus
 }

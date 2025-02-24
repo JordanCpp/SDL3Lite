@@ -36,25 +36,27 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-WindowCreator::WindowCreator(OpenGLAttributes& openGLAttributes) :
-    _openGLAttributes(openGLAttributes)
+WindowCreator::WindowCreator(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler) :
+    _openGLAttributes(openGLAttributes),
+    _result(result),
+    _eventHandler(eventHandler)
 {
 }
 
-IWindow* WindowCreator::Create(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, size_t mode)
+IWindow* WindowCreator::Create(const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode)
 {
     IWindow* window = NULL;
 
     if (mode == SDL_WINDOW_OPENGL)
     {
-        window = new OpenGL1Window(_openGLAttributes, result, eventHandler, pos, size, title, mode);
+        window = new OpenGL1Window(_openGLAttributes, _result, _eventHandler, pos, size, title, mode);
     }
     else
     {
-        window = new SoftwareWindow(result, eventHandler, pos, size, title, mode);
+        window = new SoftwareWindow(_result, _eventHandler, pos, size, title, mode);
     }
 
-    if (result.Ok())
+    if (_result.Ok())
     {
         return window;
     }

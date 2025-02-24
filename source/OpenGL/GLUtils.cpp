@@ -82,7 +82,7 @@ namespace SDL
 
 	GLint BppToFormat(int bpp)
 	{
-		assert(bpp == 3 && bpp == 4);
+		assert(bpp == 3 || bpp == 4);
 
 		if (bpp == 3)
 		{
@@ -94,12 +94,38 @@ namespace SDL
 		}
 	}
 
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, uint8_t bpp)
+	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp)
 	{
 		assert(pixels);
 
 		GLint format = BppToFormat(bpp);
 
 		GL_ASSERT(glTexSubImage2D(GL_TEXTURE_2D, 0, dstPos.x, dstPos.y, srcSize.x, srcSize.y, format, GL_UNSIGNED_BYTE, pixels));
+	}
+
+	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize)
+	{
+		GLfloat x = dstPos.x;
+		GLfloat y = dstPos.y;
+		GLfloat w = dstSize.x;
+		GLfloat h = dstSize.y;
+
+		GLfloat cx = srcPos.x;
+		GLfloat cy = srcPos.y;
+		GLfloat cw = srcSize.x;
+		GLfloat ch = srcSize.y;
+
+		GLfloat dcx = cx / textureSize;
+		GLfloat dcy = cy / textureSize;
+
+		GLfloat dcw = (cx + cw) / textureSize;
+		GLfloat dch = (cy + ch) / textureSize;
+
+		glBegin(GL_QUADS);
+		glTexCoord2f(dcx, dcy); glVertex2f(x, y);
+		glTexCoord2f(dcw, dcy); glVertex2f(x + cw + (w - cw), y);
+		glTexCoord2f(dcw, dch); glVertex2f(x + cw + (w - cw), y + ch + (h - ch));
+		glTexCoord2f(dcx, dch); glVertex2f(x, y + ch + (h - ch));
+		glEnd();
 	}
 }
