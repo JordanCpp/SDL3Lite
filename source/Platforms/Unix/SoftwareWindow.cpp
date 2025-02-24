@@ -69,9 +69,9 @@ bool SoftwareWindow::Present()
 	return false;
 }
 
-SDL_WindowFlags SoftwareWindow::GetWindowFlags()
+SDL_WindowFlags SoftwareWindow::GetFlags()
 {
-	return _mainWindow.GetWindowFlags();
+	return _mainWindow.GetFlags();
 }
 
 void SoftwareWindow::PollEvents()

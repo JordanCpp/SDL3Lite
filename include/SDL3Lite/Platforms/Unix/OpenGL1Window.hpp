@@ -47,7 +47,7 @@ namespace SDL
 		void SetTitle(const std::string& title);
 		bool Present();
 		void PollEvents();
-		SDL_WindowFlags GetWindowFlags();
+		SDL_WindowFlags GetFlags();
 	private:
 		OpenGLAttributes* _openGLAttributes;
 		Result*           _result;

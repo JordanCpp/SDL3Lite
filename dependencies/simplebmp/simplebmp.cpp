@@ -8,7 +8,7 @@
 
 #include "simplebmp.h"
 #include <fstream>
-
+#include <string.h>
 
 
 int SimpleBMP::save(const int width, const int height, const unsigned char *pixels, const char *path)

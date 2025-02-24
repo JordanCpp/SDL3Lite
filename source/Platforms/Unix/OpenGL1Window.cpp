@@ -126,9 +126,9 @@ bool OpenGL1Window::Present()
 	return true;
 }
 
-SDL_WindowFlags OpenGL1Window::GetWindowFlags()
+SDL_WindowFlags OpenGL1Window::GetFlags()
 {
-	return _mainWindow.GetWindowFlags();
+	return _mainWindow.GetFlags();
 }
 
 void OpenGL1Window::PollEvents()

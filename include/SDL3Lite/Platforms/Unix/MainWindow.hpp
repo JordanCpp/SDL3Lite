@@ -50,7 +50,7 @@ namespace SDL
 		const std::string& GetTitle();
 		void SetTitle(const std::string& title);
 		void PollEvents();
-		SDL_WindowFlags GetWindowFlags();
+		SDL_WindowFlags GetFlags();
 	private:
 		Result*         _result;
 		EventHandler*   _eventHandler;

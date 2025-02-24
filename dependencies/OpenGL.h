@@ -43,12 +43,6 @@ extern "C" {
 
 typedef void (*OpenGL_Function_Pointer)(void);
 
-#if defined(_WIN32)
-    static HMODULE globalLibraryPtr = NULL;
-#elif defined (__unix__)
-	void* globalLibraryPtr = NULL;
-#endif
-
 bool OpenGL_LoadLibrary();
 OpenGL_Function_Pointer OpenGL_Load(const char* name);
 void OpenGL_UnLoad();
@@ -4113,6 +4107,12 @@ OPENGL_API_ENTRY PFNGLMULTIDRAWELEMENTSINDIRECTCOUNTPROC glMultiDrawElementsIndi
 OPENGL_API_ENTRY PFNGLPOLYGONOFFSETCLAMPPROC glPolygonOffsetClamp;
 
 #if defined(OPENGL_IMPLEMENTATION)
+
+#if defined(_WIN32)
+    static HMODULE globalLibraryPtr = NULL;
+#elif defined (__unix__)
+	void* globalLibraryPtr = NULL;
+#endif
 
 void OpenGL_Assert(const char* file, int line, const char* expression)
 {
