@@ -41,6 +41,11 @@ SDL_Window::SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWind
 	}
 }
 
+SDL_Window::~SDL_Window()
+{
+	_windowCreator.Destroy(_window);
+}
+
 SDL::IWindow* SDL_Window::GetWindow()
 {
 	return _window;

@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_RenderCreator_hpp
 #define SDL3Lite_Shared_RenderCreator_hpp
 
+#include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/IRender.hpp>
 #include <SDL3Lite/IWindow.hpp>
 
@@ -35,7 +36,7 @@ namespace SDL
 	class RenderCreator
 	{
 	public:
-		IRender* Create(IWindow* window);
+		IRender* Create(Result& result, IWindow* window);
 		void Destroy(IRender* render);
 	private:
 	};

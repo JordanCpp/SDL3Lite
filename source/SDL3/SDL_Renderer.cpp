@@ -31,9 +31,8 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Texture.hpp>
 #include <assert.h>
 
-SDL_Renderer::SDL_Renderer(SDL::RenderCreator& renderCreator, SDL::IRender* render) :
-	_render(render),
-	_renderCreator(renderCreator)
+SDL_Renderer::SDL_Renderer(SDL::IRender* render) :
+	_render(render)
 {
 }
 
@@ -47,22 +46,25 @@ SDL::IRender* SDL_Renderer::GetRender()
 	return _render;
 }
 
-SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator, SDL_Window* window, const char* name)
+SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator, SDL::Result& result, SDL_Window* window, const char* name)
 {
 	assert(window);
 
-	SDL::IRender* render = renderCreator.Create(window->GetWindow());
+	SDL::IRender* render = renderCreator.Create(result, window->GetWindow());
 	assert(render);
 
-	SDL_Renderer* result = new SDL_Renderer(renderCreator, render);
-	assert(result);
+	SDL_Renderer* renderer = new SDL_Renderer(render);
+	assert(renderer);
 
-	return result;
+	return renderer;
 }
 
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
-	return SDL_CreateRendererImplementation(SDL::GetApplication().GetRenderCreator(), window, name);
+	return SDL_CreateRendererImplementation(
+		SDL::GetApplication().GetRenderCreator(), 
+		SDL::GetApplication().GetResult(),
+		window, name);
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)
@@ -123,12 +125,29 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 	SDL::Vec2f srcPos;
 	SDL::Vec2f srcSize;
 
-	renderer->GetRender()->Draw(
-		texture->GetTexture(),
-		SDL::Vec2f(dstrect->x, dstrect->y),
-		SDL::Vec2f(dstrect->w, dstrect->h),
-		SDL::Vec2f(srcrect->x, srcrect->y),
-		SDL::Vec2f(srcrect->w, srcrect->h));
+	if (srcrect == NULL)
+	{
+		srcPos  = SDL::Vec2f(0, 0);
+		srcSize = SDL::Vec2f((float)texture->GetTexture()->GetSize().x, (float)texture->GetTexture()->GetSize().y);
+	}
+	else
+	{
+		srcPos  = SDL::Vec2f(srcrect->x, srcrect->y);
+		srcSize = SDL::Vec2f(srcrect->w, srcrect->h);
+	}
+
+	if (dstrect == NULL)
+	{
+		dstPos  = SDL::Vec2f(0, 0);
+		dstSize = SDL::Vec2f((float)renderer->GetRender()->GetSize().x, (float)renderer->GetRender()->GetSize().y);
+	}
+	else
+	{
+		dstPos  = SDL::Vec2f(dstrect->x, dstrect->y);
+		dstSize = SDL::Vec2f(dstrect->w, dstrect->h);
+	}
+
+	renderer->GetRender()->Draw(texture->GetTexture(), dstPos, dstSize, srcPos, srcSize);
 		
 	return true;
 }

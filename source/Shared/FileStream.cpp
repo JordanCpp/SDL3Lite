@@ -24,25 +24,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL3_SDL3_Window_hpp
-#define SDL3Lite_SDL3_SDL3_Window_hpp
+#include <SDL3Lite/FileStream.hpp>
 
-#include <vector>
-#include <SDL3Lite/WindowCreator.hpp>
-
-struct SDL_Window
-{
-public:
-	SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, SDL_WindowFlags mode);
-	~SDL_Window();
-	SDL::IWindow* GetWindow();
-	SDL::WindowCreator& GetWindowCreator();
-private:
-	SDL::IWindow*               _window;
-	SDL::WindowCreator&         _windowCreator;
-	std::vector<SDL::IWindow*>& _windows;
-};
-
-SDL_Window* SDL_CreateWindowImplementation(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const char* title, int w, int h, size_t flags);
-
-#endif
+using namespace SDL;

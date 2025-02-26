@@ -25,60 +25,47 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3/SDL.h>
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-
-int RandomValue(int min, int max)
-{
-    return min + rand() % (max - min);
-}
 
 #define WINDOW_WIDTH  (640)
 #define WINDOW_HEIGTH (480)
 
 int main()
 {
-    srand(clock() / CLOCKS_PER_SEC);
-
-    SDL_Init(SDL_INIT_VIDEO);
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
     SDL_Window* window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
-
     if (window == NULL)
     {
-        printf("Create window error: %s\n", SDL_GetError());
+        SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
-    
     if (renderer == NULL)
     {
-        printf("Create renderer error: %s\n", SDL_GetError());
+        SDL_Log("Create renderer error: %s\n", SDL_GetError());
         return 1;
     }
     
+    SDL_Surface* surface = SDL_LoadBMP("sample.bmp");
+    if (surface == NULL)
+    {
+        SDL_Log("Load bmp error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL)
+    {
+        SDL_Log("Create texture error: %s\n", SDL_GetError());
+        return 1;
+    }
+
     bool done = false;
-
-    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 100, 100);
-    if (renderer == NULL)
-    {
-        printf("Create texture error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_FRect dstRect;
-    dstRect.x = 0;
-    dstRect.y = 0;
-    dstRect.w = 100;
-    dstRect.h = 100;
-
-    SDL_FRect srcRect;
-    srcRect.x = 0;
-    srcRect.y = 0;
-    srcRect.w = 100;
-    srcRect.h = 100;
 
     while (!done)
     {
@@ -95,7 +82,7 @@ int main()
         SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
         SDL_RenderClear(renderer);
 
-        SDL_RenderTexture(renderer, texture, &srcRect, &dstRect);
+        SDL_RenderTexture(renderer, texture, NULL, NULL);
 
         SDL_RenderPresent(renderer);
     }

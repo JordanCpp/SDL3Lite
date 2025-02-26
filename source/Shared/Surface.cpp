@@ -38,7 +38,7 @@ Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
 
 int Surface::GetBpp()
 {
-	return 0;
+	return _bpp;
 }
 
 SDL_PixelFormat Surface::GetPixelFormat()
@@ -51,7 +51,7 @@ const Vec2i& Surface::GetSize()
 	return _size;
 }
 
-std::vector<uint8_t> Surface::GetPixels()
+std::vector<uint8_t>& Surface::GetPixels()
 {
 	return _pixels;
 }

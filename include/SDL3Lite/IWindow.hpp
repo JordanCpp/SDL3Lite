@@ -36,6 +36,7 @@ namespace SDL
 	class IWindow
 	{
 	public:
+		virtual ~IWindow() {};
 		virtual const Vec2i& GetPos() = 0;
 		virtual void SetPos(const Vec2i& pos) = 0;
 		virtual const Vec2i& GetSize() = 0;

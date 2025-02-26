@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_ITexture_hpp
 #define SDL3Lite_Shared_ITexture_hpp
 
+#include <SDL3/pstdint.h>
 #include <SDL3Lite/Vec2.hpp>
 
 namespace SDL
@@ -34,7 +35,9 @@ namespace SDL
 	class ITexture
 	{
 	public:
+		virtual ~ITexture() {};
 		virtual const Vec2i& GetSize() = 0;
+		virtual bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp) = 0;
 	};
 }
 

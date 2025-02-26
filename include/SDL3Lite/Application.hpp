@@ -35,6 +35,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/WindowCreator.hpp>
 #include <SDL3Lite/RenderCreator.hpp>
 #include <SDL3Lite/TextureCreator.hpp>
+#include <SDL3Lite/SurfaceCreator.hpp>
 
 namespace SDL
 {
@@ -42,10 +43,12 @@ namespace SDL
 	{
 	public:
 		Application();
+		~Application();
 		std::vector<IWindow*>& GetWindows();
 		EventHandler& GetEventHandler();
 		WindowCreator& GetWindowCreator();
 		RenderCreator& GetRenderCreator();
+		SurfaceCreator& GetSurfaceCreator();
 		OpenGLAttributes& GetOpenGLAttributes();
 		Result& GetResult();
 		void PollEvents();
@@ -58,6 +61,7 @@ namespace SDL
 		WindowCreator         _windowCreator;
 		RenderCreator         _renderCreator;
 		TextureCreator        _textureCreator;
+		SurfaceCreator        _surfaceCreator;
 	};
 
 	Application& GetApplication();

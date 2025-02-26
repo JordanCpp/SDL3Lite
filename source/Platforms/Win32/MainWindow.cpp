@@ -36,50 +36,65 @@ MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& 
 	_baseWindow(pos, size, title),
 	_WindowFlags(mode)
 {
-	memset(&_message    , 0, sizeof(MSG));
+	memset(&_message, 0, sizeof(MSG));
 	memset(&_windowClass, 0, sizeof(WNDCLASSA));
 
-	_windowClass.style         = CS_HREDRAW | CS_VREDRAW;
-	_windowClass.cbClsExtra    = 0;
-	_windowClass.cbWndExtra    = 0;
+	_windowClass.style = CS_HREDRAW | CS_VREDRAW;
+	_windowClass.cbClsExtra = 0;
+	_windowClass.cbWndExtra = 0;
 	_windowClass.lpszClassName = title.c_str();
-	_windowClass.hInstance     = GetModuleHandle(NULL);
+	_windowClass.hInstance = GetModuleHandle(NULL);
 	_windowClass.hbrBackground = (HBRUSH)COLOR_APPWORKSPACE;
-	_windowClass.lpszMenuName  = NULL;
-	_windowClass.lpfnWndProc   = WndProc;
+	_windowClass.lpszMenuName = NULL;
+	_windowClass.lpfnWndProc = WndProc;
 
 	if (RegisterClass(&_windowClass) == NULL)
 	{
 		_result->Message(_windowError.GetErrorMessage());
+		return;
 	}
-	else
+
+	DWORD style = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+
+	RECT rect;
+	rect.left   = (LONG)_baseWindow.GetPos().x;
+	rect.top    = (LONG)_baseWindow.GetPos().y;
+	rect.right  = (LONG)_baseWindow.GetSize().x;
+	rect.bottom = (LONG)_baseWindow.GetSize().y;
+
+	if (!AdjustWindowRect(&rect, style, FALSE))
 	{
-		_hwnd = CreateWindow(_windowClass.lpszClassName, GetTitle().c_str(), WS_OVERLAPPEDWINDOW | WS_VISIBLE, GetPos().x, GetPos().y, GetSize().x, GetSize().y, NULL, NULL, _windowClass.hInstance, NULL);
-
-		if (_hwnd == NULL)
-		{
-			_result->Message(_windowError.GetErrorMessage());
-		}
-		else
-		{
-			_hdc = GetDC(_hwnd);
-
-			if (_hdc == NULL)
-			{
-				_result->Message(_windowError.GetErrorMessage());
-			}
-			else
-			{
-#if defined(_WIN64)
-				SetWindowLongPtr(_hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-				SetWindowLongPtr(_hwnd, GWLP_USERDATA, (LONG_PTR)this);
-#elif defined(_WIN32)
-				SetWindowLong(_hwnd, GWL_WNDPROC, (LONG)WndProc);
-				SetWindowLong(_hwnd, GWL_USERDATA, (LONG)this);
-#endif  
-			}
-		}
+		_result->Message(_windowError.GetErrorMessage());
+		return;
 	}
+
+	int width  = rect.right - rect.left;
+	int heigth = rect.bottom - rect.top;
+
+	_hwnd = CreateWindow(_windowClass.lpszClassName, GetTitle().c_str(), style, GetPos().x, GetPos().y, width, heigth, NULL, NULL, _windowClass.hInstance, NULL);
+
+	if (_hwnd == NULL)
+	{
+		_result->Message(_windowError.GetErrorMessage());
+		return;
+	}
+
+	_hdc = GetDC(_hwnd);
+
+	if (_hdc == NULL)
+	{
+		_result->Message(_windowError.GetErrorMessage());
+		return;
+	}
+
+#if defined(_WIN64)
+	SetWindowLongPtr(_hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
+	SetWindowLongPtr(_hwnd, GWLP_USERDATA, (LONG_PTR)this);
+#elif defined(_WIN32)
+	SetWindowLong(_hwnd, GWL_WNDPROC, (LONG)WndProc);
+	SetWindowLong(_hwnd, GWL_USERDATA, (LONG)this);
+#endif  
+
 }
 
 MainWindow::~MainWindow()

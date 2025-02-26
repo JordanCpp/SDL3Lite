@@ -44,13 +44,15 @@ namespace SDL
 	class OpenGL1Render : public IRender
 	{
 	public:
-	    OpenGL1Render(IWindow* window);
+	    OpenGL1Render(Result& result, IWindow* window);
+		const Vec2i& GetSize();
 		void Present();
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
 		void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
 	private:
+		Result&   _result;
 	    IWindow* _window;
 	    Color    _color;
 		Mat4f    _projection;

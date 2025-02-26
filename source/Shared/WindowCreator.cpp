@@ -25,14 +25,9 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/WindowCreator.hpp>
-
-#if defined(_WIN32)
-    #include <SDL3Lite/Platforms/Win32/SoftwareWindow.hpp>
-    #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
-#elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/SoftwareWindow.hpp>
-    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
-#endif
+#include <SDL3Lite/Platforms/OpenGL1Window.hpp>
+#include <SDL3Lite/Platforms/SoftwareWindow.hpp>
+#include <assert.h>
 
 using namespace SDL;
 
@@ -66,5 +61,7 @@ IWindow* WindowCreator::Create(const Vec2i& pos, const Vec2i& size, const std::s
 
 void WindowCreator::Destroy(IWindow* window)
 {
+    assert(window);
+
     delete window;
 }

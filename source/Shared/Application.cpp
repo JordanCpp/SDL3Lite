@@ -35,6 +35,10 @@ Application::Application() :
 {
 }
 
+Application::~Application()
+{
+}
+
 std::vector<IWindow*>& SDL::Application::GetWindows()
 {
 	return _windows;
@@ -53,6 +57,11 @@ WindowCreator& Application::GetWindowCreator()
 RenderCreator& Application::GetRenderCreator()
 {
 	return _renderCreator;
+}
+
+SurfaceCreator& Application::GetSurfaceCreator()
+{
+	return _surfaceCreator;
 }
 
 OpenGLAttributes& Application::GetOpenGLAttributes()

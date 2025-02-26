@@ -25,10 +25,13 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <assert.h>
 
 int SDL_Init(SDL_InitFlags flags)
 {
-	return 0;
+	assert(flags > 0);
+
+	return 1;
 }
 
 void SDL_Quit()

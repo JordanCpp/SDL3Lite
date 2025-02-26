@@ -27,16 +27,17 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/RenderCreator.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
+#include <assert.h>
 
 using namespace SDL;
 
-IRender* RenderCreator::Create(IWindow* window)
+IRender* RenderCreator::Create(Result& result, IWindow* window)
 {
 	IRender* render = NULL;
 		
 	if (window->GetFlags() == SDL_WINDOW_OPENGL)
 	{
-		render = new SDL::OpenGL1Render(window);
+		render = new SDL::OpenGL1Render(result, window);
 	}
 	else
 	{
@@ -48,4 +49,7 @@ IRender* RenderCreator::Create(IWindow* window)
 
 void RenderCreator::Destroy(IRender* render)
 {
+	assert(render);
+
+	delete render;
 }

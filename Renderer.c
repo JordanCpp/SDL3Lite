@@ -25,17 +25,23 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3/SDL.h>
-#include <stdio.h>
+
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
 
 int main()
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-    SDL_Window* window = SDL_CreateWindow("Renderer", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
 
     if (window == NULL)
     {
-        printf("Create window error: %s\n", SDL_GetError());
+        SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
@@ -43,7 +49,7 @@ int main()
     
     if (renderer == NULL)
     {
-        printf("Create renderer error: %s\n", SDL_GetError());
+        SDL_Log("Create renderer error: %s\n", SDL_GetError());
         return 1;
     }
     

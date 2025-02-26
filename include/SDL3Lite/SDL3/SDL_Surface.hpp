@@ -33,10 +33,14 @@ DEALINGS IN THE SOFTWARE.
 struct SDL_Surface
 {
 public:
-	SDL_Surface(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat);
+	SDL_Surface(SDL::SurfaceCreator& surfaceCreator, const SDL::Vec2i& size, SDL_PixelFormat pixelFormat);
 	~SDL_Surface();
+	SDL::Surface* GetSurface();
 private:
-	SDL::Surface _surface;
+	SDL::SurfaceCreator& _surfaceCreator;
+	SDL::Surface*        _surface;
 };
+
+SDL_Surface* SDL_CreateSurfaceImplementation(SDL::SurfaceCreator& surfaceCreator, int width, int height, SDL_PixelFormat format);
 
 #endif

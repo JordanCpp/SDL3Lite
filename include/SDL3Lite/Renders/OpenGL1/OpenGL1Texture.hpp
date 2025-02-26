@@ -45,6 +45,7 @@ namespace SDL
 		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels);
 		const Vec2i& GetSize();
 		const Vec2i& GetQuad();
+		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
 	public:
 		GLuint GetTexture();
 	private:

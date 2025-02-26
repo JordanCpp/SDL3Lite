@@ -32,6 +32,11 @@ SoftwareRender::SoftwareRender(IWindow* window)
 {
 }
 
+const Vec2i& SDL::SoftwareRender::GetSize()
+{
+	return _size;
+}
+
 void SoftwareRender::Present()
 {
 }

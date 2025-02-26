@@ -249,6 +249,21 @@ extern "C" {
     } SDL_QuitEvent;
 
     /**
+     * Display state change event data (event.display.*)
+     *
+     * \since This struct is available since SDL 3.2.0.
+     */
+    typedef struct SDL_DisplayEvent
+    {
+        SDL_EventType type; /**< SDL_DISPLAYEVENT_* */
+        Uint32 reserved;
+        Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
+        SDL_DisplayID displayID;/**< The associated display */
+        Sint32 data1;       /**< event dependent data */
+        Sint32 data2;       /**< event dependent data */
+    } SDL_DisplayEvent;
+
+    /**
      * General event structure
      *
      * The SDL_Event structure is the core of all event handling in SDL. SDL_Event

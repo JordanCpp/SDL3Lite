@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/TextureCreator.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <assert.h>
 
 using namespace SDL;
 
@@ -41,5 +42,7 @@ ITexture* TextureCreator::Create(IRender* render, const Vec2i& size, int bpp, ui
 
 void TextureCreator::Destroy(ITexture* texture)
 {
+	assert(texture);
+
 	delete texture;
 }

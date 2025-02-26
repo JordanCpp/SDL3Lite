@@ -36,12 +36,14 @@ namespace SDL
 	{
 	public:
 		SoftwareRender(IWindow*  window);
+		const Vec2i& GetSize();
 		void Present();
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
 		void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
 	private:
+		Vec2i _size;
 	};
 }
 

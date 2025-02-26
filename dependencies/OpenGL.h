@@ -48,7 +48,12 @@ OpenGL_Function_Pointer OpenGL_Load(const char* name);
 void OpenGL_UnLoad();
 void OpenGL_Assert(const char* file, int line, const char* expression);
 
-#define GL_ASSERT(expression) OpenGL_Assert(__FILE__, __LINE__, #expression)
+#define GL_ASSERT(expression)                           \
+    do                                                  \
+    {                                                   \
+        expression;                                     \
+        OpenGL_Assert(__FILE__, __LINE__, #expression); \
+    } while (false)   
 
 /********************************************************************************************************************************
 														 Defines

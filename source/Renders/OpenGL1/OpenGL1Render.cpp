@@ -32,7 +32,8 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-OpenGL1Render::OpenGL1Render(IWindow* window) :
+OpenGL1Render::OpenGL1Render(Result& result, IWindow* window) :
+    _result(result),
     _window(window)
 {
     OpenGL_Compatibility_Init(1, 2);
@@ -40,21 +41,24 @@ OpenGL1Render::OpenGL1Render(IWindow* window) :
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+}
 
-    Vec2i size = _window->GetSize();
-    
-    GL_ASSERT(glViewport(0, 0, (GLsizei)size.x, (GLsizei)size.y));
+const Vec2i& SDL::OpenGL1Render::GetSize()
+{
+    return _window->GetSize();
+}
 
-    _projection = Ortho<float>(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
+void OpenGL1Render::Present()
+{
+    GL_ASSERT(glViewport(0, 0, (GLsizei)_window->GetSize().x, (GLsizei)_window->GetSize().y));
+
+    _projection = Ortho<float>(0.0f, (float)_window->GetSize().x, (float)_window->GetSize().y, 0.0f, -1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(_projection.Values());
 
     glMatrixMode(GL_MODELVIEW);
     glLoadMatrixf(_modelView.Values());
-}
 
-void OpenGL1Render::Present()
-{
     _window->Present();
 }
 
@@ -102,5 +106,10 @@ void OpenGL1Render::Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& ds
 {
     OpenGL1Texture* tex = (OpenGL1Texture*)texture;
 
-    DrawTexture(dstPos, dstSize, srcPos, srcSize, tex->GetTexture());
+    GL_ASSERT(glEnable(GL_TEXTURE_2D));
+    GL_ASSERT(glBindTexture(GL_TEXTURE_2D, tex->GetTexture()));
+
+    DrawTexture(dstPos, dstSize, srcPos, srcSize, tex->GetQuad().x);
+
+    GL_ASSERT(glDisable(GL_TEXTURE_2D));
 }

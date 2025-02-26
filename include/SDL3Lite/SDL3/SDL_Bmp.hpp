@@ -28,5 +28,9 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_SDL3_SDL_Bmp_hpp
 
 #include <SDL3/SDL_Bmp.h>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/SurfaceCreator.hpp>
+
+SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, SDL::SurfaceCreator& surfaceCreator, const char* file);
 
 #endif

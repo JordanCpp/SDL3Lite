@@ -36,6 +36,8 @@ namespace SDL
 	class IRender
 	{
 	public:
+		virtual ~IRender(){};
+		virtual const Vec2i& GetSize() = 0;
 	    virtual void Present() = 0;
 		virtual void SetColor(const Color& color) = 0;
 		virtual void Clear() = 0;

@@ -33,13 +33,17 @@ DEALINGS IN THE SOFTWARE.
 extern "C" {
 #endif
 
-    typedef struct SDL_FRect
-    {
-        float x;
-        float y;
-        float w;
-        float h;
-    } SDL_FRect;
+typedef struct SDL_FRect
+{
+    float x, y;
+    float w, h;
+} SDL_FRect;
+
+typedef struct SDL_Rect
+{
+    int x, y;
+    int w, h;
+} SDL_Rect;
 
 #ifdef __cplusplus
 }

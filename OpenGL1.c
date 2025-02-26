@@ -27,19 +27,25 @@ DEALINGS IN THE SOFTWARE.
 #define OPENGL_IMPLEMENTATION
 #include "OpenGL.h"
 #include <SDL3/SDL.h>
-#include <stdio.h>
+
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
 
 int main()
 {
     OpenGL_Compatibility_Init(1, 2);
 
-    SDL_Init(SDL_INIT_VIDEO);
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
 
     if (window == NULL)
     {
-        printf("Create window error: %s\n", SDL_GetError());
+        SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
@@ -47,7 +53,7 @@ int main()
 
     if (context == NULL)
     {
-        printf("Create context error: %s\n", SDL_GetError());
+        SDL_Log("Create context error: %s\n", SDL_GetError());
         return 1;
     }
     

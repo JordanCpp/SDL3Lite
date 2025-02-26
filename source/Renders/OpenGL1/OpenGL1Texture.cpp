@@ -61,7 +61,7 @@ OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp
 
 	_texture = CreateTexture(_quad.x, _quad.y, format);
 
-	CopyTexture(Vec2i(0, 0), _size, pixels, bpp);
+	CopyTexture(_texture, Vec2i(0, 0), _size, pixels, bpp);
 }
 
 const Vec2i& OpenGL1Texture::GetSize()
@@ -72,6 +72,13 @@ const Vec2i& OpenGL1Texture::GetSize()
 const Vec2i& OpenGL1Texture::GetQuad()
 {
 	return _quad;
+}
+
+bool OpenGL1Texture::Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp)
+{
+	CopyTexture(GetTexture(), pos, size, pixels, bpp);
+
+	return true;
 }
 
 GLuint OpenGL1Texture::GetTexture()

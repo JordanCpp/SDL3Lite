@@ -63,6 +63,8 @@ typedef uint64_t Uint64;
 
 #define SDL_UINT64_C(c)  UINT64_C(c)
 
+typedef Uint32 SDL_DisplayID;
+
 #ifdef __cplusplus
 }
 #endif

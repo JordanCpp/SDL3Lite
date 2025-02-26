@@ -24,34 +24,65 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Texture_h
-#define SDL3Lite_SDL_Texture_h
+//https://cs.lmu.edu/~ray/notes/openglexamples/
 
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Renderer.h>
+#define OPENGL_IMPLEMENTATION
+#include "OpenGL.h"
+#include <SDL3/SDL.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+int main()
+{
+    OpenGL_Compatibility_Init(1, 2);
 
-    typedef enum SDL_TextureAccess
+    if (!SDL_Init(SDL_INIT_VIDEO))
     {
-        SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
-        SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
-        SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
-    } SDL_TextureAccess;
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-typedef struct SDL_Texture  SDL_Texture;
-typedef struct SDL_Renderer SDL_Renderer;
+    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
+    if (window == NULL)
+    {
+        SDL_Log("Create window error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h);
-extern SDL_DECLSPEC void         SDLCALL SDL_DestroyTexture(SDL_Texture* texture);
-extern SDL_DECLSPEC bool         SDLCALL SDL_UpdateTexture(SDL_Texture* texture, const SDL_Rect* rect, const void* pixels, int pitch);
-extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface);
+    SDL_GLContext* context = SDL_GL_CreateContext(window);
+    if (context == NULL)
+    {
+        SDL_Log("Create context error: %s\n", SDL_GetError());
+        return 1;
+    }
+    
+    bool done = false;
 
-#ifdef __cplusplus
+    while (!done)
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                done = true;
+            }
+        }
+
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+        glBegin(GL_POLYGON);
+        glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.6f, -0.75f, 0.5f);
+        glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.6f , -0.75f, 0.0f);
+        glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f , 0.75f , 0.0f);
+        glEnd();
+        
+        SDL_GL_SwapWindow(window);
+    }
+
+    SDL_GL_DestroyContext(context);
+    SDL_DestroyWindow(window);
+    
+    SDL_Quit();
+
+    return 0;
 }
-#endif
-
-#endif

@@ -38,7 +38,7 @@ namespace SDL
 	GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
 	void DestroyTexture(GLint id);
 	GLint BppToFormat(int bpp);
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
+	void CopyTexture(GLuint id, const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
 	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
 }
 

@@ -24,21 +24,35 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/SDL3/SDL_Surface.hpp>
 #include <assert.h>
 
-SDL_Surface::SDL_Surface(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat) :
-	_surface(size, pixelFormat)
+SDL_Surface::SDL_Surface(SDL::SurfaceCreator& surfaceCreator, const SDL::Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_surfaceCreator(surfaceCreator),
+	_surface(NULL)
 {
+	_surface = _surfaceCreator.Create(size, pixelFormat);
 }
 
 SDL_Surface::~SDL_Surface()
 {
+	_surfaceCreator.Destroy(_surface);
+}
+
+SDL::Surface* SDL_Surface::GetSurface()
+{
+	return _surface;
+}
+
+SDL_Surface* SDL_CreateSurfaceImplementation(SDL::SurfaceCreator& surfaceCreator, int width, int height, SDL_PixelFormat format)
+{
+	return new SDL_Surface(surfaceCreator, SDL::Vec2i(width, height), format);
 }
 
 SDL_Surface* SDL_CreateSurface(int width, int height, SDL_PixelFormat format)
 {
-	return new SDL_Surface(SDL::Vec2i(width, height), format);
+	return SDL_CreateSurfaceImplementation(SDL::GetApplication().GetSurfaceCreator(), width, height, format);
 }
 
 void SDL_DestroySurface(SDL_Surface* surface)

@@ -59,10 +59,9 @@ namespace SDL
 	{
 		GLuint result = 0;
 
-		GL_ASSERT(glGenTextures(1, (GLuint*)&result));
-
 		GL_ASSERT(glEnable(GL_TEXTURE_2D));
 
+		GL_ASSERT(glGenTextures(1, (GLuint*)&result));
 		GL_ASSERT(glBindTexture(GL_TEXTURE_2D, (GLuint)result));
 
 		GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
@@ -94,13 +93,18 @@ namespace SDL
 		}
 	}
 
-	void CopyTexture(const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp)
+	void CopyTexture(GLuint id, const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp)
 	{
 		assert(pixels);
 
 		GLint format = BppToFormat(bpp);
 
+		GL_ASSERT(glEnable(GL_TEXTURE_2D));
+		GL_ASSERT(glBindTexture(GL_TEXTURE_2D, id));
+
 		GL_ASSERT(glTexSubImage2D(GL_TEXTURE_2D, 0, dstPos.x, dstPos.y, srcSize.x, srcSize.y, format, GL_UNSIGNED_BYTE, pixels));
+
+		GL_ASSERT(glDisable(GL_TEXTURE_2D));
 	}
 
 	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize)

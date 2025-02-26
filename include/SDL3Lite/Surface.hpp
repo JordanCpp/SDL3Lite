@@ -40,7 +40,7 @@ namespace SDL
 		int GetBpp();
 		SDL_PixelFormat GetPixelFormat();
 		const Vec2i& GetSize();
-		std::vector<uint8_t> GetPixels();
+		std::vector<uint8_t>& GetPixels();
 	private:
 		int                  _bpp;
 		SDL_PixelFormat      _pixelFormat;

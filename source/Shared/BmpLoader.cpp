@@ -24,25 +24,70 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL3_SDL3_Window_hpp
-#define SDL3Lite_SDL3_SDL3_Window_hpp
+#include <SDL3Lite/BmpLoader.hpp>
 
-#include <vector>
-#include <SDL3Lite/WindowCreator.hpp>
+#define STBI_ONLY_BMP
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
-struct SDL_Window
+using namespace SDL;
+
+BmpLoader::BmpLoader(Result& result) :
+	_result(result),
+	_pixels(NULL),
+	_bpp(0)
 {
-public:
-	SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, SDL_WindowFlags mode);
-	~SDL_Window();
-	SDL::IWindow* GetWindow();
-	SDL::WindowCreator& GetWindowCreator();
-private:
-	SDL::IWindow*               _window;
-	SDL::WindowCreator&         _windowCreator;
-	std::vector<SDL::IWindow*>& _windows;
-};
+}
 
-SDL_Window* SDL_CreateWindowImplementation(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const char* title, int w, int h, size_t flags);
+BmpLoader::~BmpLoader()
+{
+	Clear();
+}
 
-#endif
+bool BmpLoader::Reset(const std::string& path)
+{
+	Clear();
+
+	int width       = 0;
+	int height      = 0;
+	int channels    = 0;
+	uint8_t* pixels = NULL;
+
+	pixels = stbi_load(path.c_str(), &width, &height, &channels, STBI_default);
+
+	if (pixels == NULL)
+	{
+		_result.Message("Can't load file: ", path);
+	}
+	else
+	{
+		_size   = Vec2i(width, height);
+		_bpp    = channels;
+		_pixels = pixels;
+	}
+
+	return _result.Ok();
+}
+
+const Vec2i& BmpLoader::GetSize()
+{
+	return _size;
+}
+
+int BmpLoader::GetBpp()
+{
+	return _bpp;
+}
+
+uint8_t* BmpLoader::GetPixels()
+{
+	return _pixels;
+}
+
+void BmpLoader::Clear()
+{
+	if (_pixels != NULL)
+	{
+		stbi_image_free(_pixels);
+	}
+}

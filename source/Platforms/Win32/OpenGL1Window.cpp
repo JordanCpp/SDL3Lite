@@ -43,15 +43,15 @@ OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result,
 	_format.iLayerType = PFD_MAIN_PLANE;
 	_format.iPixelType = PFD_TYPE_RGBA;
 
-	_format.cRedBits   = _openGLAttributes->GetRedSize();
-	_format.cGreenBits = _openGLAttributes->GetGreenSize();
-	_format.cBlueBits  = _openGLAttributes->GetBlueSize();
-	_format.cAlphaBits = _openGLAttributes->GetAlphaSize();
+	//_format.cRedBits   = _openGLAttributes->GetRedSize();
+	//_format.cGreenBits = _openGLAttributes->GetGreenSize();
+	//_format.cBlueBits  = _openGLAttributes->GetBlueSize();
+	//_format.cAlphaBits = _openGLAttributes->GetAlphaSize();
 
-	_format.cAccumRedBits   = _openGLAttributes->GetAccumRedSize();
-	_format.cAccumGreenBits = _openGLAttributes->GetAccumGreenSize();
-	_format.cAccumBlueBits  = _openGLAttributes->GetAccumBlueSize();
-	_format.cAccumAlphaBits = _openGLAttributes->GetAccumAlphaSize();
+	//_format.cAccumRedBits   = _openGLAttributes->GetAccumRedSize();
+	//_format.cAccumGreenBits = _openGLAttributes->GetAccumGreenSize();
+	//_format.cAccumBlueBits  = _openGLAttributes->GetAccumBlueSize();
+	//_format.cAccumAlphaBits = _openGLAttributes->GetAccumAlphaSize();
 
 	int format = ChoosePixelFormat(_mainWindow.GetHdc(), &_format);
 

@@ -25,22 +25,23 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
-
-#if defined(_WIN32)
-    #include <SDL3Lite/Platforms/Win32/Library.hpp>
-#elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/Library.hpp>
-#endif
-
+#include <SDL3Lite/Platforms/Library.hpp>
 #include <assert.h>
 
 struct SDL_SharedObject
 {
 public:
+	SDL_SharedObject(SDL::Result& result);
 	SDL::Library& GetLibrary();
 private:
+	SDL::Result& _result;
 	SDL::Library _library;
 };
+
+SDL_SharedObject::SDL_SharedObject(SDL::Result& result) :
+	_result(result)
+{
+}
 
 SDL::Library& SDL_SharedObject::GetLibrary()
 {
@@ -49,7 +50,7 @@ SDL::Library& SDL_SharedObject::GetLibrary()
 
 SDL_SharedObject* SDL_LoadObject(const char* sofile)
 {
-	SDL_SharedObject* sharedObject = new SDL_SharedObject();
+	SDL_SharedObject* sharedObject = new SDL_SharedObject(SDL::GetApplication().GetResult());
 
 	if (sharedObject->GetLibrary().Open(sofile))
 	{
@@ -61,14 +62,6 @@ SDL_SharedObject* SDL_LoadObject(const char* sofile)
 	return NULL;
 }
 
-SDL_FunctionPointer SDL_LoadFunction(SDL_SharedObject* handle, const char* name)
-{
-	assert(handle);
-	assert(name);
-
-	return handle->GetLibrary().GetFunction(name);
-}
-
 void SDL_UnloadObject(SDL_SharedObject* handle)
 {
 	assert(handle);
@@ -76,4 +69,12 @@ void SDL_UnloadObject(SDL_SharedObject* handle)
 	handle->GetLibrary().Close();
 
 	delete handle;
+}
+
+SDL_FunctionPointer SDL_LoadFunction(SDL_SharedObject* handle, const char* name)
+{
+	assert(handle);
+	assert(name);
+
+	return handle->GetLibrary().GetFunction(name);
 }
