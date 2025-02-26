@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #if defined(_WIN32)
     #include <SDL3Lite/Platforms/Win32/OpenGLWindow.hpp>
 #elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
+    #include <SDL3Lite/Platforms/Unix/OpenGLWindow.hpp>
 #endif
 
 #endif

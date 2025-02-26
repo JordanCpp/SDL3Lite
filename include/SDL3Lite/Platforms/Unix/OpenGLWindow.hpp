@@ -34,11 +34,11 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
-	class OpenGL1Window : public IWindow
+	class OpenGLWindow : public IWindow
 	{
 	public:
-		OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
-		~OpenGL1Window();
+		OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		~OpenGLWindow();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();

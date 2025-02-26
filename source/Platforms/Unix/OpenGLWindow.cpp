@@ -25,11 +25,11 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
-#include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
+#include <SDL3Lite/Platforms/Unix/OpenGLWindow.hpp>
 
 using namespace SDL;
 
-OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
+OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
 	_openGLAttributes(&openGLAttributes),
 	_result(&result),
 	_mainWindow(result, eventHandler, pos, size, title, mode)
@@ -84,54 +84,54 @@ OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result,
 	XMapRaised(_mainWindow.GetDisplay(), _mainWindow.GetWindow());
 }
 
-OpenGL1Window::~OpenGL1Window()
+OpenGLWindow::~OpenGLWindow()
 {
 	glXDestroyContext(_mainWindow.GetDisplay(), _Context);
 }
 
-const Vec2i& OpenGL1Window::GetPos()
+const Vec2i& OpenGLWindow::GetPos()
 {
 	return _mainWindow.GetPos();
 }
 
-void OpenGL1Window::SetPos(const Vec2i& pos)
+void OpenGLWindow::SetPos(const Vec2i& pos)
 {
 	_mainWindow.SetPos(pos);
 }
 
-const Vec2i& OpenGL1Window::GetSize()
+const Vec2i& OpenGLWindow::GetSize()
 {
 	return _mainWindow.GetSize();
 }
 
-void OpenGL1Window::SetSize(const Vec2i& size)
+void OpenGLWindow::SetSize(const Vec2i& size)
 {
 	_mainWindow.SetSize(size);
 }
 
-const std::string& OpenGL1Window::GetTitle()
+const std::string& OpenGLWindow::GetTitle()
 {
 	return _mainWindow.GetTitle();
 }
 
-void OpenGL1Window::SetTitle(const std::string& title)
+void OpenGLWindow::SetTitle(const std::string& title)
 {
 	_mainWindow.SetTitle(title);
 }
 
-bool OpenGL1Window::Present()
+bool OpenGLWindow::Present()
 {
 	glXSwapBuffers(_mainWindow.GetDisplay(), _mainWindow.GetWindow());
 
 	return true;
 }
 
-SDL_WindowFlags OpenGL1Window::GetFlags()
+SDL_WindowFlags OpenGLWindow::GetFlags()
 {
 	return _mainWindow.GetFlags();
 }
 
-void OpenGL1Window::PollEvents()
+void OpenGLWindow::PollEvents()
 {
 	_mainWindow.PollEvents();
 }

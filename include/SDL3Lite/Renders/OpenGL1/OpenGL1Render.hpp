@@ -30,12 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/IRender.hpp>
 #include <SDL3Lite/OpenGL/Mat4f.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
-
-#if defined(_WIN32)
-    #include <SDL3Lite/Platforms/Win32/OpenGLWindow.hpp>
-#elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
-#endif
+#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 
 namespace SDL
 {
