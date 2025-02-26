@@ -41,8 +41,10 @@ Boost Software License - Version 1.0 - August 17th, 2003
 
 ![renderer](/screenshots/SDL_Renderer.jpg)
 ![Rects](/screenshots/Rects.jpg)
-![Textures](/screenshots/Textures.jpg.jpg)
-
+![Textures](/screenshots/Textures.jpg)
+![Textures1](/screenshots/Textures1.jpg)
+![Tetrahedron](/screenshots/Tetrahedron.jpg)
+![Triangle](/screenshots/Triangle.jpg)
 
 # Renderer - Screen color
 ```c++
