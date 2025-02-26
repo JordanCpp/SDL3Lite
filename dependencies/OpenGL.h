@@ -4166,8 +4166,6 @@ bool OpenGL_LoadLibrary()
 
 OpenGL_Function_Pointer OpenGL_Load(const char* name)
 {
-	return (OpenGL_Function_Pointer)GetProcAddress(globalLibraryPtr, name);
-
 	OpenGL_Function_Pointer result = (OpenGL_Function_Pointer)wglGetProcAddress(name);
 
 	if (result == 0

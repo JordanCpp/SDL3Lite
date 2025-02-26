@@ -42,9 +42,9 @@ namespace SDL
 		IWindow* Create(const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		void Destroy(IWindow* window);
 	private:
-		OpenGLAttributes _openGLAttributes;
-		Result           _result;
-		EventHandler&    _eventHandler;
+		OpenGLAttributes& _openGLAttributes;
+		Result&           _result;
+		EventHandler&     _eventHandler;
 	};
 }
 

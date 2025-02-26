@@ -29,6 +29,75 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Window.hpp>
 #include <assert.h>
 
+bool SDL_GL_SetAttribute(SDL_GLAttr attr, int value)
+{
+	switch (attr)
+	{
+	case SDL_GL_RED_SIZE:
+		break;
+	case SDL_GL_GREEN_SIZE:
+		break;
+	case SDL_GL_BLUE_SIZE:
+		break;
+	case SDL_GL_ALPHA_SIZE:
+		break;
+	case SDL_GL_BUFFER_SIZE:
+		break;
+	case SDL_GL_DOUBLEBUFFER:
+		break;
+	case SDL_GL_DEPTH_SIZE:
+		break;
+	case SDL_GL_STENCIL_SIZE:
+		break;
+	case SDL_GL_ACCUM_RED_SIZE:
+		break;
+	case SDL_GL_ACCUM_GREEN_SIZE:
+		break;
+	case SDL_GL_ACCUM_BLUE_SIZE:
+		break;
+	case SDL_GL_ACCUM_ALPHA_SIZE:
+		break;
+	case SDL_GL_STEREO:
+		break;
+	case SDL_GL_MULTISAMPLEBUFFERS:
+		break;
+	case SDL_GL_MULTISAMPLESAMPLES:
+		break;
+	case SDL_GL_ACCELERATED_VISUAL:
+		break;
+	case SDL_GL_RETAINED_BACKING:
+		break;
+	case SDL_GL_CONTEXT_MAJOR_VERSION:
+		SDL::GetApplication().GetOpenGLAttributes().SetMajor(value);
+		break;
+	case SDL_GL_CONTEXT_MINOR_VERSION:
+		SDL::GetApplication().GetOpenGLAttributes().SetMinor(value);
+		break;
+	case SDL_GL_CONTEXT_FLAGS:
+		break;
+	case SDL_GL_CONTEXT_PROFILE_MASK:
+		break;
+	case SDL_GL_SHARE_WITH_CURRENT_CONTEXT:
+		break;
+	case SDL_GL_FRAMEBUFFER_SRGB_CAPABLE:
+		break;
+	case SDL_GL_CONTEXT_RELEASE_BEHAVIOR:
+		break;
+	case SDL_GL_CONTEXT_RESET_NOTIFICATION:
+		break;
+	case SDL_GL_CONTEXT_NO_ERROR:
+		break;
+	case SDL_GL_FLOATBUFFERS:
+		break;
+	case SDL_GL_EGL_PLATFORM:
+		break;
+	default:
+		break;
+	}
+
+	return true;
+}
+
 SDL_GLContext* SDL_GL_CreateContext(SDL_Window* window)
 {
 	assert(window);

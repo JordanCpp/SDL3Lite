@@ -57,3 +57,6 @@ target_link_libraries(GL1_Triangle SDL3)
 
 add_executable(GL1_Tetrahedron "GL1_Tetrahedron.c")
 target_link_libraries(GL1_Tetrahedron SDL3)
+
+add_executable(GL3_Triangle "GL3_Triangle.cpp")
+target_link_libraries(GL3_Triangle SDL3)

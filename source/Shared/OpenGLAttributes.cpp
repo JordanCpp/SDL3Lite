@@ -121,3 +121,23 @@ void OpenGLAttributes::SetAccumAlphaSize(int value)
 {
 	_accumAlphaSize = value;
 }
+
+int OpenGLAttributes::GetMajor()
+{
+	return _major;
+}
+
+void OpenGLAttributes::SetMajor(int value)
+{
+	_major = value;
+}
+
+int OpenGLAttributes::GetMinor()
+{
+	return _minor;
+}
+
+void OpenGLAttributes::SetMinor(int value)
+{
+	_minor = value;
+}

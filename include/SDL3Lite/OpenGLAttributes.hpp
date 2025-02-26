@@ -57,6 +57,12 @@ namespace SDL
 
 		int GetAccumAlphaSize();
 		void SetAccumAlphaSize(int value);
+
+		int GetMajor();
+		void SetMajor(int value);
+
+		int GetMinor();
+		void SetMinor(int value);
 	private:
 		int _redSize;
 		int _greenSize;

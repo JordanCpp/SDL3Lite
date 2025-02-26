@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Platforms/MainWindow.hpp>
-#include <SDL3Lite/Platforms/OpenGL1Window.hpp>
+#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
 #include <SDL3Lite/WindowCreator.hpp>
 #include <SDL3Lite/BmpLoader.hpp>
@@ -169,30 +169,30 @@ void TestMainWindow(SDL_WindowFlags flags)
     SDL_TEST(mainWindow.GetTitle() == "Change MainWindow");
 }
 
-void TestOpenGL1Window(SDL_WindowFlags flags)
+void TestOpenGLWindow(SDL_WindowFlags flags)
 {
     OpenGLAttributes openGLAttributes;
     Result           result;
     EventHandler     eventHandler;
-    OpenGL1Window    openGL1Window(openGLAttributes, result, eventHandler, Vec2i(10, 15), Vec2i(640, 480), "Create OpenGL1Window", flags);
+    OpenGLWindow     openGLWindow(openGLAttributes, result, eventHandler, Vec2i(10, 15), Vec2i(640, 480), "Create OpenGL1Window", flags);
     SDL_TEST(result.Ok() == true);
-    SDL_TEST(openGL1Window.GetPos().x  == 10);
-    SDL_TEST(openGL1Window.GetPos().y  == 15);
-    SDL_TEST(openGL1Window.GetSize().x == 640);
-    SDL_TEST(openGL1Window.GetSize().y == 480);
-    SDL_TEST(openGL1Window.GetTitle()  == "Create OpenGL1Window");
-    SDL_TEST(openGL1Window.GetFlags()  == flags);
+    SDL_TEST(openGLWindow.GetPos().x  == 10);
+    SDL_TEST(openGLWindow.GetPos().y  == 15);
+    SDL_TEST(openGLWindow.GetSize().x == 640);
+    SDL_TEST(openGLWindow.GetSize().y == 480);
+    SDL_TEST(openGLWindow.GetTitle()  == "Create OpenGL1Window");
+    SDL_TEST(openGLWindow.GetFlags()  == flags);
 
-    openGL1Window.SetPos(Vec2i(35, 45));
-    SDL_TEST(openGL1Window.GetPos().x == 35);
-    SDL_TEST(openGL1Window.GetPos().y == 45);
+    openGLWindow.SetPos(Vec2i(35, 45));
+    SDL_TEST(openGLWindow.GetPos().x == 35);
+    SDL_TEST(openGLWindow.GetPos().y == 45);
 
-    openGL1Window.SetSize(Vec2i(500, 600));
-    SDL_TEST(openGL1Window.GetSize().x == 500);
-    SDL_TEST(openGL1Window.GetSize().y == 600);
+    openGLWindow.SetSize(Vec2i(500, 600));
+    SDL_TEST(openGLWindow.GetSize().x == 500);
+    SDL_TEST(openGLWindow.GetSize().y == 600);
 
-    openGL1Window.SetTitle("Change OpenGL1Window");
-    SDL_TEST(openGL1Window.GetTitle() == "Change OpenGL1Window");
+    openGLWindow.SetTitle("Change OpenGL1Window");
+    SDL_TEST(openGLWindow.GetTitle() == "Change OpenGL1Window");
 }
 
 void TestSoftwareWindow(SDL_WindowFlags flags)
@@ -258,7 +258,7 @@ int main()
     TestResult();
     TestBaseWindow();
     TestMainWindow(SDL_WINDOW_OPENGL);
-    TestOpenGL1Window(SDL_WINDOW_OPENGL);
+    TestOpenGLWindow(SDL_WINDOW_OPENGL);
     TestSoftwareWindow(0);
     TestWindowCreator(SDL_WINDOW_OPENGL);
     TestBmpLoader();

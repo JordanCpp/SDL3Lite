@@ -24,13 +24,37 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Platforms_OpenGL1Window_hpp
-#define SDL3Lite_Platforms_OpenGL1Window_hpp
+#ifndef SDL3Lite_Win32_OpenGLWindow_hpp
+#define SDL3Lite_Win32_OpenGLWindow_hpp
 
-#if defined(_WIN32)
-    #include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
-#elif defined (__unix__)
-    #include <SDL3Lite/Platforms/Unix/OpenGL1Window.hpp>
-#endif
+#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
+#include <SDL3Lite/OpenGLAttributes.hpp>
+
+namespace SDL
+{
+	class OpenGLWindow : public IWindow
+	{
+	public:
+		OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		~OpenGLWindow();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetFlags();
+		bool Present();
+		void PollEvents();
+	private:
+		OpenGLAttributes&     _openGLAttributes;
+		Result*               _result;
+		HGLRC                 _renderContext;
+		PIXELFORMATDESCRIPTOR _format;
+		MainWindow            _mainWindow;
+		WindowError           _windowError;
+	};
+}
 
 #endif

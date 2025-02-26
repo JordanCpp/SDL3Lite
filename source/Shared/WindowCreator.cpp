@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/WindowCreator.hpp>
-#include <SDL3Lite/Platforms/OpenGL1Window.hpp>
+#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
 #include <assert.h>
 
@@ -44,7 +44,7 @@ IWindow* WindowCreator::Create(const Vec2i& pos, const Vec2i& size, const std::s
 
     if (mode == SDL_WINDOW_OPENGL)
     {
-        window = new OpenGL1Window(_openGLAttributes, _result, _eventHandler, pos, size, title, mode);
+        window = new OpenGLWindow(_openGLAttributes, _result, _eventHandler, pos, size, title, mode);
     }
     else
     {

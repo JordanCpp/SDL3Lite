@@ -24,13 +24,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
-#include <SDL3Lite/Platforms/Win32/OpenGL1Window.hpp>
+#include <SDL3Lite/Platforms/Win32/OpenGLWindow.hpp>
 
 using namespace SDL;
 
-OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
-	_openGLAttributes(&openGLAttributes),
+OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
+	_openGLAttributes(openGLAttributes),
 	_result(&result),
 	_renderContext(NULL),
 	_mainWindow(result, eventHandler, pos, size, title, mode)
@@ -42,19 +41,20 @@ OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result,
 	_format.dwFlags    = (PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER);
 	_format.iLayerType = PFD_MAIN_PLANE;
 	_format.iPixelType = PFD_TYPE_RGBA;
+	_format.cColorBits = 32;
+	_format.cDepthBits = 24;
 
-	//_format.cRedBits   = _openGLAttributes->GetRedSize();
-	//_format.cGreenBits = _openGLAttributes->GetGreenSize();
-	//_format.cBlueBits  = _openGLAttributes->GetBlueSize();
-	//_format.cAlphaBits = _openGLAttributes->GetAlphaSize();
+	_format.cRedBits   = _openGLAttributes.GetRedSize();
+	_format.cGreenBits = _openGLAttributes.GetGreenSize();
+	_format.cBlueBits  = _openGLAttributes.GetBlueSize();
+	_format.cAlphaBits = _openGLAttributes.GetAlphaSize();
 
-	//_format.cAccumRedBits   = _openGLAttributes->GetAccumRedSize();
-	//_format.cAccumGreenBits = _openGLAttributes->GetAccumGreenSize();
-	//_format.cAccumBlueBits  = _openGLAttributes->GetAccumBlueSize();
-	//_format.cAccumAlphaBits = _openGLAttributes->GetAccumAlphaSize();
+	_format.cAccumRedBits   = _openGLAttributes.GetAccumRedSize();
+	_format.cAccumGreenBits = _openGLAttributes.GetAccumGreenSize();
+	_format.cAccumBlueBits  = _openGLAttributes.GetAccumBlueSize();
+	_format.cAccumAlphaBits = _openGLAttributes.GetAccumAlphaSize();
 
 	int format = ChoosePixelFormat(_mainWindow.GetHdc(), &_format);
-
 
 	if (format == 0)
 	{
@@ -81,55 +81,101 @@ OpenGL1Window::OpenGL1Window(OpenGLAttributes& openGLAttributes, Result& result,
 		_result->Message(_windowError.GetErrorMessage());
 		return;
 	}
+
+	if (openGLAttributes.GetMajor() >= 3)
+	{
+		int attribs[] =
+		{
+			WGL_CONTEXT_MAJOR_VERSION_ARB, openGLAttributes.GetMajor(),
+			WGL_CONTEXT_MINOR_VERSION_ARB, openGLAttributes.GetMinor(),
+			WGL_CONTEXT_FLAGS_ARB,         WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+			WGL_CONTEXT_PROFILE_MASK_ARB,  WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+			0
+		};
+
+		PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
+
+		if (!wglCreateContextAttribsARB)
+		{
+			_result->Message("wglGetProcAddress failed");
+			return;
+		}
+
+		if (!wglMakeCurrent(NULL, NULL))
+		{
+			_result->Message("wglMakeCurrent failed");
+			return;
+		}
+
+		if (!wglDeleteContext(_renderContext))
+		{
+			_result->Message("wglDeleteContext failed");
+			return;
+		}
+
+		_renderContext = wglCreateContextAttribsARB(_mainWindow.GetHdc(), 0, attribs);
+
+		if (!_renderContext)
+		{
+			_result->Message("wglCreateContextAttribsARB failed");
+			return;
+		}
+
+		if (!wglMakeCurrent(_mainWindow.GetHdc(), _renderContext))
+		{
+			_result->Message("wglMakeCurrent failed");
+			return;
+		}
+	}
 }
 
-OpenGL1Window::~OpenGL1Window()
+OpenGLWindow::~OpenGLWindow()
 {
 	wglMakeCurrent(NULL, NULL);
 	wglDeleteContext(_renderContext);
 }
 
-const Vec2i& OpenGL1Window::GetPos()
+const Vec2i& OpenGLWindow::GetPos()
 {
 	return _mainWindow.GetPos();
 }
 
-void OpenGL1Window::SetPos(const Vec2i& pos)
+void OpenGLWindow::SetPos(const Vec2i& pos)
 {
 	_mainWindow.SetPos(pos);
 }
 
-const Vec2i& OpenGL1Window::GetSize()
+const Vec2i& OpenGLWindow::GetSize()
 {
 	return _mainWindow.GetSize();
 }
 
-void OpenGL1Window::SetSize(const Vec2i& size)
+void OpenGLWindow::SetSize(const Vec2i& size)
 {
 	_mainWindow.SetSize(size);
 }
 
-const std::string& OpenGL1Window::GetTitle()
+const std::string& OpenGLWindow::GetTitle()
 {
 	return _mainWindow.GetTitle();
 }
 
-void OpenGL1Window::SetTitle(const std::string& title)
+void OpenGLWindow::SetTitle(const std::string& title)
 {
 	_mainWindow.SetTitle(title);
 }
 
-SDL_WindowFlags SDL::OpenGL1Window::GetFlags()
+SDL_WindowFlags SDL::OpenGLWindow::GetFlags()
 {
 	return _mainWindow.GetFlags();
 }
 
-bool OpenGL1Window::Present()
+bool OpenGLWindow::Present()
 {
 	return SwapBuffers(_mainWindow.GetHdc());
 }
 
-void OpenGL1Window::PollEvents()
+void OpenGLWindow::PollEvents()
 {
 	_mainWindow.PollEvents();
 }

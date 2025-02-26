@@ -84,9 +84,11 @@ extern "C" {
 
     typedef struct SDL_GLContext SDL_GLContext;
 
+    extern SDL_DECLSPEC bool SDLCALL SDL_GL_SetAttribute(SDL_GLAttr attr, int value);
     extern SDL_DECLSPEC SDL_GLContext* SDLCALL SDL_GL_CreateContext(SDL_Window* window);
     extern SDL_DECLSPEC void SDLCALL SDL_GL_DestroyContext(SDL_GLContext* context);
     extern SDL_DECLSPEC bool SDLCALL SDL_GL_SwapWindow(SDL_Window* window);
+
 
 #ifdef __cplusplus
 }
