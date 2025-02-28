@@ -27,14 +27,14 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_OpenGL1Window_hpp
 #define SDL3Lite_Unix_OpenGL1Window_hpp
 
-#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
 #include <SDL3Lite/OpenGLAttributes.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 #include <SDL3Lite/Platforms/Unix/GLX.hpp>
 
 namespace SDL
 {
-	class OpenGLWindow : public IWindow
+	class OpenGLWindow : public SDL_Window
 	{
 	public:
 		OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);

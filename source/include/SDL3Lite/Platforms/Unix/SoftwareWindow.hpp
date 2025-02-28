@@ -27,12 +27,12 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_SoftwareWindow_hpp
 #define SDL3Lite_Unix_SoftwareWindow_hpp
 
-#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 
 namespace SDL
 {
-	class SoftwareWindow : public IWindow
+	class SoftwareWindow : public SDL_Window
 	{
 	public:
 		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
