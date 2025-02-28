@@ -28,7 +28,8 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-Library::Library() :
+Library::Library(SDL::Result& result) :
+    _result(result),
     _library(NULL)
 {
 }
@@ -51,7 +52,7 @@ void Library::Close()
 	}
 }
 
-SDL_FunctionPointer Library::GetFunction(const std::string& name)
+SDL_FunctionPointer Library::Load(const std::string& name)
 {
 	return (SDL_FunctionPointer)dlsym(_library, name.c_str());
 }

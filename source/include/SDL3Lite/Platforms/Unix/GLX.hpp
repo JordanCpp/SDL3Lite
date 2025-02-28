@@ -31,7 +31,8 @@ DEALINGS IN THE SOFTWARE.
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 
-extern "C" {
+extern "C" 
+{
 	
 #define GLX_USE_GL		      1
 #define GLX_BUFFER_SIZE		  2

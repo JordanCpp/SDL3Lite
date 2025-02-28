@@ -30,7 +30,6 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL_Window.hpp>
 #include <SDL3Lite/OpenGLAttributes.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
-#include <SDL3Lite/Platforms/Unix/GLX.hpp>
 
 namespace SDL
 {

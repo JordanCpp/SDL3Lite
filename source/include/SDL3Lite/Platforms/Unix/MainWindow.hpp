@@ -31,10 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/BaseWindow.hpp>
 #include <SDL3Lite/EventHandler.hpp>
-
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/keysym.h>
+#include <SDL3Lite/Platforms/Unix/GLX.hpp>
 
 namespace SDL
 {
