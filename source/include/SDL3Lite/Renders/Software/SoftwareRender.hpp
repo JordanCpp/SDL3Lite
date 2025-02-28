@@ -24,25 +24,27 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/TextureCreator.hpp>
-#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
-#include <assert.h>
+#ifndef SDL3Lite_Renders_Software_SoftwareRender_hpp
+#define SDL3Lite_Renders_Software_SoftwareRender_hpp
 
-using namespace SDL;
+#include <SDL3Lite/SDL_Renderer.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
 
-ITexture* TextureCreator::Create(IRender* render, const Vec2i& size, int bpp)
+namespace SDL
 {
-	return new OpenGL1Texture((OpenGL1Render&)render, size, bpp);
+	class SoftwareRender : public SDL_Renderer
+	{
+	public:
+		SoftwareRender(SDL_Window*  window);
+		const Vec2i& GetSize();
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
+	private:
+		Vec2i _size;
+	};
 }
 
-ITexture* TextureCreator::Create(IRender* render, const Vec2i& size, int bpp, uint8_t* pixels)
-{
-	return new OpenGL1Texture((OpenGL1Render&)render, size, bpp, pixels);
-}
-
-void TextureCreator::Destroy(ITexture* texture)
-{
-	assert(texture);
-
-	delete texture;
-}
+#endif

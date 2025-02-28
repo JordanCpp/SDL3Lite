@@ -26,13 +26,12 @@ DEALINGS IN THE SOFTWARE.
 
 #define OPENGL_IMPLEMENTATION
 #include <OpenGL.h>
-
 #include <SDL3Lite/OpenGL/GLUtils.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 
 using namespace SDL;
 
-OpenGL1Render::OpenGL1Render(Result& result, IWindow* window) :
+OpenGL1Render::OpenGL1Render(Result& result, SDL_Window* window) :
     _result(result),
     _window(window)
 {
@@ -102,7 +101,7 @@ void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
     glEnd();
 }
 
-void OpenGL1Render::Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
+void OpenGL1Render::Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
 {
     OpenGL1Texture* tex = (OpenGL1Texture*)texture;
 

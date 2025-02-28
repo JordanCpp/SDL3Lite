@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-SoftwareRender::SoftwareRender(IWindow* window)
+SoftwareRender::SoftwareRender(SDL_Window* window)
 {
 }
 
@@ -53,6 +53,6 @@ void SoftwareRender::FillRect(const Vec2f& pos, const Vec2f& size)
 {
 }
 
-void SoftwareRender::Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
+void SoftwareRender::Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
 {
 }

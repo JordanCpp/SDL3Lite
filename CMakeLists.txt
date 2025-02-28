@@ -18,8 +18,9 @@ elseif (UNIX AND NOT APPLE)
     set(DEPS_LIBRARIES X11 GL dl)
 endif()
 
-include_directories("include")
 include_directories("dependencies")
+include_directories("include")
+include_directories("source/include")
 
 FILE(GLOB SOURCES
 "source/OpenGL/*.cpp" 

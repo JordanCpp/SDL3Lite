@@ -24,19 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/SurfaceCreator.hpp>
-#include <assert.h>
+#ifndef SDL3Lite_Win32_SoftwareWindow_hpp
+#define SDL3Lite_Win32_SoftwareWindow_hpp
 
-using namespace SDL;
+#include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
 
-Surface* SurfaceCreator::Create(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat)
+namespace SDL
 {
-	return new Surface(size, pixelFormat);
+	class SoftwareWindow : public SDL_Window
+	{
+	public:
+		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetFlags();
+		bool Present();
+		void PollEvents();
+	private:
+		MainWindow _mainWindow;
+	};
 }
 
-void SurfaceCreator::Destroy(Surface* surface)
-{
-	assert(surface != NULL);
-
-	delete surface;
-}
+#endif

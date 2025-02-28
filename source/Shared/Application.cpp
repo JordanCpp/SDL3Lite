@@ -25,13 +25,13 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
 
 using namespace SDL;
 
-SDL::Application MainApplication;
+static SDL::Application MainApplication;
 
-Application::Application() :
-	_windowCreator(_openGLAttributes, _result, _eventHandler)
+Application::Application()
 {
 }
 
@@ -39,7 +39,7 @@ Application::~Application()
 {
 }
 
-std::vector<IWindow*>& SDL::Application::GetWindows()
+std::vector<SDL_Window*>& SDL::Application::GetWindows()
 {
 	return _windows;
 }
@@ -47,21 +47,6 @@ std::vector<IWindow*>& SDL::Application::GetWindows()
 EventHandler& Application::GetEventHandler()
 {
 	return _eventHandler;
-}
-
-WindowCreator& Application::GetWindowCreator()
-{
-	return _windowCreator;
-}
-
-RenderCreator& Application::GetRenderCreator()
-{
-	return _renderCreator;
-}
-
-SurfaceCreator& Application::GetSurfaceCreator()
-{
-	return _surfaceCreator;
 }
 
 OpenGLAttributes& Application::GetOpenGLAttributes()

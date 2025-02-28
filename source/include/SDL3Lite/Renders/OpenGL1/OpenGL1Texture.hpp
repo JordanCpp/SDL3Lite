@@ -24,32 +24,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/RenderCreator.hpp>
+#ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
+#define SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
+
+#include <SDL3/pstdint.h>
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/SDL_Texture.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
-#include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
-#include <assert.h>
+#include <OpenGL.h>
 
-using namespace SDL;
-
-IRender* RenderCreator::Create(Result& result, IWindow* window)
+namespace SDL
 {
-	IRender* render = NULL;
-		
-	if (window->GetFlags() == SDL_WINDOW_OPENGL)
-	{
-		render = new SDL::OpenGL1Render(result, window);
-	}
-	else
-	{
-		render = new SDL::SoftwareRender(window);
-	}
+	class OpenGL1Render;
 
-	return render;
+	class OpenGL1Texture : public SDL_Texture
+	{
+	public:
+		~OpenGL1Texture();
+		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp);
+		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels);
+		const Vec2i& GetSize();
+		const Vec2i& GetQuad();
+		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
+	public:
+		GLuint GetTexture();
+	private:
+		OpenGL1Render& _render;
+		GLuint         _texture;
+		Vec2i          _size;
+		Vec2i          _quad;
+	};
 }
 
-void RenderCreator::Destroy(IRender* render)
-{
-	assert(render);
-
-	delete render;
-}
+#endif

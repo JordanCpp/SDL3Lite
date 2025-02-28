@@ -24,20 +24,18 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_SurfaceCreator_hpp
-#define SDL3Lite_Shared_SurfaceCreator_hpp
+#ifndef SDL3Lite_Shared_SDL_Texture_hpp
+#define SDL3Lite_Shared_SDL_Texture_hpp
 
-#include <SDL3Lite/Surface.hpp>
+#include <SDL3/pstdint.h>
+#include <SDL3Lite/Vec2.hpp>
 
-namespace SDL
+struct SDL_Texture
 {
-	class SurfaceCreator
-	{
-	public:
-		Surface* Create(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat);
-		void Destroy(Surface* surface);
-	private:
-	};
-}
+public:
+	virtual ~SDL_Texture() {};
+	virtual const SDL::Vec2i& GetSize() = 0;
+	virtual bool Update(const SDL::Vec2i& pos, const SDL::Vec2i& size, uint8_t* pixels, int bpp) = 0;
+};
 
 #endif

@@ -24,29 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IWindow_hpp
-#define SDL3Lite_Shared_IWindow_hpp
+#ifndef SDL3Lite_SDL3_SDL_Surface_hpp
+#define SDL3Lite_SDL3_SDL_Surface_hpp
 
-#include <string>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/Surface.hpp>
 
-namespace SDL
+struct SDL_Surface
 {
-	class IWindow
-	{
-	public:
-		virtual ~IWindow() {};
-		virtual const Vec2i& GetPos() = 0;
-		virtual void SetPos(const Vec2i& pos) = 0;
-		virtual const Vec2i& GetSize() = 0;
-		virtual void SetSize(const Vec2i& size) = 0;
-		virtual const std::string& GetTitle() = 0;
-		virtual void SetTitle(const std::string& title) = 0;
-		virtual SDL_WindowFlags GetFlags() = 0;
-		virtual void PollEvents() = 0;
-		virtual bool Present() = 0;
-	};
-}
+public:
+	SDL_Surface(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat);
+	~SDL_Surface();
+	SDL::Surface* GetSurface();
+private:
+	SDL::Surface* _surface;
+};
+
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format);
 
 #endif

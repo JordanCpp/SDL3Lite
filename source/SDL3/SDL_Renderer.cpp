@@ -25,36 +25,25 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
-#include <SDL3Lite/RenderCreator.hpp>
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
-#include <SDL3Lite/SDL3/SDL_Window.hpp>
-#include <SDL3Lite/SDL3/SDL_Texture.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
+#include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
 #include <assert.h>
 
-SDL_Renderer::SDL_Renderer(SDL::IRender* render) :
-	_render(render)
-{
-}
-
-SDL_Renderer::~SDL_Renderer()
-{
-	delete _render;
-}
-
-SDL::IRender* SDL_Renderer::GetRender()
-{
-	return _render;
-}
-
-SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator, SDL::Result& result, SDL_Window* window, const char* name)
+SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* window, const char* name)
 {
 	assert(window);
 
-	SDL::IRender* render = renderCreator.Create(result, window->GetWindow());
-	assert(render);
+	SDL_Renderer* renderer = NULL;
 
-	SDL_Renderer* renderer = new SDL_Renderer(render);
-	assert(renderer);
+	if (window->GetFlags() == SDL_WINDOW_OPENGL)
+	{
+		renderer = new SDL::OpenGL1Render(result, window);
+	}
+	else
+	{
+		renderer = new SDL::SoftwareRender(window);
+	}
 
 	return renderer;
 }
@@ -62,7 +51,6 @@ SDL_Renderer* SDL_CreateRendererImplementation(SDL::RenderCreator& renderCreator
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
 	return SDL_CreateRendererImplementation(
-		SDL::GetApplication().GetRenderCreator(), 
 		SDL::GetApplication().GetResult(),
 		window, name);
 }
@@ -77,9 +65,8 @@ void SDL_DestroyRenderer(SDL_Renderer* renderer)
 bool SDL_RenderPresent(SDL_Renderer* renderer)
 {
 	assert(renderer);
-	assert(renderer->GetRender());
 
-	renderer->GetRender()->Present();
+	renderer->Present();
 
 	return true;
 }
@@ -87,9 +74,8 @@ bool SDL_RenderPresent(SDL_Renderer* renderer)
 bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	assert(renderer);
-	assert(renderer->GetRender());
 
-	renderer->GetRender()->SetColor(SDL::Color(r, g, b, a));
+	renderer->SetColor(SDL::Color(r, g, b, a));
 
 	return true;
 }
@@ -97,9 +83,8 @@ bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, U
 bool SDL_RenderClear(SDL_Renderer* renderer)
 {
 	assert(renderer);
-	assert(renderer->GetRender());
 
-	renderer->GetRender()->Clear();
+	renderer->Clear();
 
 	return true;
 }
@@ -107,18 +92,14 @@ bool SDL_RenderClear(SDL_Renderer* renderer)
 void SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect)
 {
 	assert(renderer);
-	assert(renderer->GetRender());
 
-	renderer->GetRender()->FillRect(SDL::Vec2f(rect->x, rect->y), SDL::Vec2f(rect->w, rect->h));
+	renderer->FillRect(SDL::Vec2f(rect->x, rect->y), SDL::Vec2f(rect->w, rect->h));
 }
 
 bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_FRect* srcrect, const SDL_FRect* dstrect)
 {
 	assert(renderer);
-	assert(renderer->GetRender());
-
 	assert(texture);
-	assert(texture->GetTexture());
 
 	SDL::Vec2f dstPos;
 	SDL::Vec2f dstSize;
@@ -128,7 +109,7 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 	if (srcrect == NULL)
 	{
 		srcPos  = SDL::Vec2f(0, 0);
-		srcSize = SDL::Vec2f((float)texture->GetTexture()->GetSize().x, (float)texture->GetTexture()->GetSize().y);
+		srcSize = SDL::Vec2f((float)texture->GetSize().x, (float)texture->GetSize().y);
 	}
 	else
 	{
@@ -139,7 +120,7 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 	if (dstrect == NULL)
 	{
 		dstPos  = SDL::Vec2f(0, 0);
-		dstSize = SDL::Vec2f((float)renderer->GetRender()->GetSize().x, (float)renderer->GetRender()->GetSize().y);
+		dstSize = SDL::Vec2f((float)renderer->GetSize().x, (float)renderer->GetSize().y);
 	}
 	else
 	{
@@ -147,7 +128,7 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 		dstSize = SDL::Vec2f(dstrect->w, dstrect->h);
 	}
 
-	renderer->GetRender()->Draw(texture->GetTexture(), dstPos, dstSize, srcPos, srcSize);
+	renderer->Draw(texture, dstPos, dstSize, srcPos, srcSize);
 		
 	return true;
 }

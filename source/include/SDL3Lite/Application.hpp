@@ -24,20 +24,37 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL3_SDL_Texture_hpp
-#define SDL3Lite_SDL3_SDL_Texture_hpp
+#ifndef SDL3Lite_Shared_Application_hpp
+#define SDL3Lite_Shared_Application_hpp
 
-#include <SDL3Lite/Application.hpp>
-#include <SDL3Lite/ITexture.hpp>
+#include <vector>
+#include <SDL3/SDL.h>
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+#include "OpenGLAttributes.hpp"
 
-struct SDL_Texture
+namespace SDL
 {
-public:
-	SDL_Texture(SDL::IRender* render, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h);
-	SDL::ITexture* GetTexture();
-private:
-	SDL::IRender*  _render;
-	SDL::ITexture* _texture;
-};
+	class Application
+	{
+	public:
+		Application();
+		~Application();
+		std::vector<SDL_Window*>& GetWindows();
+		EventHandler& GetEventHandler();
+		OpenGLAttributes& GetOpenGLAttributes();
+		Result& GetResult();
+		void PollEvents();
+		bool PollEvent(SDL_Event& dest);
+	private:
+		OpenGLAttributes      _openGLAttributes;
+		Result                _result;
+		std::vector<SDL_Window*> _windows;
+		EventHandler          _eventHandler;
+	};
+
+	Application& GetApplication();
+}
 
 #endif

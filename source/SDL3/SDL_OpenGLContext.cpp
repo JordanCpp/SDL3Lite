@@ -25,8 +25,8 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
 #include <SDL3Lite/SDL3/SDL_OpenGLContext.hpp>
-#include <SDL3Lite/SDL3/SDL_Window.hpp>
 #include <assert.h>
 
 bool SDL_GL_SetAttribute(SDL_GLAttr attr, int value)
@@ -118,7 +118,6 @@ void SDL_GL_DestroyContext(SDL_GLContext* context)
 bool SDL_GL_SwapWindow(SDL_Window* window)
 {
 	assert(window);
-	assert(window->GetWindow());
 
-	return window->GetWindow()->Present();
+	return window->Present();
 }

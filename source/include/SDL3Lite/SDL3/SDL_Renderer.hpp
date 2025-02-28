@@ -24,44 +24,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/WindowCreator.hpp>
-#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
-#include <SDL3Lite/Platforms/SoftwareWindow.hpp>
-#include <assert.h>
+#ifndef SDL3Lite_SDL3_SDL_Renderer_hpp
+#define SDL3Lite_SDL3_SDL_Renderer_hpp
 
-using namespace SDL;
+#include <SDL3Lite/Application.hpp>
 
-WindowCreator::WindowCreator(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler) :
-    _openGLAttributes(openGLAttributes),
-    _result(result),
-    _eventHandler(eventHandler)
-{
-}
+SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* window, const char* name);
 
-IWindow* WindowCreator::Create(const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode)
-{
-    IWindow* window = NULL;
-
-    if (mode == SDL_WINDOW_OPENGL)
-    {
-        window = new OpenGLWindow(_openGLAttributes, _result, _eventHandler, pos, size, title, mode);
-    }
-    else
-    {
-        window = new SoftwareWindow(_result, _eventHandler, pos, size, title, mode);
-    }
-
-    if (_result.Ok())
-    {
-        return window;
-    }
-
-    return window;
-}
-
-void WindowCreator::Destroy(IWindow* window)
-{
-    assert(window);
-
-    delete window;
-}
+#endif

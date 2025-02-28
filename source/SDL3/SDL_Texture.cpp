@@ -24,26 +24,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/SDL3/SDL_Texture.hpp>
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 #include <SDL3Lite/SDL3/SDL_Surface.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 
-SDL_Texture::SDL_Texture(SDL::IRender* render, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h) :
-	_render(NULL),
-	_texture(NULL)
-{
-	_texture = new SDL::OpenGL1Texture((SDL::OpenGL1Render&)render, SDL::Vec2i(w, h), 3);
-}
-
-SDL::ITexture* SDL_Texture::GetTexture()
-{
-	return _texture;
-}
-
 SDL_Texture* SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h)
 {
-	return new SDL_Texture(renderer->GetRender(), format, access, w, h);
+	SDL_Texture* texture = new SDL::OpenGL1Texture((SDL::OpenGL1Render&)renderer, SDL::Vec2i(w, h), 3);
+
+	return texture;
 }
 
 void SDL_DestroyTexture(SDL_Texture* texture)
@@ -53,14 +42,14 @@ void SDL_DestroyTexture(SDL_Texture* texture)
 
 bool SDL_UpdateTexture(SDL_Texture* texture, const SDL_Rect* rect, const void* pixels, int pitch)
 {
-	texture->GetTexture()->Update(SDL::Vec2i(rect->x, rect->y), SDL::Vec2i(rect->w, rect->h), (uint8_t*)pixels, pitch);
+	texture->Update(SDL::Vec2i(rect->x, rect->y), SDL::Vec2i(rect->w, rect->h), (uint8_t*)pixels, pitch);
 
 	return true;
 }
 
 SDL_Texture* SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface)
 {
-	SDL_Texture* result =  new SDL_Texture(renderer->GetRender(), SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STATIC, surface->GetSurface()->GetSize().x, surface->GetSurface()->GetSize().y);
+	SDL_Texture* result = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STATIC, surface->GetSurface()->GetSize().x, surface->GetSurface()->GetSize().y);
 
 	SDL_Rect rect;
 	rect.x = 0;

@@ -226,6 +226,13 @@ extern "C" {
 #endif
     } SDL_PixelFormat;
 
+    typedef Uint32 SDL_SurfaceFlags;
+
+#define SDL_SURFACE_PREALLOCATED    0x00000001u /**< Surface uses preallocated pixel memory */
+#define SDL_SURFACE_LOCK_NEEDED     0x00000002u /**< Surface needs to be locked to access pixels */
+#define SDL_SURFACE_LOCKED          0x00000004u /**< Surface is currently locked */
+#define SDL_SURFACE_SIMD_ALIGNED    0x00000008u /**< Surface uses pixel memory allocated with SDL_aligned_alloc() */
+
 typedef struct SDL_Surface SDL_Surface;
 
 extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_CreateSurface(int width, int height, SDL_PixelFormat format);

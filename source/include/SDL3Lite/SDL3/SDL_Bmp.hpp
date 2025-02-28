@@ -24,26 +24,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IRender_hpp
-#define SDL3Lite_Shared_IRender_hpp
+#ifndef SDL3Lite_SDL3_SDL_Bmp_hpp
+#define SDL3Lite_SDL3_SDL_Bmp_hpp
 
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/Color.hpp>
-#include <SDL3Lite/ITexture.hpp>
+#include <SDL3/SDL_Bmp.h>
+#include <SDL3Lite/Result.hpp>
 
-namespace SDL
-{
-	class IRender
-	{
-	public:
-		virtual ~IRender(){};
-		virtual const Vec2i& GetSize() = 0;
-	    virtual void Present() = 0;
-		virtual void SetColor(const Color& color) = 0;
-		virtual void Clear() = 0;
-		virtual void FillRect(const Vec2f& pos, const Vec2f& size) = 0;
-		virtual void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize) = 0;
-	};
-}
+SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file);
 
 #endif

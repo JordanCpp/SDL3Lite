@@ -31,16 +31,16 @@ DEALINGS IN THE SOFTWARE.
 
 SDL_Surface* SDL_LoadBMP(const char* file)
 {
-	return SDL_LoadBMPImplementation(SDL::GetApplication().GetResult(), SDL::GetApplication().GetSurfaceCreator(), file);
+	return SDL_LoadBMPImplementation(SDL::GetApplication().GetResult(), file);
 }
 
-SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, SDL::SurfaceCreator& surfaceCreator, const char* file)
+SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file)
 {
 	SDL::BmpLoader bmpLoader(result);
 
 	if (bmpLoader.Reset(file))
 	{
-		SDL_Surface* result = new SDL_Surface(surfaceCreator, bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
+		SDL_Surface* result = new SDL_Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
 
 		int width  = result->GetSurface()->GetSize().x;
 		int heigth = result->GetSurface()->GetSize().y;

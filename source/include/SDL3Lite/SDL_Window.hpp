@@ -24,25 +24,32 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL3_SDL3_Window_hpp
-#define SDL3Lite_SDL3_SDL3_Window_hpp
+#ifndef SDL3Lite_Shared_IWindow_hpp
+#define SDL3Lite_Shared_IWindow_hpp
 
+#include <string>
 #include <vector>
-#include <SDL3Lite/WindowCreator.hpp>
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3/SDL_Window.h>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+#include <SDL3Lite/OpenGLAttributes.hpp>
 
 struct SDL_Window
 {
 public:
-	SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, SDL_WindowFlags mode);
-	~SDL_Window();
-	SDL::IWindow* GetWindow();
-	SDL::WindowCreator& GetWindowCreator();
-private:
-	SDL::IWindow*               _window;
-	SDL::WindowCreator&         _windowCreator;
-	std::vector<SDL::IWindow*>& _windows;
+	virtual ~SDL_Window() {};
+	virtual const SDL::Vec2i& GetPos() = 0;
+	virtual void SetPos(const SDL::Vec2i& pos) = 0;
+	virtual const SDL::Vec2i& GetSize() = 0;
+	virtual void SetSize(const SDL::Vec2i& size) = 0;
+	virtual const std::string& GetTitle() = 0;
+	virtual void SetTitle(const std::string& title) = 0;
+	virtual SDL_WindowFlags GetFlags() = 0;
+	virtual void PollEvents() = 0;
+	virtual bool Present() = 0;
 };
 
-SDL_Window* SDL_CreateWindowImplementation(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const char* title, int w, int h, size_t flags);
+SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, size_t flags);
 
 #endif

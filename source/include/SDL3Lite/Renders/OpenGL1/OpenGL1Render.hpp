@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
 #define SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
 
-#include <SDL3Lite/IRender.hpp>
+#include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/OpenGL/Mat4f.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
@@ -36,22 +36,22 @@ namespace SDL
 {
 	class OpenGL1Texture;
 
-	class OpenGL1Render : public IRender
+	class OpenGL1Render : public SDL_Renderer
 	{
 	public:
-	    OpenGL1Render(Result& result, IWindow* window);
+	    OpenGL1Render(Result& result, SDL_Window* window);
 		const Vec2i& GetSize();
 		void Present();
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
-		void Draw(ITexture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
+		void Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
 	private:
-		Result&   _result;
-	    IWindow* _window;
-	    Color    _color;
-		Mat4f    _projection;
-		Mat4f    _modelView;
+		Result&     _result;
+		SDL_Window* _window;
+	    Color       _color;
+		Mat4f       _projection;
+		Mat4f       _modelView;
 	};
 }
 

@@ -4178,8 +4178,8 @@ OpenGL_Function_Pointer OpenGL_Load(const char* name)
 
 		if (result == NULL)
 		{
-			printf("Not found function: %s\n", name);
-			abort();
+			//printf("Not found function: %s\n", name);
+			//abort();
 		}
 	}
 

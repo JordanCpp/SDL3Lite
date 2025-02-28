@@ -24,53 +24,45 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/SDL3/SDL_Window.hpp>
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
+#include <SDL3Lite/Platforms/SoftwareWindow.hpp>
 #include <assert.h>
 
-SDL_Window::SDL_Window(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
-	_window(NULL),
-	_windowCreator(windowCreator),
-	_windows(windows)
+SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, size_t flags)
 {
-	_window = _windowCreator.Create(pos, size, title, mode);
+	SDL_Window* window = NULL;
 
-	if (_window)
+	if (flags == SDL_WINDOW_OPENGL)
 	{
-		_windows.push_back(_window);
+		window = new SDL::OpenGLWindow(openGLAttributes, result, eventHandler, SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
 	}
-}
+	else
+	{
+		window = new SDL::SoftwareWindow(result, eventHandler, SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
+	}
 
-SDL_Window::~SDL_Window()
-{
-	_windowCreator.Destroy(_window);
-}
-
-SDL::IWindow* SDL_Window::GetWindow()
-{
-	return _window;
-}
-
-SDL::WindowCreator& SDL_Window::GetWindowCreator()
-{
-	return _windowCreator;
-}
-
-SDL_Window* SDL_CreateWindowImplementation(SDL::WindowCreator& windowCreator, std::vector<SDL::IWindow*>& windows, const char* title, int w, int h, size_t flags)
-{
-	SDL_Window* window = new SDL_Window(windowCreator, windows, SDL::Vec2i(0, 0), SDL::Vec2i(w, h), title, flags);
+	if (window)
+	{
+		windows.push_back(window);
+	}
 
 	return window;
 }
 
 SDL_Window* SDL_CreateWindow(const char* title, int w, int h, size_t flags)
 {
-	return SDL_CreateWindowImplementation(SDL::GetApplication().GetWindowCreator(), SDL::GetApplication().GetWindows(), title, w, h, flags);
+	return SDL_CreateWindowImplementation(
+		SDL::GetApplication().GetWindows(),
+		SDL::GetApplication().GetOpenGLAttributes(),
+		SDL::GetApplication().GetResult(),
+		SDL::GetApplication().GetEventHandler(),
+		title, w, h, flags);
 }
 
 void SDL_DestroyWindow(SDL_Window* window)
 {
 	assert(window);
 
-	window->GetWindowCreator().Destroy(window->GetWindow());
+	delete window;
 }

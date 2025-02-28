@@ -24,22 +24,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_RenderCreator_hpp
-#define SDL3Lite_Shared_RenderCreator_hpp
+#ifndef SDL3Lite_Shared_SDL_Renderer_hpp
+#define SDL3Lite_Shared_SDL_Renderer_hpp
 
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/IRender.hpp>
-#include <SDL3Lite/IWindow.hpp>
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/SDL_Texture.hpp>
 
-namespace SDL
+struct SDL_Renderer
 {
-	class RenderCreator
-	{
-	public:
-		IRender* Create(Result& result, IWindow* window);
-		void Destroy(IRender* render);
-	private:
-	};
-}
+public:
+	virtual ~SDL_Renderer() {};
+	virtual const SDL::Vec2i& GetSize() = 0;
+	virtual void Present() = 0;
+	virtual void SetColor(const SDL::Color& color) = 0;
+	virtual void Clear() = 0;
+	virtual void FillRect(const SDL::Vec2f& pos, const SDL::Vec2f& size) = 0;
+	virtual void Draw(SDL_Texture* texture, const SDL::Vec2f& dstPos, const SDL::Vec2f& dstSize, const SDL::Vec2f& srcPos, const SDL::Vec2f& srcSize) = 0;
+};
 
 #endif

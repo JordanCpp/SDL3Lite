@@ -24,20 +24,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_ITexture_hpp
-#define SDL3Lite_Shared_ITexture_hpp
+#ifndef SDL3Lite_Win32_OpenGLWindow_hpp
+#define SDL3Lite_Win32_OpenGLWindow_hpp
 
-#include <SDL3/pstdint.h>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
+#include <SDL3Lite/OpenGLAttributes.hpp>
 
 namespace SDL
 {
-	class ITexture
+	class OpenGLWindow : public SDL_Window
 	{
 	public:
-		virtual ~ITexture() {};
-		virtual const Vec2i& GetSize() = 0;
-		virtual bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp) = 0;
+		OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		~OpenGLWindow();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetFlags();
+		bool Present();
+		void PollEvents();
+	private:
+		OpenGLAttributes&     _openGLAttributes;
+		Result*               _result;
+		HGLRC                 _renderContext;
+		PIXELFORMATDESCRIPTOR _format;
+		MainWindow            _mainWindow;
+		WindowError           _windowError;
 	};
 }
 

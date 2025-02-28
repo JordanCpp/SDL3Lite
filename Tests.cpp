@@ -27,7 +27,6 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Platforms/MainWindow.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
-#include <SDL3Lite/WindowCreator.hpp>
 #include <SDL3Lite/BmpLoader.hpp>
 #include <stdio.h>
 
@@ -220,26 +219,6 @@ void TestSoftwareWindow(SDL_WindowFlags flags)
     SDL_TEST(softwareWindow.GetTitle() == "Change SoftwareWindow");
 }
 
-void TestWindowCreator(SDL_WindowFlags flags)
-{
-    OpenGLAttributes openGLAttributes;
-    Result           result;
-    EventHandler     eventHandler;
-    WindowCreator    windowCreator(openGLAttributes, result, eventHandler);
-
-    IWindow* window = windowCreator.Create(Vec2i(10, 15), Vec2i(640, 480), "Create Window", flags);
-    SDL_TEST(window              != NULL);
-    SDL_TEST(result.Ok()         == true);
-    SDL_TEST(window->GetPos().x  == 10);
-    SDL_TEST(window->GetPos().y  == 15);
-    SDL_TEST(window->GetSize().x == 640);
-    SDL_TEST(window->GetSize().y == 480);
-    SDL_TEST(window->GetTitle()  == "Create Window");
-    SDL_TEST(window->GetFlags()  == flags);
-
-    windowCreator.Destroy(window);
-}
-
 void TestBmpLoader()
 {
     Result result;
@@ -260,7 +239,6 @@ int main()
     TestMainWindow(SDL_WINDOW_OPENGL);
     TestOpenGLWindow(SDL_WINDOW_OPENGL);
     TestSoftwareWindow(0);
-    TestWindowCreator(SDL_WINDOW_OPENGL);
     TestBmpLoader();
 
     return 0;
