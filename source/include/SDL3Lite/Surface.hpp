@@ -33,17 +33,16 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
-	class Surface
+	class Surface : public SDL_Surface
 	{
 	public:
 		Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
+		~Surface();
 		int GetBpp();
 		SDL_PixelFormat GetPixelFormat();
 		const Vec2i& GetSize();
-		std::vector<uint8_t>& GetPixels();
+		uint8_t* GetPixels();
 	private:
-		int                  _bpp;
-		SDL_PixelFormat      _pixelFormat;
 		Vec2i                _size;
 		std::vector<uint8_t> _pixels;
 	};

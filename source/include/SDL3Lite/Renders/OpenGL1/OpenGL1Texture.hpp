@@ -27,11 +27,11 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
 #define SDL3Lite_Renders_OpenGL1_OpenGL1Texture_hpp
 
+#include <OpenGL.h>
 #include <SDL3/pstdint.h>
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/SDL_Texture.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
-#include <OpenGL.h>
 
 namespace SDL
 {

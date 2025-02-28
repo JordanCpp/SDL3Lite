@@ -1,10 +1,10 @@
 
-call "E:\Programs\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+call "C:\Program Files\Microsoft Visual Studio\VC98\Bin\VCVARS32.BAT"
 
-CL /O2 -EHsc /FeSDL3.dll -LD      ^
+CL /O2 -GX /FeSDL3.dll -LD -DSDL3LITE_SHARED ^
 /I..\dependencies                 ^
 /I..\include\                     ^
-/I..\source\include\                     ^
+/I..\source\include\              ^
 ..\source\OpenGL\*.cpp            ^
 ..\source\Platforms\Win32\*.cpp   ^
 ..\source\Renders\OpenGL1\*.cpp   ^
@@ -15,5 +15,7 @@ gdi32.lib                         ^
 opengl32.lib                      ^
 winmm.lib                         ^
 user32.lib
+
+del *.obj
 
 pause

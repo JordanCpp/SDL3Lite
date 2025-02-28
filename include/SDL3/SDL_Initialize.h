@@ -58,8 +58,8 @@ extern "C" {
 #define SDL_INIT_SENSOR     0x00008000u /**< `SDL_INIT_SENSOR` implies `SDL_INIT_EVENTS` */
 #define SDL_INIT_CAMERA     0x00010000u /**< `SDL_INIT_CAMERA` implies `SDL_INIT_EVENTS` */
 
-	extern SDL_DECLSPEC int SDLCALL SDL_Init(SDL_InitFlags flags);
-	extern SDL_DECLSPEC void SDLCALL SDL_Quit();
+extern SDL_DECLSPEC int  SDLCALL SDL_Init(SDL_InitFlags flags);
+extern SDL_DECLSPEC void SDLCALL SDL_Quit();
 
 #ifdef __cplusplus
 }

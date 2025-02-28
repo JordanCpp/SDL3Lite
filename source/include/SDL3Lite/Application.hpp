@@ -48,10 +48,10 @@ namespace SDL
 		void PollEvents();
 		bool PollEvent(SDL_Event& dest);
 	private:
-		OpenGLAttributes      _openGLAttributes;
-		Result                _result;
 		std::vector<SDL_Window*> _windows;
-		EventHandler          _eventHandler;
+		Result                   _result;
+		OpenGLAttributes         _openGLAttributes;
+		EventHandler             _eventHandler;
 	};
 
 	Application& GetApplication();

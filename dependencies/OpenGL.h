@@ -35,7 +35,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,7 +42,7 @@ extern "C" {
 
 typedef void (*OpenGL_Function_Pointer)(void);
 
-bool OpenGL_LoadLibrary();
+int OpenGL_LoadLibrary();
 OpenGL_Function_Pointer OpenGL_Load(const char* name);
 void OpenGL_UnLoad();
 void OpenGL_Assert(const char* file, int line, const char* expression);
@@ -4157,7 +4156,7 @@ void OpenGL_Assert(const char* file, int line, const char* expression)
 
 #if defined(_WIN32)
 
-bool OpenGL_LoadLibrary()
+int OpenGL_LoadLibrary()
 {
 	globalLibraryPtr = LoadLibrary("OpenGL32.dll");
 
@@ -4195,7 +4194,7 @@ void OpenGL_UnLoad()
 typedef unsigned char GLubyte;
 extern void (*glXGetProcAddress(const GLubyte* procname))(void);
 
-bool OpenGL_LoadLibrary()
+int OpenGL_LoadLibrary()
 {
 	return true;
 }

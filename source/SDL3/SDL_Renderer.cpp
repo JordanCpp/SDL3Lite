@@ -50,9 +50,7 @@ SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* 
 
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
-	return SDL_CreateRendererImplementation(
-		SDL::GetApplication().GetResult(),
-		window, name);
+	return SDL_CreateRendererImplementation(SDL::GetApplication().GetResult(), window, name);
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)

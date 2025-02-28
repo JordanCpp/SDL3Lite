@@ -275,7 +275,7 @@ extern "C" {
         SDL_QuitEvent quit;                     /**< Quit request event data */
     } SDL_Event;
 
-    extern SDL_DECLSPEC int SDLCALL SDL_PollEvent(SDL_Event* dest);
+extern SDL_DECLSPEC int SDLCALL SDL_PollEvent(SDL_Event* dest);
 
 #ifdef __cplusplus
 }

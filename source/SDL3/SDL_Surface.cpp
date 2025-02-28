@@ -25,28 +25,12 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
-#include <SDL3Lite/SDL3/SDL_Surface.hpp>
+#include <SDL3Lite/SDL_Surface.hpp>
 #include <assert.h>
-
-SDL_Surface::SDL_Surface(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat) :
-	_surface(NULL)
-{
-	_surface = new SDL::Surface(size, pixelFormat);
-}
-
-SDL_Surface::~SDL_Surface()
-{
-	delete _surface;
-}
-
-SDL::Surface* SDL_Surface::GetSurface()
-{
-	return _surface;
-}
 
 SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format)
 {
-	return new SDL_Surface(SDL::Vec2i(width, height), format);
+	return new SDL::Surface(SDL::Vec2i(width, height), format);
 }
 
 SDL_Surface* SDL_CreateSurface(int width, int height, SDL_PixelFormat format)

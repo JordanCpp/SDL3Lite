@@ -24,58 +24,32 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/SDL.h>
+#include <SDL3Lite/Rect2f.hpp>
 
-#define WINDOW_WIDTH  (640)
-#define WINDOW_HEIGTH (480)
+using namespace SDL;
 
-int main()
+Rect2f::Rect2f()
 {
-    if (!SDL_Init(SDL_INIT_VIDEO))
-    {
-        SDL_Log("Init error: %s\n", SDL_GetError());
-        return 1;
-    }
+	_rect.x = 0.0f;
+	_rect.y = 0.0f;
+	_rect.w = 0.0f;
+	_rect.h = 0.0f;
+}
 
-    SDL_Window* window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+Rect2f::Rect2f(float x, float y, float w, float h)
+{
+	_rect.x = x;
+	_rect.y = y;
+	_rect.w = w;
+	_rect.h = h;
+}
 
-    if (window == NULL)
-    {
-        SDL_Log("Create window error: %s\n", SDL_GetError());
-        return 1;
-    }
+Rect2f::Rect2f(const SDL_FRect& rect)
+{
+	_rect = rect;
+}
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
-    
-    if (renderer == NULL)
-    {
-        SDL_Log("Create renderer error: %s\n", SDL_GetError());
-        return 1;
-    }
-    
-    bool done = false;
-
-    SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
-
-    while (!done)
-    {
-        SDL_Event event;
-
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT)
-            {
-                done = true;
-            }
-        }
-
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
-    }
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
-    return 0;
+const SDL_FRect& Rect2f::Get()
+{
+	return _rect;
 }

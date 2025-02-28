@@ -49,12 +49,12 @@ void display()
     // Draw the tetrahedron.  It is a four sided figure, so when defining it
     // with a triangle strip we have to repeat the last two vertices.
     glBegin(GL_TRIANGLE_STRIP);
-    glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
-    glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
-    glColor3f(0, 1, 0); glVertex3f(1, 0, 1);
-    glColor3f(0, 0, 1); glVertex3f(0, 0, -1.4);
-    glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
-    glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
+    glColor3f(1.0f, 1.0f, 1.0f); glVertex3f( 0.0f, 2.0f,  0.0f);
+    glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, 0.0f,  1.0f);
+    glColor3f(0.0f, 1.0f, 0.0f); glVertex3f( 1.0f, 0.0f,  1.0f);
+    glColor3f(0.0f, 0.0f, 1.0f); glVertex3f( 0.0f, 0.0f, -1.4f);
+    glColor3f(1.0f, 1.0f, 1.0f); glVertex3f( 0.0f, 2.0f,  0.0f);
+    glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, 0.0f,  1.0f);
     glEnd();
 
     glFlush();
@@ -69,7 +69,7 @@ void init()
 
     // Set the current clear color to sky blue and the current drawing color to
     // white.
-    glClearColor(0.1, 0.39, 0.88, 1.0);
+    glClearColor(0.1f, 0.39f, 0.88f, 1.0f);
     glColor3f(1.0, 1.0, 1.0);
 
     // Tell the rendering engine not to draw backfaces.  Without this code,
@@ -101,6 +101,9 @@ void init()
     glRotatef(70, 0, 1, 0);
 }
 
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
+
 int main()
 {
     OpenGL_Compatibility_Init(1, 2);
@@ -111,7 +114,7 @@ int main()
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());

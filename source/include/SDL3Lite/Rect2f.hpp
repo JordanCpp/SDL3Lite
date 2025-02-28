@@ -24,29 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Vec2_hpp
-#define SDL3Lite_Shared_Vec2_hpp
+#ifndef SDL3Lite_Shared_Rect2f_hpp
+#define SDL3Lite_Shared_Rect2f_hpp
 
-#include <SDL3/SDL_Point.h>
+#include <SDL3/SDL_Rect.h>
 
 namespace SDL
 {
-	class Vec2i : public SDL_Point
+	class Rect2f
 	{
 	public:
-		Vec2i();
-		Vec2i(int x, int y);
-		const Vec2i& operator=(Vec2i& v);
-		const Vec2i& operator=(const Vec2i& v);
-	};
-
-	class Vec2f : public SDL_FPoint
-	{
-	public:
-		Vec2f();
-		Vec2f(float x, float y);
-		const Vec2f& operator=(Vec2f& v);
-		const Vec2f& operator=(const Vec2f& v);
+		Rect2f();
+		Rect2f(float x, float y, float w, float h);
+		Rect2f(const SDL_FRect& rect);
+		const SDL_FRect& Get();
+	private:
+		SDL_FRect _rect;
 	};
 }
 

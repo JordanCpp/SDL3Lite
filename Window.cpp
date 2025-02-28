@@ -24,30 +24,43 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Vec2_hpp
-#define SDL3Lite_Shared_Vec2_hpp
+#include <SDL3/SDL.h>
 
-#include <SDL3/SDL_Point.h>
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
 
-namespace SDL
+int main()
 {
-	class Vec2i : public SDL_Point
-	{
-	public:
-		Vec2i();
-		Vec2i(int x, int y);
-		const Vec2i& operator=(Vec2i& v);
-		const Vec2i& operator=(const Vec2i& v);
-	};
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-	class Vec2f : public SDL_FPoint
-	{
-	public:
-		Vec2f();
-		Vec2f(float x, float y);
-		const Vec2f& operator=(Vec2f& v);
-		const Vec2f& operator=(const Vec2f& v);
-	};
+    SDL_Window* window = SDL_CreateWindow("Window", WINDOW_WIDTH, WINDOW_HEIGTH, 0);
+    if (window == NULL)
+    {
+        SDL_Log("Create window error: %s\n", SDL_GetError());
+        return 1;
+    }
+    
+    bool done = false;
+
+    while (!done)
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                done = true;
+            }
+        }
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
 }
-
-#endif

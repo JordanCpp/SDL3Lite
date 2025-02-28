@@ -77,7 +77,7 @@ typedef Uint64 SDL_WindowFlags;
 typedef struct SDL_Window SDL_Window;
 
 extern SDL_DECLSPEC SDL_Window* SDLCALL SDL_CreateWindow(const char* title, int w, int h, size_t flags);
-extern SDL_DECLSPEC void SDLCALL SDL_DestroyWindow(SDL_Window* window);
+extern SDL_DECLSPEC void        SDLCALL SDL_DestroyWindow(SDL_Window* window);
 
 #ifdef __cplusplus
 }

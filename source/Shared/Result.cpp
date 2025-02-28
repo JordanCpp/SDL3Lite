@@ -60,6 +60,6 @@ void Result::Message(const std::string& message, const std::string& detail)
 
 void Result::Clear()
 {
-	_ok = true;
-	_message.clear();
+	_ok      = true;
+	_message = "";
 }

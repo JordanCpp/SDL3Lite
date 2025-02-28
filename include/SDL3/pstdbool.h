@@ -24,30 +24,17 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Vec2_hpp
-#define SDL3Lite_Shared_Vec2_hpp
+#ifndef SDL3Lite_pstdbool_h
+#define SDL3Lite_pstdbool_h
 
-#include <SDL3/SDL_Point.h>
+#if (_MSC_VER >= 1900)
+    #include <stdbool.h>
+#endif
 
-namespace SDL
-{
-	class Vec2i : public SDL_Point
-	{
-	public:
-		Vec2i();
-		Vec2i(int x, int y);
-		const Vec2i& operator=(Vec2i& v);
-		const Vec2i& operator=(const Vec2i& v);
-	};
-
-	class Vec2f : public SDL_FPoint
-	{
-	public:
-		Vec2f();
-		Vec2f(float x, float y);
-		const Vec2f& operator=(Vec2f& v);
-		const Vec2f& operator=(const Vec2f& v);
-	};
-}
+#if (_MSC_VER <= 1200) && (!__cplusplus)
+    #define bool  char
+    #define true  1
+    #define false 0
+#endif
 
 #endif

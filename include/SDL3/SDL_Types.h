@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_SDL_Types_h
 
 #include <SDL3/pstdint.h>
+#include <SDL3/pstdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,12 +38,27 @@ extern "C" {
                                       Defines
 **************************************************************************************/
 
+#define SDLCALL
+
 #if defined(_WIN32)
-    #define SDLCALL      __cdecl
-    #define SDL_DECLSPEC __declspec(dllexport)
-#elif defined (__unix__)
-    #define SDLCALL      
-    #define SDL_DECLSPEC __attribute__((visibility("default")))
+    #define SDL3LITE_EXPORT __declspec(dllexport)
+    #define SDL3LITE_IMPORT __declspec(dllimport)
+#elif defined(__unix__)
+    #define SDL3LITE_EXPORT __attribute__((visibility("default")))
+    #define SDL3LITE_IMPORT
+#else
+    #define SDL3LITE_EXPORT
+    #define SDL3LITE_IMPORT
+#endif
+
+#if defined(SDL3LITE_STATIC)
+    #define SDL_DECLSPEC
+#else
+    #if defined(SDL3LITE_SHARED)
+        #define SDL_DECLSPEC SDL3LITE_EXPORT
+    #else
+        #define SDL_DECLSPEC SDL3LITE_IMPORT
+    #endif
 #endif
 
 /**************************************************************************************

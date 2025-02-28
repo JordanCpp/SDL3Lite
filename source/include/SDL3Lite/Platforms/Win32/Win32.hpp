@@ -27,6 +27,9 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Win32_Win32_hpp
 #define SDL3Lite_Win32_Win32_hpp
 
+#undef UNICODE
+#undef _UNICODE
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 typedef HGLRC(WINAPI* PFNWGLCREATECONTEXT)(HDC);

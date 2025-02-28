@@ -29,21 +29,31 @@ DEALINGS IN THE SOFTWARE.
 using namespace SDL;
 
 Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
-	_bpp(3),
-	_size(size),
-	_pixelFormat(pixelFormat)
+	_size(size)
 {
-	_pixels.resize(_size.x * _size.y * _bpp);
+	flags    = 0;
+	format   = pixelFormat;
+	w        = _size.x;
+	h        = _size.y;
+	pitch    = 3;
+	_pixels.resize(w * h * pitch);
+	pixels   = &_pixels[0];
+	refcount = 0;
+	reserved = NULL;
+}
+
+Surface::~Surface()
+{
 }
 
 int Surface::GetBpp()
 {
-	return _bpp;
+	return pitch;
 }
 
 SDL_PixelFormat Surface::GetPixelFormat()
 {
-	return _pixelFormat;
+	return format;
 }
 
 const Vec2i& Surface::GetSize()
@@ -51,7 +61,7 @@ const Vec2i& Surface::GetSize()
 	return _size;
 }
 
-std::vector<uint8_t>& Surface::GetPixels()
+uint8_t* Surface::GetPixels()
 {
-	return _pixels;
+	return (uint8_t*)pixels;
 }

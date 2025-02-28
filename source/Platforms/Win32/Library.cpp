@@ -28,7 +28,8 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-Library::Library() :
+Library::Library(SDL::Result& result) :
+	_result(result),
 	_module(NULL)
 {
 }
@@ -54,7 +55,14 @@ void Library::Close()
 	}
 }
 
-SDL_FunctionPointer Library::GetFunction(const std::string& name)
+SDL_FunctionPointer Library::Load(const std::string& name)
 {
-	return (SDL_FunctionPointer)GetProcAddress(_module, name.c_str());
+	SDL_FunctionPointer result = (SDL_FunctionPointer)GetProcAddress(_module, name.c_str());
+
+	if (result == NULL)
+	{
+		_result.Message("Could not load library: " + std::string(name));
+	}
+
+	return result;
 }

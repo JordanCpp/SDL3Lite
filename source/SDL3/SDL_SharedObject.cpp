@@ -25,48 +25,32 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SDL3/SDL_SharedObject.hpp>
 #include <SDL3Lite/Platforms/Library.hpp>
 #include <assert.h>
 
-struct SDL_SharedObject
+SDL_SharedObject* SDL_LoadObjectImplementation(SDL::Result& result, const char* sofile)
 {
-public:
-	SDL_SharedObject(SDL::Result& result);
-	SDL::Library& GetLibrary();
-private:
-	SDL::Result& _result;
-	SDL::Library _library;
-};
+	SDL_SharedObject* sharedObject = new SDL::Library(result);
 
-SDL_SharedObject::SDL_SharedObject(SDL::Result& result) :
-	_result(result)
-{
-}
-
-SDL::Library& SDL_SharedObject::GetLibrary()
-{
-	return _library;
-}
-
-SDL_SharedObject* SDL_LoadObject(const char* sofile)
-{
-	SDL_SharedObject* sharedObject = new SDL_SharedObject(SDL::GetApplication().GetResult());
-
-	if (sharedObject->GetLibrary().Open(sofile))
+	if (sharedObject->Open(sofile))
 	{
 		return sharedObject;
 	}
 
-	SDL::GetApplication().GetResult().Message("Could not load library: " + std::string(sofile));
-
 	return NULL;
+}
+
+SDL_SharedObject* SDL_LoadObject(const char* sofile)
+{
+	return SDL_LoadObjectImplementation(SDL::GetApplication().GetResult(), sofile);
 }
 
 void SDL_UnloadObject(SDL_SharedObject* handle)
 {
 	assert(handle);
 
-	handle->GetLibrary().Close();
+	handle->Close();
 
 	delete handle;
 }
@@ -76,5 +60,5 @@ SDL_FunctionPointer SDL_LoadFunction(SDL_SharedObject* handle, const char* name)
 	assert(handle);
 	assert(name);
 
-	return handle->GetLibrary().GetFunction(name);
+	return handle->Load(name);
 }

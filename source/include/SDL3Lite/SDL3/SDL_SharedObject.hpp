@@ -24,22 +24,20 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL3_SDL_Surface_hpp
-#define SDL3Lite_SDL3_SDL_Surface_hpp
+#ifndef SDL3Lite_SDL3_SDL_SharedObject_hpp
+#define SDL3Lite_SDL3_SDL_SharedObject_hpp
 
-#include <SDL3Lite/Application.hpp>
-#include <SDL3Lite/Surface.hpp>
+#include <SDL3/SDL_SharedObject.h>
 
-struct SDL_Surface
+struct SDL_SharedObject
 {
 public:
-	SDL_Surface(const SDL::Vec2i& size, SDL_PixelFormat pixelFormat);
-	~SDL_Surface();
-	SDL::Surface* GetSurface();
-private:
-	SDL::Surface* _surface;
+	virtual ~SDL_SharedObject() {};
+	virtual bool Open(const std::string& path) = 0;
+	virtual void Close() = 0;
+	virtual SDL_FunctionPointer Load(const std::string& path) = 0;
 };
 
-SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format);
+SDL_SharedObject* SDL_LoadObjectImplementation(SDL::Result& result, const char* sofile);
 
 #endif

@@ -24,40 +24,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/SDL.h>
+#ifndef SDL3Lite_SDL3_SDL_Surface_hpp
+#define SDL3Lite_SDL3_SDL_Surface_hpp
 
-int main()
-{
-    if (!SDL_Init(SDL_INIT_VIDEO))
-    {
-        SDL_Log("Init error: %s\n", SDL_GetError());
-        return 1;
-    }
+#include <SDL3Lite/Surface.hpp>
 
-    SDL_Window* window = SDL_CreateWindow("Window", 640, 480, 0);
-    if (window == NULL)
-    {
-        SDL_Log("Create window error: %s\n", SDL_GetError());
-        return 1;
-    }
-    
-    bool done = false;
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format);
 
-    while (!done)
-    {
-        SDL_Event event;
-
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT)
-            {
-                done = true;
-            }
-        }
-    }
-
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
-    return 0;
-}
+#endif

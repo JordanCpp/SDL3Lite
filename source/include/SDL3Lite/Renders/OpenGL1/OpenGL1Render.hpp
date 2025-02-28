@@ -29,8 +29,8 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/OpenGL/Mat4f.hpp>
-#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 
 namespace SDL
 {

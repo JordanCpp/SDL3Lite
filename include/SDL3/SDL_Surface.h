@@ -226,12 +226,25 @@ extern "C" {
 #endif
     } SDL_PixelFormat;
 
+
     typedef Uint32 SDL_SurfaceFlags;
 
 #define SDL_SURFACE_PREALLOCATED    0x00000001u /**< Surface uses preallocated pixel memory */
 #define SDL_SURFACE_LOCK_NEEDED     0x00000002u /**< Surface needs to be locked to access pixels */
 #define SDL_SURFACE_LOCKED          0x00000004u /**< Surface is currently locked */
 #define SDL_SURFACE_SIMD_ALIGNED    0x00000008u /**< Surface uses pixel memory allocated with SDL_aligned_alloc() */
+
+    struct SDL_Surface
+    {
+        SDL_SurfaceFlags flags;     /**< The flags of the surface, read-only */
+        SDL_PixelFormat format;     /**< The format of the surface, read-only */
+        int w;                      /**< The width of the surface, read-only. */
+        int h;                      /**< The height of the surface, read-only. */
+        int pitch;                  /**< The distance in bytes between rows of pixels, read-only */
+        void* pixels;               /**< A pointer to the pixels of the surface, the pixels are writeable if non-NULL */
+        int refcount;               /**< Application reference count, used when freeing surface */
+        void* reserved;             /**< Reserved for internal use */
+    };
 
 typedef struct SDL_Surface SDL_Surface;
 

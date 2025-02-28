@@ -27,11 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_h
 #define SDL3Lite_SDL_h
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdbool.h>
+#include <SDL3/SDL_AppResult.h>
 #include <SDL3/SDL_Rect.h>
 #include <SDL3/SDL_Types.h>
 #include <SDL3/SDL_SharedObject.h>
@@ -45,9 +41,5 @@ extern "C" {
 #include <SDL3/SDL_Texture.h>
 #include <SDL3/SDL_Bmp.h>
 #include <SDL3/SDL_Log.h>
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

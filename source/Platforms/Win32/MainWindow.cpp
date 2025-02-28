@@ -176,7 +176,7 @@ LRESULT CALLBACK MainWindow::Handler(UINT Message, WPARAM WParam, LPARAM LParam)
 	{
 
 	case WM_DESTROY:
-		event.type = SDL_EventType::SDL_EVENT_QUIT;
+		event.type = SDL_EVENT_QUIT;
 		_eventHandler->Push(event);
 		PostQuitMessage(0);
 		break;

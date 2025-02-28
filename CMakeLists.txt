@@ -1,4 +1,6 @@
 
+add_compile_definitions(-DSDL3LITE_SHARED)
+
 if (MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)  
@@ -38,26 +40,29 @@ target_link_libraries(Tests ${DEPS_LIBRARIES})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/sample.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
-add_executable(OpenGL1 "OpenGL1.c")
+add_executable(OpenGL1 "OpenGL1.cpp")
 target_link_libraries(OpenGL1 SDL3)
 
-add_executable(Rects "Rects.c")
+add_executable(Rects "Rects.cpp")
 target_link_libraries(Rects SDL3)
 
-add_executable(Renderer "Renderer.c")
+add_executable(Renderer "Renderer.cpp")
 target_link_libraries(Renderer SDL3)
 
-add_executable(Textures "Textures.c")
+add_executable(Textures "Textures.cpp")
 target_link_libraries(Textures SDL3)
 
-add_executable(Window "Window.c")
+add_executable(Window "Window.cpp")
 target_link_libraries(Window SDL3)
 
-add_executable(GL1_Triangle "GL1_Triangle.c")
+add_executable(GL1_Triangle "GL1_Triangle.cpp")
 target_link_libraries(GL1_Triangle SDL3)
 
-add_executable(GL1_Tetrahedron "GL1_Tetrahedron.c")
+add_executable(GL1_Tetrahedron "GL1_Tetrahedron.cpp")
 target_link_libraries(GL1_Tetrahedron SDL3)
 
 add_executable(GL3_Triangle "GL3_Triangle.cpp")
 target_link_libraries(GL3_Triangle SDL3)
+
+add_executable(App "App.cpp")
+target_link_libraries(App SDL3)

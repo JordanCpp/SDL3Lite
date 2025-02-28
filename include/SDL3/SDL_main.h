@@ -24,65 +24,49 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-//https://cs.lmu.edu/~ray/notes/openglexamples/
+#ifndef SDL3Lite_SDL_main_h
+#define SDL3Lite_SDL_main_h
 
-#define OPENGL_IMPLEMENTATION
-#include "OpenGL.h"
 #include <SDL3/SDL.h>
 
-int main()
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if defined(SDL_MAIN_USE_CALLBACKS)
+
+extern SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]);
+extern SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event);
+extern SDL_AppResult SDL_AppIterate(void* appstate);
+extern void SDL_AppQuit(void* appstate, SDL_AppResult result);
+
+int main(int argc, char* argv[])
 {
-    OpenGL_Compatibility_Init(1, 2);
-
-    if (!SDL_Init(SDL_INIT_VIDEO))
-    {
-        SDL_Log("Init error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", 640, 480, SDL_WINDOW_OPENGL);
-    if (window == NULL)
-    {
-        SDL_Log("Create window error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
-    if (context == NULL)
-    {
-        SDL_Log("Create context error: %s\n", SDL_GetError());
-        return 1;
-    }
-    
-    bool done = false;
-
-    while (!done)
+    SDL_AppResult result = SDL_AppInit(NULL, argc, argv);
+	
+    if (result != SDL_APP_FAILURE)
     {
         SDL_Event event;
 
-        while (SDL_PollEvent(&event))
+        while (SDL_AppEvent(NULL, &event) != SDL_APP_SUCCESS)
         {
-            if (event.type == SDL_EVENT_QUIT)
+            while (SDL_PollEvent(&event))
             {
-                done = true;
             }
+
+            SDL_AppIterate(NULL);
         }
 
-        glClear(GL_DEPTH_BUFFER_BIT);
-
-        glBegin(GL_POLYGON);
-        glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.6f, -0.75f, 0.5f);
-        glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.6f , -0.75f, 0.0f);
-        glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f , 0.75f , 0.0f);
-        glEnd();
-        
-        SDL_GL_SwapWindow(window);
+        SDL_AppQuit(NULL, SDL_APP_FAILURE);
     }
 
-    SDL_GL_DestroyContext(context);
-    SDL_DestroyWindow(window);
-    
-    SDL_Quit();
-
-    return 0;
+	return result;
 }
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

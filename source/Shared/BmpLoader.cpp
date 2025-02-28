@@ -26,6 +26,11 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/BmpLoader.hpp>
 
+#if (_MSC_VER <= 1600)
+    #define STBI_NO_THREAD_LOCALS
+    #define STBI_NO_SIMD
+#endif
+
 #define STBI_ONLY_BMP
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"

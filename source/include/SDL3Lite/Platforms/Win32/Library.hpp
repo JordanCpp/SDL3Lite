@@ -27,22 +27,23 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Win32_Library_hpp
 #define SDL3Lite_Win32_Library_hpp
 
-#include <string>
-#include <SDL3/SDL.h>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/SDL3/SDL_SharedObject.hpp>
 #include <SDL3Lite/Platforms/Win32/Win32.hpp>
 
 namespace SDL
 {
-	class Library
+	class Library : public SDL_SharedObject
 	{
 	public:
-		Library();
+		Library(SDL::Result& result);
 		~Library();
 		bool Open(const std::string& path);
 		void Close();
-		SDL_FunctionPointer GetFunction(const std::string& name);
+		SDL_FunctionPointer Load(const std::string& name);
 	private:
-		HMODULE _module;
+		SDL::Result& _result;
+		HMODULE      _module;
 	};
 }
 

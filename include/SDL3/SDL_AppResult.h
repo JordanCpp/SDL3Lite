@@ -24,30 +24,22 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_Vec2_hpp
-#define SDL3Lite_Shared_Vec2_hpp
+#ifndef SDL3Lite_SDL_AppResult_h
+#define SDL3Lite_SDL_AppResult_h
 
-#include <SDL3/SDL_Point.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-namespace SDL
-{
-	class Vec2i : public SDL_Point
-	{
-	public:
-		Vec2i();
-		Vec2i(int x, int y);
-		const Vec2i& operator=(Vec2i& v);
-		const Vec2i& operator=(const Vec2i& v);
-	};
+    typedef enum SDL_AppResult
+    {
+        SDL_APP_CONTINUE,   /**< Value that requests that the app continue from the main callbacks. */
+        SDL_APP_SUCCESS,    /**< Value that requests termination with success from the main callbacks. */
+        SDL_APP_FAILURE     /**< Value that requests termination with error from the main callbacks. */
+    } SDL_AppResult;
 
-	class Vec2f : public SDL_FPoint
-	{
-	public:
-		Vec2f();
-		Vec2f(float x, float y);
-		const Vec2f& operator=(Vec2f& v);
-		const Vec2f& operator=(const Vec2f& v);
-	};
+#ifdef __cplusplus
 }
+#endif
 
 #endif

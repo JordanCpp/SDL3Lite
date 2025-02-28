@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Bmp.hpp>
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/BmpLoader.hpp>
-#include <SDL3Lite/SDL3/SDL_Surface.hpp>
+#include <SDL3Lite/Surface.hpp>
 
 SDL_Surface* SDL_LoadBMP(const char* file)
 {
@@ -40,14 +40,14 @@ SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file)
 
 	if (bmpLoader.Reset(file))
 	{
-		SDL_Surface* result = new SDL_Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
+		SDL_Surface* result = new SDL::Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
 
-		int width  = result->GetSurface()->GetSize().x;
-		int heigth = result->GetSurface()->GetSize().y;
-		int bpp    = result->GetSurface()->GetBpp();
+		int width  = result->w;
+		int heigth = result->h;
+		int bpp    = result->pitch;
 
 		size_t bytes = width * heigth * bpp;
-		uint8_t* dst = &result->GetSurface()->GetPixels()[0];
+		uint8_t* dst = (uint8_t*)result->pixels;
 		uint8_t* src = bmpLoader.GetPixels();
 
 		for (size_t i = 0; i < bytes; i += bpp)
