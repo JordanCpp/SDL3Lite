@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <OpenGL.h>
 #include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Rect2f.hpp>
 #include <SDL3Lite/Color.hpp>
 
 namespace SDL
@@ -39,7 +40,7 @@ namespace SDL
 	void DestroyTexture(GLint id);
 	GLint BppToFormat(int bpp);
 	void CopyTexture(GLuint id, const Vec2i& dstPos, const Vec2i& srcSize, uint8_t* pixels, int bpp);
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize);
+	void DrawTexture(const Rect2f& dst, const Rect2f& src, size_t textureSize);
 }
 
 #endif

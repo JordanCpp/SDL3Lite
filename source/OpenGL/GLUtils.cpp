@@ -107,17 +107,17 @@ namespace SDL
 		GL_ASSERT(glDisable(GL_TEXTURE_2D));
 	}
 
-	void DrawTexture(const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize, size_t textureSize)
+	void DrawTexture(const Rect2f& dst, const Rect2f& src, size_t textureSize)
 	{
-		GLfloat x = dstPos.x;
-		GLfloat y = dstPos.y;
-		GLfloat w = dstSize.x;
-		GLfloat h = dstSize.y;
+		GLfloat x = dst.x;
+		GLfloat y = dst.y;
+		GLfloat w = dst.w;
+		GLfloat h = dst.h;
 
-		GLfloat cx = srcPos.x;
-		GLfloat cy = srcPos.y;
-		GLfloat cw = srcSize.x;
-		GLfloat ch = srcSize.y;
+		GLfloat cx = src.x;
+		GLfloat cy = src.y;
+		GLfloat cw = src.w;
+		GLfloat ch = src.h;
 
 		GLfloat dcx = cx / textureSize;
 		GLfloat dcy = cy / textureSize;

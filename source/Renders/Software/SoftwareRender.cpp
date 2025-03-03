@@ -28,11 +28,12 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-SoftwareRender::SoftwareRender(SDL_Window* window)
+SoftwareRender::SoftwareRender(SDL_Window* window) :
+	_surface(window->GetSize(), SDL_PIXELFORMAT_RGB24)
 {
 }
 
-const Vec2i& SDL::SoftwareRender::GetSize()
+const Vec2i& SoftwareRender::GetSize()
 {
 	return _size;
 }
@@ -53,6 +54,6 @@ void SoftwareRender::FillRect(const Vec2f& pos, const Vec2f& size)
 {
 }
 
-void SoftwareRender::Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
+void SoftwareRender::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
 }

@@ -42,7 +42,7 @@ OpenGL1Render::OpenGL1Render(Result& result, SDL_Window* window) :
     glEnable(GL_BLEND);
 }
 
-const Vec2i& SDL::OpenGL1Render::GetSize()
+const Vec2i& OpenGL1Render::GetSize()
 {
     return _window->GetSize();
 }
@@ -101,14 +101,14 @@ void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
     glEnd();
 }
 
-void OpenGL1Render::Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize)
+void OpenGL1Render::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
     OpenGL1Texture* tex = (OpenGL1Texture*)texture;
 
     GL_ASSERT(glEnable(GL_TEXTURE_2D));
     GL_ASSERT(glBindTexture(GL_TEXTURE_2D, tex->GetTexture()));
 
-    DrawTexture(dstPos, dstSize, srcPos, srcSize, tex->GetQuad().x);
+    DrawTexture(dst, src, tex->GetQuad().x);
 
     GL_ASSERT(glDisable(GL_TEXTURE_2D));
 }

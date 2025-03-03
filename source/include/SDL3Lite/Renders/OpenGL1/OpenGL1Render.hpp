@@ -31,6 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/OpenGL/Mat4f.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <SDL3Lite/Rect2f.hpp>
 
 namespace SDL
 {
@@ -45,7 +46,7 @@ namespace SDL
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
-		void Draw(SDL_Texture* texture, const Vec2f& dstPos, const Vec2f& dstSize, const Vec2f& srcPos, const Vec2f& srcSize);
+		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
 	private:
 		Result&     _result;
 		SDL_Window* _window;

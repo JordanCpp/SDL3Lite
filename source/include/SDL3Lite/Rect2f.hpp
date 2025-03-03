@@ -31,15 +31,15 @@ DEALINGS IN THE SOFTWARE.
 
 namespace SDL
 {
-	class Rect2f
+	class Rect2f : public SDL_FRect
 	{
 	public:
 		Rect2f();
 		Rect2f(float x, float y, float w, float h);
 		Rect2f(const SDL_FRect& rect);
-		const SDL_FRect& Get();
-	private:
-		SDL_FRect _rect;
+		const Rect2f& operator=(Rect2f& v);
+		const Rect2f& operator=(SDL_FRect* v);
+		const Rect2f& operator=(const SDL_FRect* v);
 	};
 }
 

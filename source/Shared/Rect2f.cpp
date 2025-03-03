@@ -30,26 +30,54 @@ using namespace SDL;
 
 Rect2f::Rect2f()
 {
-	_rect.x = 0.0f;
-	_rect.y = 0.0f;
-	_rect.w = 0.0f;
-	_rect.h = 0.0f;
+	x = 0.0f;
+	y = 0.0f;
+	w = 0.0f;
+	h = 0.0f;
 }
 
 Rect2f::Rect2f(float x, float y, float w, float h)
 {
-	_rect.x = x;
-	_rect.y = y;
-	_rect.w = w;
-	_rect.h = h;
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
 }
 
 Rect2f::Rect2f(const SDL_FRect& rect)
 {
-	_rect = rect;
+	x = rect.x;
+	y = rect.y;
+	w = rect.w;
+	h = rect.h;
 }
 
-const SDL_FRect& Rect2f::Get()
+const Rect2f& Rect2f::operator=(Rect2f& v)
 {
-	return _rect;
+	x = v.x;
+	y = v.y;
+	w = v.w;
+	h = v.h;
+
+	return *this;
+}
+
+const Rect2f& Rect2f::operator=(SDL_FRect* v)
+{
+	x = v->x;
+	y = v->y;
+	w = v->w;
+	h = v->h;
+
+	return *this;
+}
+
+const Rect2f& Rect2f::operator=(const SDL_FRect* v)
+{
+	x = v->x;
+	y = v->y;
+	w = v->w;
+	h = v->h;
+
+	return *this;
 }

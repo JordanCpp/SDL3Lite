@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Shared_SDL_Renderer_hpp
 
 #include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Rect2f.hpp>
 #include <SDL3Lite/Color.hpp>
 #include <SDL3Lite/SDL_Texture.hpp>
 
@@ -40,7 +41,7 @@ public:
 	virtual void SetColor(const SDL::Color& color) = 0;
 	virtual void Clear() = 0;
 	virtual void FillRect(const SDL::Vec2f& pos, const SDL::Vec2f& size) = 0;
-	virtual void Draw(SDL_Texture* texture, const SDL::Vec2f& dstPos, const SDL::Vec2f& dstSize, const SDL::Vec2f& srcPos, const SDL::Vec2f& srcSize) = 0;
+	virtual void Draw(SDL_Texture* texture, const SDL::Rect2f& dst, const SDL::Rect2f& src) = 0;
 };
 
 #endif

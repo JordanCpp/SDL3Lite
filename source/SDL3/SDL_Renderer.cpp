@@ -99,34 +99,28 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 	assert(renderer);
 	assert(texture);
 
-	SDL::Vec2f dstPos;
-	SDL::Vec2f dstSize;
-	SDL::Vec2f srcPos;
-	SDL::Vec2f srcSize;
+	SDL::Rect2f srcRect;
+	SDL::Rect2f dstRect;
 
 	if (srcrect == NULL)
 	{
-		srcPos  = SDL::Vec2f(0, 0);
-		srcSize = SDL::Vec2f((float)texture->GetSize().x, (float)texture->GetSize().y);
+		srcRect = SDL::Rect2f(0, 0, (float)texture->GetSize().x, (float)texture->GetSize().y);
 	}
 	else
 	{
-		srcPos  = SDL::Vec2f(srcrect->x, srcrect->y);
-		srcSize = SDL::Vec2f(srcrect->w, srcrect->h);
+		srcRect = srcrect;
 	}
 
 	if (dstrect == NULL)
 	{
-		dstPos  = SDL::Vec2f(0, 0);
-		dstSize = SDL::Vec2f((float)renderer->GetSize().x, (float)renderer->GetSize().y);
+		dstRect = SDL::Rect2f(0, 0, (float)renderer->GetSize().x, (float)renderer->GetSize().y);
 	}
 	else
 	{
-		dstPos  = SDL::Vec2f(dstrect->x, dstrect->y);
-		dstSize = SDL::Vec2f(dstrect->w, dstrect->h);
+		dstRect = dstrect;
 	}
 
-	renderer->Draw(texture, dstPos, dstSize, srcPos, srcSize);
+	renderer->Draw(texture, dstRect, srcRect);
 		
 	return true;
 }

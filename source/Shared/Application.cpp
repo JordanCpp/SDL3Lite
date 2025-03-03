@@ -39,7 +39,7 @@ Application::~Application()
 {
 }
 
-std::vector<SDL_Window*>& SDL::Application::GetWindows()
+std::vector<SDL_Window*>& Application::GetWindows()
 {
 	return _windows;
 }
@@ -79,7 +79,7 @@ bool Application::PollEvent(SDL_Event& dest)
 	return false;
 }
 
-Application& SDL::GetApplication()
+SDL::Application& SDL::GetApplication()
 {
 	return MainApplication;
 }
