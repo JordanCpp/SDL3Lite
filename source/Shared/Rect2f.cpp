@@ -62,6 +62,16 @@ const Rect2f& Rect2f::operator=(Rect2f& v)
 	return *this;
 }
 
+const Rect2f& Rect2f::operator=(const Rect2f& v)
+{
+	x = v.x;
+	y = v.y;
+	w = v.w;
+	h = v.h;
+
+	return *this;
+}
+
 const Rect2f& Rect2f::operator=(SDL_FRect* v)
 {
 	x = v->x;

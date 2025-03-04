@@ -31,7 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/pstdint.h>
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/SDL_Texture.hpp>
-#include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
+#include <SDL3Lite/SDL_Renderer.hpp>
 
 namespace SDL
 {
@@ -41,15 +41,15 @@ namespace SDL
 	{
 	public:
 		~OpenGL1Texture();
-		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp);
-		OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels);
+		OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp);
+		OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels);
 		const Vec2i& GetSize();
 		const Vec2i& GetQuad();
 		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
 	public:
 		GLuint GetTexture();
 	private:
-		OpenGL1Render& _render;
+	    SDL_Renderer*  _render;
 		GLuint         _texture;
 		Vec2i          _size;
 		Vec2i          _quad;

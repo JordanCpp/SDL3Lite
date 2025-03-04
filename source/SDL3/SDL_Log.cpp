@@ -26,8 +26,14 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/SDL_Log.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 void SDL_Log(const char* fmt, ...)
 {
-	printf(fmt);
+	va_list args;
+	va_start(args, fmt);
+
+	vprintf(fmt, args);
+	
+	va_end(args);
 }

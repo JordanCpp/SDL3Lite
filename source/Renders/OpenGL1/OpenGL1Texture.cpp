@@ -34,7 +34,7 @@ OpenGL1Texture::~OpenGL1Texture()
 	DestroyTexture(_texture);
 }
 
-OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp) :
+OpenGL1Texture::OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp) :
 	_render(render),
 	_texture(0),
 	_size(size)
@@ -48,7 +48,7 @@ OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp
 	_texture = CreateTexture(_quad.x, _quad.y, format);
 }
 
-OpenGL1Texture::OpenGL1Texture(OpenGL1Render& render, const Vec2i& size, int bpp, uint8_t* pixels) :
+OpenGL1Texture::OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels) :
 	_render(render),
 	_texture(0),
 	_size(size)

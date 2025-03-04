@@ -36,18 +36,20 @@ SDL_Surface* SDL_LoadBMP(const char* file)
 
 SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file)
 {
+	SDL_Surface* surface = NULL;
+
 	SDL::BmpLoader bmpLoader(result);
 
 	if (bmpLoader.Reset(file))
 	{
-		SDL_Surface* result = new SDL::Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
+		surface = new SDL::Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
 
-		int width  = result->w;
-		int heigth = result->h;
-		int bpp    = result->pitch;
+		int width  = surface->w;
+		int heigth = surface->h;
+		int bpp    = surface->pitch;
 
 		size_t bytes = width * heigth * bpp;
-		uint8_t* dst = (uint8_t*)result->pixels;
+		uint8_t* dst = (uint8_t*)surface->pixels;
 		uint8_t* src = bmpLoader.GetPixels();
 
 		for (size_t i = 0; i < bytes; i += bpp)
@@ -56,9 +58,7 @@ SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file)
 			dst[i + 1] = src[i + 1];
 			dst[i + 2] = src[i + 2];
 		}
-
-		return result;
 	}
 
-	return NULL;
+	return surface;
 }

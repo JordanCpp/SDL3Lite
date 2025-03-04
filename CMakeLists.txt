@@ -40,6 +40,9 @@ target_link_libraries(Tests ${DEPS_LIBRARIES})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/sample.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
+add_executable(Multiple "Multiple.cpp")
+target_link_libraries(Multiple SDL3)
+
 add_executable(OpenGL1 "OpenGL1.cpp")
 target_link_libraries(OpenGL1 SDL3)
 

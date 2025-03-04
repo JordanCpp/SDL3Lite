@@ -38,6 +38,7 @@ namespace SDL
 		Rect2f(float x, float y, float w, float h);
 		Rect2f(const SDL_FRect& rect);
 		const Rect2f& operator=(Rect2f& v);
+		const Rect2f& operator=(const Rect2f& v);
 		const Rect2f& operator=(SDL_FRect* v);
 		const Rect2f& operator=(const SDL_FRect* v);
 	};

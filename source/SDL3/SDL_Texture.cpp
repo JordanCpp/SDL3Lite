@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
 
 SDL_Texture* SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h)
 {
-	SDL_Texture* texture = new SDL::OpenGL1Texture((SDL::OpenGL1Render&)renderer, SDL::Vec2i(w, h), 3);
+	SDL_Texture* texture = new SDL::OpenGL1Texture(renderer, SDL::Vec2i(w, h), 3);
 
 	return texture;
 }
