@@ -28,8 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-SoftwareRender::SoftwareRender(SDL_Window* window) :
-	_surface(window->GetSize(), SDL_PIXELFORMAT_RGB24)
+SoftwareRender::SoftwareRender(SDL_Window* window)
 {
 }
 

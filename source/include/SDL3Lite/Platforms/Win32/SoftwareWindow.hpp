@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Win32_SoftwareWindow_hpp
 
 #include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Surface.hpp>
 #include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
 
 namespace SDL
@@ -47,6 +48,7 @@ namespace SDL
 		void PollEvents();
 	private:
 		MainWindow _mainWindow;
+		Surface    _surface;
 	};
 }
 

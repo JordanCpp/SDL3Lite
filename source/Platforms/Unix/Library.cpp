@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-Library::Library(SDL::Result& result) :
+Library::Library(Result& result) :
     _result(result),
     _library(NULL)
 {

@@ -88,6 +88,7 @@ int main()
     }
 
     SDL_DestroyTexture(texture);
+    SDL_DestroySurface(surface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 

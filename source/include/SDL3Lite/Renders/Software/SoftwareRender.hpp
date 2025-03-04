@@ -29,7 +29,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/SDL_Window.hpp>
-#include <SDL3Lite/Surface.hpp>
 
 namespace SDL
 {
@@ -45,7 +44,6 @@ namespace SDL
 		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
 	private:
 		Vec2i   _size;
-		Surface _surface;
 	};
 }
 
