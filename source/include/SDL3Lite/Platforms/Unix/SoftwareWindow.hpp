@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Unix_SoftwareWindow_hpp
 
 #include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Surface.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 
 namespace SDL
@@ -36,6 +37,7 @@ namespace SDL
 	{
 	public:
 		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		Surface* GetSurface();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();
@@ -47,6 +49,7 @@ namespace SDL
 		SDL_WindowFlags GetFlags();
 	private:
 		MainWindow _mainWindow;
+		Surface    _surface;
 	};
 }
 

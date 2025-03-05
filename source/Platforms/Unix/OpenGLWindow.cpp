@@ -89,6 +89,11 @@ OpenGLWindow::~OpenGLWindow()
 	glXDestroyContext(_mainWindow.GetDisplay(), _Context);
 }
 
+Surface* OpenGLWindow::GetSurface()
+{
+	return NULL;
+}
+
 const Vec2i& OpenGLWindow::GetPos()
 {
 	return _mainWindow.GetPos();
