@@ -35,6 +35,10 @@ DEALINGS IN THE SOFTWARE.
 
 int main()
 {
+    SDL_Window* window = NULL;
+    SDL_GLContext* context = NULL;
+    bool done = false;
+
     OpenGL_Compatibility_Init(1, 2);
 
     if (!SDL_Init(SDL_INIT_VIDEO))
@@ -43,21 +47,19 @@ int main()
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
+    context = SDL_GL_CreateContext(window);
     if (context == NULL)
     {
         SDL_Log("Create context error: %s\n", SDL_GetError());
         return 1;
     }
-    
-    bool done = false;
 
     while (!done)
     {

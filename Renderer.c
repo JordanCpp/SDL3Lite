@@ -24,8 +24,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#define OPENGL_IMPLEMENTATION
-#include "OpenGL.h"
 #include <SDL3/SDL.h>
 
 #define WINDOW_WIDTH  (640)
@@ -33,7 +31,9 @@ DEALINGS IN THE SOFTWARE.
 
 int main()
 {
-    OpenGL_Compatibility_Init(1, 2);
+    SDL_Window* window     = NULL;
+    SDL_Renderer* renderer = NULL;
+    bool done              = false;
 
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -41,23 +41,21 @@ int main()
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
-
+    window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
-
-    if (context == NULL)
+    renderer = SDL_CreateRenderer(window, NULL);
+    if (renderer == NULL)
     {
-        SDL_Log("Create context error: %s\n", SDL_GetError());
+        SDL_Log("Create renderer error: %s\n", SDL_GetError());
         return 1;
     }
-    
-    bool done = false;
+
+    SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
 
     while (!done)
     {
@@ -71,15 +69,12 @@ int main()
             }
         }
 
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        SDL_GL_SwapWindow(window);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
     }
 
-    SDL_GL_DestroyContext(context);
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    
     SDL_Quit();
 
     return 0;

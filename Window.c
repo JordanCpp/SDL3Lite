@@ -31,44 +31,21 @@ DEALINGS IN THE SOFTWARE.
 
 int main()
 {
+    SDL_Window* window = NULL;
+    bool done = false;
+
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("Init error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_Window* window1 = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
-    if (window1 == NULL)
+    window = SDL_CreateWindow("Window", WINDOW_WIDTH, WINDOW_HEIGTH, 0);
+    if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
-
-    SDL_Window* window2 = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
-    if (window2 == NULL)
-    {
-        SDL_Log("Create window error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_Renderer* renderer1 = SDL_CreateRenderer(window1, NULL);
-    if (renderer1 == NULL)
-    {
-        SDL_Log("Create renderer error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_Renderer* renderer2 = SDL_CreateRenderer(window2, NULL);
-    if (renderer2 == NULL)
-    {
-        SDL_Log("Create renderer error: %s\n", SDL_GetError());
-        return 1;
-    }
-    
-    bool done = false;
-
-    SDL_SetRenderDrawColor(renderer1, 237, 28, 36, 0);
-    SDL_SetRenderDrawColor(renderer2, 45, 28, 36, 0);
 
     while (!done)
     {
@@ -81,18 +58,9 @@ int main()
                 done = true;
             }
         }
-
-        SDL_RenderClear(renderer1);
-        SDL_RenderPresent(renderer1);
-
-        SDL_RenderClear(renderer2);
-        SDL_RenderPresent(renderer2);
     }
 
-    SDL_DestroyRenderer(renderer1);
-    SDL_DestroyRenderer(renderer2);
-    SDL_DestroyWindow(window1);
-    SDL_DestroyWindow(window2);
+    SDL_DestroyWindow(window);
     SDL_Quit();
 
     return 0;

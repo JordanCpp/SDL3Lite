@@ -35,15 +35,20 @@ DEALINGS IN THE SOFTWARE.
 // easy to read.
 void display() 
 {
+    GLfloat i = 0;
+
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Draw a white grid "floor" for the tetrahedron to sit on.
     glColor3f(1.0, 1.0, 1.0);
     glBegin(GL_LINES);
-    for (GLfloat i = -2.5; i <= 2.5; i += 0.25) {
+
+    for (i = -2.5; i <= 2.5; i += 0.25) 
+    {
         glVertex3f(i, 0, 2.5); glVertex3f(i, 0, -2.5);
         glVertex3f(2.5, 0, i); glVertex3f(-2.5, 0, i);
     }
+
     glEnd();
 
     // Draw the tetrahedron.  It is a four sided figure, so when defining it
@@ -106,6 +111,10 @@ void init()
 
 int main()
 {
+    SDL_Window* window     = NULL;
+    SDL_GLContext* context = NULL;
+    bool done              = false;
+
     OpenGL_Compatibility_Init(1, 2);
 
     if (!SDL_Init(SDL_INIT_VIDEO))
@@ -114,22 +123,20 @@ int main()
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_GLContext* context = SDL_GL_CreateContext(window);
+    context = SDL_GL_CreateContext(window);
     if (context == NULL)
     {
         SDL_Log("Create context error: %s\n", SDL_GetError());
         return 1;
     }
     
-    bool done = false;
-
     init();
 
     while (!done)

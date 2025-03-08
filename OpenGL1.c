@@ -24,6 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#define OPENGL_IMPLEMENTATION
+#include "OpenGL.h"
 #include <SDL3/SDL.h>
 
 #define WINDOW_WIDTH  (640)
@@ -31,21 +33,34 @@ DEALINGS IN THE SOFTWARE.
 
 int main()
 {
+    SDL_Window* window     = NULL;
+    SDL_GLContext* context = NULL;
+    bool done              = false;
+
+    OpenGL_Compatibility_Init(1, 2);
+
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("Init error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Window", WINDOW_WIDTH, WINDOW_HEIGTH, 0);
+    window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
-    
-    bool done = false;
 
+    context = SDL_GL_CreateContext(window);
+
+    if (context == NULL)
+    {
+        SDL_Log("Create context error: %s\n", SDL_GetError());
+        return 1;
+    }
+    
     while (!done)
     {
         SDL_Event event;
@@ -57,9 +72,16 @@ int main()
                 done = true;
             }
         }
+
+        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        SDL_GL_SwapWindow(window);
     }
 
+    SDL_GL_DestroyContext(context);
     SDL_DestroyWindow(window);
+    
     SDL_Quit();
 
     return 0;

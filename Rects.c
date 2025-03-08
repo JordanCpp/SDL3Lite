@@ -25,47 +25,46 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3/SDL.h>
+#include <time.h>
+#include <stdlib.h>
+
+int RandomValue(int min, int max)
+{
+    return min + rand() % (max - min);
+}
 
 #define WINDOW_WIDTH  (640)
 #define WINDOW_HEIGTH (480)
 
 int main()
 {
+    SDL_Window* window     = NULL;
+    SDL_Renderer* renderer = NULL;
+    bool done              = false;
+    size_t i               = 0;
+    SDL_FRect rect;
+
+    srand(clock() / CLOCKS_PER_SEC);
+
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("Init error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    renderer = SDL_CreateRenderer(window, NULL);
     if (renderer == NULL)
     {
         SDL_Log("Create renderer error: %s\n", SDL_GetError());
         return 1;
     }
-    
-    SDL_Surface* surface = SDL_LoadBMP("sample.bmp");
-    if (surface == NULL)
-    {
-        SDL_Log("Load bmp error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    if (texture == NULL)
-    {
-        SDL_Log("Create texture error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    bool done = false;
 
     while (!done)
     {
@@ -82,13 +81,21 @@ int main()
         SDL_SetRenderDrawColor(renderer, 237, 28, 36, 0);
         SDL_RenderClear(renderer);
 
-        SDL_RenderTexture(renderer, texture, NULL, NULL);
+        for (i = 0; i < 300; i++)
+        {
+            SDL_SetRenderDrawColor(renderer, RandomValue(0, 255), RandomValue(0, 255), RandomValue(0, 255), 0);
+
+            rect.x = (float)RandomValue(0, WINDOW_WIDTH);
+            rect.y = (float)RandomValue(0, WINDOW_HEIGTH);
+            rect.w = (float)RandomValue(25, 50);
+            rect.h = (float)RandomValue(25, 50);
+
+            SDL_RenderFillRect(renderer, &rect);
+        }
 
         SDL_RenderPresent(renderer);
     }
 
-    SDL_DestroyTexture(texture);
-    SDL_DestroySurface(surface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 

@@ -1,13 +1,13 @@
 
-call VC6_Build_EXE App.cpp ..\
-call VC6_Build_EXE GL1_Tetrahedron.cpp ..\
-call VC6_Build_EXE GL1_Triangle.cpp ..\
+call VC6_Build_EXE App.c ..\
+call VC6_Build_EXE GL1_Tetrahedron.c ..\
+call VC6_Build_EXE GL1_Triangle.c ..\
 call VC6_Build_EXE GL3_Triangle.cpp ..\
-call VC6_Build_EXE OpenGL1.cpp ..\
-call VC6_Build_EXE Rects.cpp ..\
-call VC6_Build_EXE Renderer.cpp ..\
-call VC6_Build_EXE Tests.cpp ..\
-call VC6_Build_EXE Textures.cpp ..\
-call VC6_Build_EXE Window.cpp ..\
+call VC6_Build_EXE OpenGL1.c ..\
+call VC6_Build_EXE Rects.c ..\
+call VC6_Build_EXE Renderer.c ..\
+call VC6_Build_EXE Textures.c ..\
+call VC6_Build_EXE Window.c ..\
+call VC6_Build_EXE Multiple.c ..\
 
 pause
