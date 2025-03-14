@@ -35,6 +35,11 @@ SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const
 {
 }
 
+Surface* SoftwareWindow::GetSurface()
+{
+	return &_surface;
+}
+
 const Vec2i& SoftwareWindow::GetPos()
 {
 	return _mainWindow.GetPos();
@@ -72,7 +77,19 @@ SDL_WindowFlags SoftwareWindow::GetFlags()
 
 bool SoftwareWindow::Present()
 {
-	return false;
+	DWORD w = (DWORD)_surface.GetSize().x;
+	DWORD h = (DWORD)_surface.GetSize().y;
+
+	_bitmapInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+	_bitmapInfo.bmiHeader.biWidth       = (LONG)w;
+	_bitmapInfo.bmiHeader.biHeight      = -(LONG)h;
+	_bitmapInfo.bmiHeader.biPlanes      = 1;
+	_bitmapInfo.bmiHeader.biBitCount    = _surface.GetBpp() * 8;
+	_bitmapInfo.bmiHeader.biCompression = BI_RGB;
+	
+	SetDIBitsToDevice(_mainWindow.GetHdc(), 0, 0, w, h, 0, 0, 0, h, _surface.GetPixels(), &_bitmapInfo, DIB_RGB_COLORS);
+
+	return true;
 }
 
 void SoftwareWindow::PollEvents()

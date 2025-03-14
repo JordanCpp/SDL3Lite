@@ -37,6 +37,7 @@ extern "C" {
 typedef struct SDL_Renderer SDL_Renderer;
 typedef struct SDL_Texture  SDL_Texture;
 
+extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateSoftwareRenderer(SDL_Surface* surface);
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateRenderer(SDL_Window* window, const char* name);
 extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* renderer);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPresent(SDL_Renderer* renderer);

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_Window_h
 #define SDL3Lite_SDL_Window_h
 
-#include <SDL3/SDL_Types.h>
+#include <SDL3/SDL_Surface.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,8 +76,9 @@ typedef Uint64 SDL_WindowFlags;
 
 typedef struct SDL_Window SDL_Window;
 
-extern SDL_DECLSPEC SDL_Window* SDLCALL SDL_CreateWindow(const char* title, int w, int h, size_t flags);
-extern SDL_DECLSPEC void        SDLCALL SDL_DestroyWindow(SDL_Window* window);
+extern SDL_DECLSPEC SDL_Window*  SDLCALL SDL_CreateWindow(const char* title, int w, int h, size_t flags);
+extern SDL_DECLSPEC void         SDLCALL SDL_DestroyWindow(SDL_Window* window);
+extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_GetWindowSurface(SDL_Window* window);
 
 #ifdef __cplusplus
 }

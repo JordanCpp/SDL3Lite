@@ -38,6 +38,7 @@ namespace SDL
 	public:
 		OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
 		~OpenGLWindow();
+		SDL::Surface* GetSurface();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();

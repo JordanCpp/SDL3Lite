@@ -27,19 +27,15 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_Color_hpp
 #define SDL3Lite_Shared_Color_hpp
 
-#include <SDL3/pstdint.h>
+#include <SDL3/SDL_Color.h>
 
 namespace SDL
 {
-	class Color
+	class Color : public SDL_Color
 	{
 	public:
 	    Color();
 		Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
-	    uint8_t r;
-		uint8_t g;
-		uint8_t b;
-		uint8_t a;
 	};
 }
 

@@ -37,6 +37,7 @@ namespace SDL
 	{
 	public:
 		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		SDL::Surface* GetSurface();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();
@@ -49,6 +50,7 @@ namespace SDL
 	private:
 		MainWindow _mainWindow;
 		Surface    _surface;
+		BITMAPINFO _bitmapInfo;
 	};
 }
 

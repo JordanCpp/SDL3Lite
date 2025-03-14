@@ -135,6 +135,11 @@ OpenGLWindow::~OpenGLWindow()
 	wglDeleteContext(_renderContext);
 }
 
+Surface* OpenGLWindow::GetSurface()
+{
+	return NULL;
+}
+
 const Vec2i& OpenGLWindow::GetPos()
 {
 	return _mainWindow.GetPos();

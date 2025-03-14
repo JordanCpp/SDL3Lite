@@ -24,34 +24,47 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IWindow_hpp
-#define SDL3Lite_Shared_IWindow_hpp
+#include <SDL3/SDL.h>
 
-#include <string>
-#include <vector>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
-#include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/EventHandler.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
 
-struct SDL_Window
+int main()
 {
-public:
-	virtual ~SDL_Window() {};
-	virtual SDL::Surface* GetSurface() = 0;
-	virtual const SDL::Vec2i& GetPos() = 0;
-	virtual void SetPos(const SDL::Vec2i& pos) = 0;
-	virtual const SDL::Vec2i& GetSize() = 0;
-	virtual void SetSize(const SDL::Vec2i& size) = 0;
-	virtual const std::string& GetTitle() = 0;
-	virtual void SetTitle(const std::string& title) = 0;
-	virtual SDL_WindowFlags GetFlags() = 0;
-	virtual void PollEvents() = 0;
-	virtual bool Present() = 0;
-};
+    SDL_Window* window   = NULL;
+    SDL_Surface* surface = NULL;
+    bool done            = false;
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, size_t flags);
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Init error: %s\n", SDL_GetError());
+        return 1;
+    }
 
-#endif
+    window = SDL_CreateWindow("Software", WINDOW_WIDTH, WINDOW_HEIGTH, 0);
+    if (window == NULL)
+    {
+        SDL_Log("Create window error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    surface = SDL_GetWindowSurface(window);
+
+    while (!done)
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                done = true;
+            }
+        }
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+}

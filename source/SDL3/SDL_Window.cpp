@@ -66,3 +66,10 @@ void SDL_DestroyWindow(SDL_Window* window)
 
 	delete window;
 }
+
+SDL_Surface* SDL_GetWindowSurface(SDL_Window* window)
+{
+	assert(window);
+
+	return window->GetSurface();
+}

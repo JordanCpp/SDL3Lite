@@ -48,6 +48,11 @@ SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* 
 	return renderer;
 }
 
+SDL_Renderer* SDL_CreateSoftwareRenderer(SDL_Surface* surface)
+{
+	return NULL;
+}
+
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
 	return SDL_CreateRendererImplementation(SDL::GetApplication().GetResult(), window, name);

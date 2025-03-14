@@ -28,17 +28,19 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-SoftwareRender::SoftwareRender(SDL_Window* window)
+SoftwareRender::SoftwareRender(SDL_Window* window) :
+	_window(window)
 {
 }
 
 const Vec2i& SoftwareRender::GetSize()
 {
-	return _size;
+	return _window->GetSize();
 }
 
 void SoftwareRender::Present()
 {
+	_window->Present();
 }
 
 void SoftwareRender::SetColor(const Color& color)

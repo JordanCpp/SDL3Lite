@@ -35,7 +35,7 @@ namespace SDL
 	class SoftwareRender : public SDL_Renderer
 	{
 	public:
-		SoftwareRender(SDL_Window*  window);
+		SoftwareRender(SDL_Window* window);
 		const Vec2i& GetSize();
 		void Present();
 		void SetColor(const Color& color);
@@ -43,7 +43,7 @@ namespace SDL
 		void FillRect(const Vec2f& pos, const Vec2f& size);
 		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
 	private:
-		Vec2i   _size;
+		SDL_Window* _window;
 	};
 }
 

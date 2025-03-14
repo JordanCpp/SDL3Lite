@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
 #include <SDL3Lite/BmpLoader.hpp>
+#include <SDL3/SDL.h>
 #include <stdio.h>
 
 using namespace SDL;
@@ -230,6 +231,26 @@ void TestBmpLoader()
     SDL_TEST(bmpLoader.GetBpp()            == 3);
 }
 
+void SDL_WindowTest()
+{
+    SDL_Window* window = SDL_CreateWindow("", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_TEST(window != NULL);
+
+    SDL_DestroyWindow(window);
+}
+
+void SDL_RendererTest()
+{
+    SDL_Window* window = SDL_CreateWindow("", 640, 480, SDL_WINDOW_OPENGL);
+    SDL_TEST(window != NULL);
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, "");
+    SDL_TEST(renderer != NULL);
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+}
+
 int main()
 {
     TestRingBuffer();
@@ -240,6 +261,9 @@ int main()
     TestOpenGLWindow(SDL_WINDOW_OPENGL);
     TestSoftwareWindow(0);
     TestBmpLoader();
+
+    SDL_WindowTest();
+    SDL_RendererTest();
 
     return 0;
 }

@@ -69,3 +69,6 @@ target_link_libraries(GL3_Triangle SDL3)
 
 add_executable(App "App.c")
 target_link_libraries(App SDL3)
+
+add_executable(Software "Software.c")
+target_link_libraries(Software SDL3)
