@@ -1,47 +1,61 @@
-# Greetings
-
 # SDL3Lite - Simple Directmedia Layer Version 3 Lite
+
 This is a lightweight implementation of the SDL3 library. 
+
 I really like the SDL3 library, but it saddens me that with each release of a new version, support for older systems is removed. 
 Therefore, I decided to write a simpler version compatible at the API level. 
 To support old and new systems, architectures, and operating systems.
 
-# Library Features
+## Library Features
 
-# Build for Linux
-sudo apt-get install libx11-dev
+To be described later (TBD)
 
-sudo apt-get install libgl1-mesa-dev
+## Build for Linux
 
-git clone https://github.com/JordanCpp/SDL3Lite.git
+```shell
+# Install dependencies
+$ sudo apt-get install libx11-dev
+$ sudo apt-get install libgl1-mesa-dev
 
-cd SDL3Lite
+# Clone this repository & go into its directory
+$ git clone https://github.com/JordanCpp/SDL3Lite.git
+$ cd SDL3Lite
 
-cmake -Bout
+# Generate Makefile
+$ cmake -Bout
+$ cd out
 
-cd out
+# Build library
+$ make
+```
 
-make
+## Integration into your project (CMake Linux or Windows)
 
-# Integration into your project (CMake Linux or Windows)
+TBD
 
-# Support platforms.
-Windows 95 and higher
+## Supported platforms
 
-Linux (XLib) Debian 3 and higher
+- Windows 95 and higher
+- Linux (XLib) Debian 3 and higher
 
-# Support graphics API.
-OpenGL >= 1.0 and <= 4.6
+## Supported graphics API
 
-# Support 2D renders.
-OpenGL 1.2
+- OpenGL >= 1.0 and <= 4.6
 
-# License.
+## Supported 2D renders
+
+- OpenGL 1.2
+
+## License
+
 Boost Software License - Version 1.0 - August 17th, 2003
 
-# Support compillers
+## Supported compillers
 
-# Screenshots
+TBD
+
+## Screenshots
+
 ![renderer](/screenshots/SDL_Renderer.jpg)
 ![Rects](/screenshots/Rects.jpg)
 ![Textures](/screenshots/Textures.jpg)
@@ -49,7 +63,10 @@ Boost Software License - Version 1.0 - August 17th, 2003
 ![Tetrahedron](/screenshots/Tetrahedron.jpg)
 ![Triangle](/screenshots/Triangle.jpg)
 
-# Renderer - Screen color
+## Examples
+
+### Renderer - Screen color
+
 ```c++
 #include <SDL3/SDL.h>
 #include <stdio.h>
@@ -102,7 +119,7 @@ int main()
 }
 ```
 
-# OpenGL 3.3 - Triangle
+### OpenGL 3.3 - Triangle
 
 ```c++
 #define OPENGL_IMPLEMENTATION
@@ -136,8 +153,8 @@ int main()
         return 1;
     }
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
     SDL_Window* window = SDL_CreateWindow("OpenGL1", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
     if (window == NULL)
@@ -146,7 +163,7 @@ int main()
         return 1;
     }
 
-	OpenGL_Compatibility_Init(3, 3);
+    OpenGL_Compatibility_Init(3, 3);
 
     SDL_GLContext* context = SDL_GL_CreateContext(window);
     if (context == NULL)
@@ -157,67 +174,67 @@ int main()
     
     bool done = false;
 
-	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGTH);
+    // Specify the viewport of OpenGL in the Window
+    // In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGTH);
 
-	// Create Vertex Shader Object and get its reference
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	// Attach Vertex Shader source to the Vertex Shader Object
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	// Compile the Vertex Shader into machine code
-	glCompileShader(vertexShader);
+    // Create Vertex Shader Object and get its reference
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    // Attach Vertex Shader source to the Vertex Shader Object
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    // Compile the Vertex Shader into machine code
+    glCompileShader(vertexShader);
 
-	// Create Fragment Shader Object and get its reference
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	// Attach Fragment Shader source to the Fragment Shader Object
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	// Compile the Vertex Shader into machine code
-	glCompileShader(fragmentShader);
+    // Create Fragment Shader Object and get its reference
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    // Attach Fragment Shader source to the Fragment Shader Object
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    // Compile the Vertex Shader into machine code
+    glCompileShader(fragmentShader);
 
-	// Create Shader Program Object and get its reference
-	GLuint shaderProgram = glCreateProgram();
-	// Attach the Vertex and Fragment Shaders to the Shader Program
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	// Wrap-up/Link all the shaders together into the Shader Program
-	glLinkProgram(shaderProgram);
+    // Create Shader Program Object and get its reference
+    GLuint shaderProgram = glCreateProgram();
+    // Attach the Vertex and Fragment Shaders to the Shader Program
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    // Wrap-up/Link all the shaders together into the Shader Program
+    glLinkProgram(shaderProgram);
 
-	// Delete the now useless Vertex and Fragment Shader objects
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+    // Delete the now useless Vertex and Fragment Shader objects
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
-	// Vertices coordinates
-	GLfloat vertices[] =
-	{
-		-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
-		0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-		0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f // Upper corner
-	};
+    // Vertices coordinates
+    GLfloat vertices[] =
+    {
+        -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
+         0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
+         0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f // Upper corner
+    };
 
-	// Create reference containers for the Vartex Array Object and the Vertex Buffer Object
-	GLuint VAO, VBO;
+    // Create reference containers for the Vartex Array Object and the Vertex Buffer Object
+    GLuint VAO, VBO;
 
-	// Generate the VAO and VBO with only 1 object each
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+    // Generate the VAO and VBO with only 1 object each
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
 
-	// Make the VAO the current Vertex Array Object by binding it
-	glBindVertexArray(VAO);
+    // Make the VAO the current Vertex Array Object by binding it
+    glBindVertexArray(VAO);
 
-	// Bind the VBO specifying it's a GL_ARRAY_BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// Introduce the vertices into the VBO
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // Bind the VBO specifying it's a GL_ARRAY_BUFFER
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // Introduce the vertices into the VBO
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	// Enable the Vertex Attribute so that OpenGL knows to use it
-	glEnableVertexAttribArray(0);
+    // Configure the Vertex Attribute so that OpenGL knows how to read the VBO
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // Enable the Vertex Attribute so that OpenGL knows to use it
+    glEnableVertexAttribArray(0);
 
-	// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+    // Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
     while (!done)
     {
@@ -231,24 +248,24 @@ int main()
             }
         }
 
-		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clean the back buffer and assign the new color to it
-		glClear(GL_COLOR_BUFFER_BIT);
-		// Tell OpenGL which Shader Program we want to use
-		glUseProgram(shaderProgram);
-		// Bind the VAO so OpenGL knows to use it
-		glBindVertexArray(VAO);
-		// Draw the triangle using the GL_TRIANGLES primitive
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+        // Specify the color of the background
+        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+        // Clean the back buffer and assign the new color to it
+        glClear(GL_COLOR_BUFFER_BIT);
+        // Tell OpenGL which Shader Program we want to use
+        glUseProgram(shaderProgram);
+        // Bind the VAO so OpenGL knows to use it
+        glBindVertexArray(VAO);
+        // Draw the triangle using the GL_TRIANGLES primitive
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         
         SDL_GL_SwapWindow(window);
     }
 
-	// Delete all the objects we've created
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteProgram(shaderProgram);
+    // Delete all the objects we've created
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteProgram(shaderProgram);
 
     SDL_GL_DestroyContext(context);
     SDL_DestroyWindow(window);
@@ -259,7 +276,7 @@ int main()
 }
 ```
 
-# OpenGL 1.2 - Triangle
+### OpenGL 1.2 - Triangle
 
 ```c++
 #define OPENGL_IMPLEMENTATION
