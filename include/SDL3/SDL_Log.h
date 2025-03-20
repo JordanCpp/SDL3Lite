@@ -34,7 +34,7 @@ extern "C" {
 #endif
 
 extern SDL_DECLSPEC void SDLCALL SDL_Log(const char* fmt, ...);
-
+extern SDL_DECLSPEC void SDLCALL SDL_LogError(int category, const char* fmt, ...);
 #ifdef __cplusplus
 }
 #endif

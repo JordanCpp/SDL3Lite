@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
 #include <assert.h>
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, size_t flags)
+SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags)
 {
 	SDL_Window* window = NULL;
 
@@ -72,4 +72,9 @@ SDL_Surface* SDL_GetWindowSurface(SDL_Window* window)
 	assert(window);
 
 	return window->GetSurface();
+}
+
+bool SDL_UpdateWindowSurface(SDL_Window* window)
+{
+	return window->Present();
 }

@@ -41,5 +41,6 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/SDL_Texture.h>
 #include <SDL3/SDL_Bmp.h>
 #include <SDL3/SDL_Log.h>
+#include <SDL3/SDL_Timer.h>
 
 #endif

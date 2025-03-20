@@ -251,6 +251,11 @@ void SDL_RendererTest()
     SDL_DestroyWindow(window);
 }
 
+void SDL_SoftwareRenderTest()
+{
+
+}
+
 int main()
 {
     TestRingBuffer();
@@ -264,6 +269,7 @@ int main()
 
     SDL_WindowTest();
     SDL_RendererTest();
+    SDL_SoftwareRenderTest();
 
     return 0;
 }

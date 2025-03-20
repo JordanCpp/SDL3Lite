@@ -24,34 +24,31 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IWindow_hpp
-#define SDL3Lite_Shared_IWindow_hpp
+#ifndef SDL3Lite_Renders_Software_SurfaceRender_hpp
+#define SDL3Lite_Renders_Software_SurfaceRender_hpp
 
-#include <string>
-#include <vector>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
+#include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/EventHandler.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
+#include <SDL3Lite/Renders/Software/PixelPainter.hpp>
 
-struct SDL_Window
+namespace SDL
 {
-public:
-	virtual ~SDL_Window() {};
-	virtual SDL::Surface* GetSurface() = 0;
-	virtual const SDL::Vec2i& GetPos() = 0;
-	virtual void SetPos(const SDL::Vec2i& pos) = 0;
-	virtual const SDL::Vec2i& GetSize() = 0;
-	virtual void SetSize(const SDL::Vec2i& size) = 0;
-	virtual const std::string& GetTitle() = 0;
-	virtual void SetTitle(const std::string& title) = 0;
-	virtual SDL_WindowFlags GetFlags() = 0;
-	virtual void PollEvents() = 0;
-	virtual bool Present() = 0;
-};
-
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
+	class SurfaceRender : public SDL_Renderer
+	{
+	public:
+		SurfaceRender(Surface* surface);
+		SDL_WindowFlags GetFlags();
+		const Vec2i& GetSize();
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
+	private:
+		PixelPainter _pixelPainter;
+		Color        _color;
+		Surface*     _surface;
+	};
+}
 
 #endif

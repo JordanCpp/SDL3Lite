@@ -24,34 +24,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IWindow_hpp
-#define SDL3Lite_Shared_IWindow_hpp
+#ifndef SDL3Lite_Renders_Software_SoftwareTexture_hpp
+#define SDL3Lite_Renders_Software_SoftwareTexture_hpp
 
-#include <string>
-#include <vector>
+#include <SDL3/pstdint.h>
 #include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
+#include <SDL3Lite/SDL_Texture.hpp>
+#include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/EventHandler.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
+#include <SDL3Lite/Renders/Software/PixelCopier.hpp>
 
-struct SDL_Window
+namespace SDL
 {
-public:
-	virtual ~SDL_Window() {};
-	virtual SDL::Surface* GetSurface() = 0;
-	virtual const SDL::Vec2i& GetPos() = 0;
-	virtual void SetPos(const SDL::Vec2i& pos) = 0;
-	virtual const SDL::Vec2i& GetSize() = 0;
-	virtual void SetSize(const SDL::Vec2i& size) = 0;
-	virtual const std::string& GetTitle() = 0;
-	virtual void SetTitle(const std::string& title) = 0;
-	virtual SDL_WindowFlags GetFlags() = 0;
-	virtual void PollEvents() = 0;
-	virtual bool Present() = 0;
-};
+	class SoftwareRender;
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
+	class SoftwareTexture : public SDL_Texture
+	{
+	public:
+		~SoftwareTexture();
+		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp);
+		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels);
+		const Vec2i& GetSize();
+		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
+	public:
+		Surface* GetSurface();
+	private:
+		PixelCopier    _pixelCopier;
+	    SDL_Renderer*  _render;
+		Vec2i          _size;
+		Surface        _surface;
+	};
+}
 
 #endif

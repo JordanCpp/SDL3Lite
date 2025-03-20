@@ -24,34 +24,41 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Shared_IWindow_hpp
-#define SDL3Lite_Shared_IWindow_hpp
+#include <SDL3Lite/Renders/Software/SoftwareTexture.hpp>
 
-#include <string>
-#include <vector>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
-#include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/EventHandler.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
+using namespace SDL;
 
-struct SDL_Window
+SoftwareTexture::~SoftwareTexture()
 {
-public:
-	virtual ~SDL_Window() {};
-	virtual SDL::Surface* GetSurface() = 0;
-	virtual const SDL::Vec2i& GetPos() = 0;
-	virtual void SetPos(const SDL::Vec2i& pos) = 0;
-	virtual const SDL::Vec2i& GetSize() = 0;
-	virtual void SetSize(const SDL::Vec2i& size) = 0;
-	virtual const std::string& GetTitle() = 0;
-	virtual void SetTitle(const std::string& title) = 0;
-	virtual SDL_WindowFlags GetFlags() = 0;
-	virtual void PollEvents() = 0;
-	virtual bool Present() = 0;
-};
+}
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
+SoftwareTexture::SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp) :
+	_render(render),
+	_size(size),
+	_surface(size)
+{
+}
 
-#endif
+SoftwareTexture::SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels) :
+	_render(render),
+	_size(size),
+	_surface(size)
+{
+}
+
+const Vec2i& SoftwareTexture::GetSize()
+{
+	return _size;
+}
+
+bool SoftwareTexture::Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp)
+{
+	_pixelCopier.Copy(_surface.GetPixels(), _surface.GetBpp(), _surface.GetSize(), pos, size, pixels, bpp, size, pos, size);
+
+	return true;
+}
+
+Surface* SoftwareTexture::GetSurface()
+{
+	return &_surface;
+}

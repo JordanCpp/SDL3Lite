@@ -41,6 +41,7 @@ namespace SDL
 	{
 	public:
 	    OpenGL1Render(Result& result, SDL_Window* window);
+		SDL_WindowFlags GetFlags();
 		const Vec2i& GetSize();
 		void Present();
 		void SetColor(const Color& color);

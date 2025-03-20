@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #undef UNICODE
 #undef _UNICODE
+#define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 

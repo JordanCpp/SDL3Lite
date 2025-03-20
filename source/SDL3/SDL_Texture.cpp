@@ -27,10 +27,20 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 #include <SDL3Lite/SDL_Surface.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <SDL3Lite/Renders/Software/SoftwareTexture.hpp>
 
 SDL_Texture* SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h)
 {
-	SDL_Texture* texture = new SDL::OpenGL1Texture(renderer, SDL::Vec2i(w, h), 3);
+	SDL_Texture* texture = NULL;
+
+	if (renderer->GetFlags() & SDL_WINDOW_OPENGL)
+	{
+		texture = new SDL::OpenGL1Texture(renderer, SDL::Vec2i(w, h), 3);
+	}
+	else
+	{
+		texture = new SDL::SoftwareTexture(renderer, SDL::Vec2i(w, h), 3);
+	}
 
 	return texture;
 }

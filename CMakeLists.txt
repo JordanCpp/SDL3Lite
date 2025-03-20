@@ -72,3 +72,6 @@ target_link_libraries(App SDL3)
 
 add_executable(Software "Software.c")
 target_link_libraries(Software SDL3)
+
+add_executable(clear.c "clear.c")
+target_link_libraries(clear.c SDL3)

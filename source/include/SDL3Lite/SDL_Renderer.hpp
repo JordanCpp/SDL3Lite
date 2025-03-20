@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Shared_SDL_Renderer_hpp
 #define SDL3Lite_Shared_SDL_Renderer_hpp
 
+#include <SDL3/SDL_Window.h>
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Rect2f.hpp>
 #include <SDL3Lite/Color.hpp>
@@ -36,6 +37,7 @@ struct SDL_Renderer
 {
 public:
 	virtual ~SDL_Renderer() {};
+	virtual SDL_WindowFlags GetFlags() = 0;
 	virtual const SDL::Vec2i& GetSize() = 0;
 	virtual void Present() = 0;
 	virtual void SetColor(const SDL::Color& color) = 0;

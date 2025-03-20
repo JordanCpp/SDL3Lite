@@ -43,6 +43,7 @@ int main()
     bool done              = false;
     size_t i               = 0;
     SDL_FRect rect;
+    SDL_Rect viewport;
 
     srand(clock() / CLOCKS_PER_SEC);
 
@@ -66,6 +67,8 @@ int main()
         return 1;
     }
 
+    SDL_GetRenderViewport(renderer, &viewport);
+
     while (!done)
     {
         SDL_Event event;
@@ -85,8 +88,8 @@ int main()
         {
             SDL_SetRenderDrawColor(renderer, RandomValue(0, 255), RandomValue(0, 255), RandomValue(0, 255), 0);
 
-            rect.x = (float)RandomValue(0, WINDOW_WIDTH);
-            rect.y = (float)RandomValue(0, WINDOW_HEIGTH);
+            rect.x = (float)RandomValue(0, viewport.w);
+            rect.y = (float)RandomValue(0, viewport.h);
             rect.w = (float)RandomValue(25, 50);
             rect.h = (float)RandomValue(25, 50);
 

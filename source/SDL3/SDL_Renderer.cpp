@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/SDL3/SDL_Renderer.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
+#include <SDL3Lite/Renders/Software/SurfaceRender.hpp>
 #include <assert.h>
 
 SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* window, const char* name)
@@ -50,12 +51,33 @@ SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* 
 
 SDL_Renderer* SDL_CreateSoftwareRenderer(SDL_Surface* surface)
 {
-	return NULL;
+	return new SDL::SurfaceRender((SDL::Surface*)surface);
 }
 
 SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 {
 	return SDL_CreateRendererImplementation(SDL::GetApplication().GetResult(), window, name);
+}
+
+bool SDL_CreateWindowAndRenderer(const char* title, int width, int height, SDL_WindowFlags window_flags, SDL_Window** window, SDL_Renderer** renderer)
+{
+	SDL_Window* singleWindow = SDL_CreateWindowImplementation(
+		SDL::GetApplication().GetWindows(),
+		SDL::GetApplication().GetOpenGLAttributes(),
+		SDL::GetApplication().GetResult(),
+		SDL::GetApplication().GetEventHandler(),
+		title, width, height, window_flags);
+
+	*window = singleWindow;
+
+	SDL_Renderer* singleRenderer = SDL_CreateRendererImplementation(
+		SDL::GetApplication().GetResult(),
+		singleWindow,
+		"");
+
+	*renderer = singleRenderer;
+
+	return true;
 }
 
 void SDL_DestroyRenderer(SDL_Renderer* renderer)
@@ -127,5 +149,18 @@ bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_F
 
 	renderer->Draw(texture, dstRect, srcRect);
 		
+	return true;
+}
+
+bool SDL_GetRenderViewport(SDL_Renderer* renderer, SDL_Rect* rect)
+{
+	assert(renderer);
+	assert(rect);
+
+	rect->x = 0;
+	rect->y = 0;
+	rect->w = renderer->GetSize().x;
+	rect->h = renderer->GetSize().y;
+
 	return true;
 }

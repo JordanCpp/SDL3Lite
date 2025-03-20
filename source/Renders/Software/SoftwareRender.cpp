@@ -25,12 +25,18 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
+#include <SDL3Lite/Renders/Software/SoftwareTexture.hpp>
 
 using namespace SDL;
 
 SoftwareRender::SoftwareRender(SDL_Window* window) :
 	_window(window)
 {
+}
+
+SDL_WindowFlags SoftwareRender::GetFlags()
+{
+	return _window->GetFlags();
 }
 
 const Vec2i& SoftwareRender::GetSize()
@@ -45,16 +51,35 @@ void SoftwareRender::Present()
 
 void SoftwareRender::SetColor(const Color& color)
 {
+	_color = color;
 }
 
 void SoftwareRender::Clear()
 {
+	_pixelPainter.Clear(_window->GetSurface(), _color);
 }
 
 void SoftwareRender::FillRect(const Vec2f& pos, const Vec2f& size)
 {
+	_pixelPainter.FillRect(_window->GetSurface(), pos, size, _color);
 }
 
 void SoftwareRender::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
+	SDL_Rect dest   = { (int)dst.x, (int)dst.y, (int)dst.w, (int)dst.h };
+	SDL_Rect source = { (int)src.x, (int)src.y, (int)src.w, (int)src.h };
+
+	SoftwareTexture* surf = (SoftwareTexture*)texture;
+
+	_pixelCopier.Copy(
+		_window->GetSurface()->GetPixels(), 
+		_window->GetSurface()->GetBpp(), 
+		_window->GetSurface()->GetSize(), 
+		Vec2i(dest.x, dest.y),
+		Vec2i(dest.w, dest.h),
+		surf->GetSurface()->GetPixels(),
+		surf->GetSurface()->GetBpp(),
+		surf->GetSurface()->GetSize(),
+		Vec2i(source.x, source.y),
+		Vec2i(source.w, source.h));
 }

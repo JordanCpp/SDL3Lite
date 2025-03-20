@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define OpenGL_h
 
 #if defined(_WIN32)
+    #define NOMINMAX
     #include <Windows.h>
 #elif defined (__unix__)
     #include <dlfcn.h>

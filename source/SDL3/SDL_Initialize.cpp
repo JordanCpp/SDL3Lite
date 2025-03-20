@@ -27,6 +27,11 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Application.hpp>
 #include <assert.h>
 
+bool SDL_SetAppMetadata(const char* appname, const char* appversion, const char* appidentifier)
+{
+	return true;
+}
+
 int SDL_Init(SDL_InitFlags flags)
 {
 	assert(flags > 0);

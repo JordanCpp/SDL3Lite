@@ -37,3 +37,8 @@ void SDL_Log(const char* fmt, ...)
 	
 	va_end(args);
 }
+
+void SDL_LogError(int category, const char* fmt, ...)
+{
+	SDL_Log(fmt);
+}

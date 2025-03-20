@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 #define WINDOW_WIDTH  (640)
 #define WINDOW_HEIGTH (480)
+#define WINDOW_FLAGS  (SDL_WINDOW_OPENGL)
 
 int main()
 {
@@ -43,7 +44,7 @@ int main()
         return 1;
     }
 
-    window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("Renderer", WINDOW_WIDTH, WINDOW_HEIGTH, WINDOW_FLAGS);
     if (window == NULL)
     {
         SDL_Log("Create window error: %s\n", SDL_GetError());

@@ -42,6 +42,11 @@ OpenGL1Render::OpenGL1Render(Result& result, SDL_Window* window) :
     glEnable(GL_BLEND);
 }
 
+SDL_WindowFlags OpenGL1Render::GetFlags()
+{
+    return _window->GetFlags();
+}
+
 const Vec2i& OpenGL1Render::GetSize()
 {
     return _window->GetSize();

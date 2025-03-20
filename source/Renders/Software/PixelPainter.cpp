@@ -24,33 +24,68 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Renders_Software_SoftwareRender_hpp
-#define SDL3Lite_Renders_Software_SoftwareRender_hpp
-
-#include <SDL3Lite/SDL_Renderer.hpp>
-#include <SDL3Lite/SDL_Window.hpp>
 #include <SDL3Lite/Renders/Software/PixelPainter.hpp>
-#include <SDL3Lite/Renders/Software/PixelCopier.hpp>
 
-namespace SDL
+using namespace SDL;
+
+void PixelPainter::Clear(Surface* dest, const Color& color)
 {
-	class SoftwareRender : public SDL_Renderer
+	size_t w        = dest->GetSize().x;
+	size_t h        = dest->GetSize().y;
+	size_t bpp      = dest->GetBpp();
+	uint8_t* pixels = dest->GetPixels();
+
+	if (bpp == 3)
 	{
-	public:
-		SoftwareRender(SDL_Window* window);
-		SDL_WindowFlags GetFlags();
-		const Vec2i& GetSize();
-		void Present();
-		void SetColor(const Color& color);
-		void Clear();
-		void FillRect(const Vec2f& pos, const Vec2f& size);
-		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
-	private:
-		PixelPainter _pixelPainter;
-		PixelCopier  _pixelCopier;
-		Color        _color;
-		SDL_Window*  _window;
-	};
+		for (size_t i = 0; i < w * h * bpp; i += bpp)
+		{
+#if defined(_WIN32)
+			pixels[i + 0] = color.b;
+			pixels[i + 1] = color.g;
+			pixels[i + 2] = color.r;
+#else
+			pixels[i + 0] = color.r;
+			pixels[i + 1] = color.g;
+			pixels[i + 2] = color.b;
+#endif
+
+		}
+	}
 }
 
+void PixelPainter::FillRect(Surface* dest, const Vec2f& pos, const Vec2f& size, const Color& color)
+{
+	size_t x = (size_t)pos.x;
+	size_t y = (size_t)pos.y;
+	size_t w = (size_t)size.x;
+	size_t h = (size_t)size.y;
+
+	size_t surfW        = dest->GetSize().x;
+	size_t surfH        = dest->GetSize().y;
+	size_t surfBpp      = dest->GetBpp();
+	uint8_t* surfPixels = dest->GetPixels();
+
+	if (surfBpp == 3)
+	{
+		for (size_t i = 0; i < size.x; i++)
+		{
+			for (size_t j = 0; j < size.y; j++)
+			{
+				size_t index = (surfW * (y + j) + (x + i)) * surfBpp;
+
+				if (index < surfW * surfH * surfBpp)
+				{
+#if defined(_WIN32)
+					surfPixels[index + 0] = color.b;
+					surfPixels[index + 1] = color.g;
+					surfPixels[index + 2] = color.r;
+#else
+					surfPixels[index + 0] = color.r;
+					surfPixels[index + 1] = color.g;
+					surfPixels[index + 2] = color.b;
 #endif
+				}
+			}
+		}
+	}
+}
