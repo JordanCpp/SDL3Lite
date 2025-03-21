@@ -1,6 +1,10 @@
 
 call VC6_Build_EXE App.c             ..\
 call VC6_Build_EXE clear.c           ..\
+call VC6_Build_EXE lines.c           ..\
+call VC6_Build_EXE primitives.c      ..\
+call VC6_Build_EXE rectangles.c      ..\
+call VC6_Build_EXE textures2.c       ..\
 call VC6_Build_EXE GL1_Tetrahedron.c ..\
 call VC6_Build_EXE GL1_Triangle.c    ..\
 call VC6_Build_EXE GL3_Triangle.cpp  ..\

@@ -60,6 +60,7 @@ TBD
 ![Rects](/screenshots/Rects.jpg)
 ![Textures](/screenshots/Textures.jpg)
 ![Textures1](/screenshots/Textures1.jpg)
+![Textures2](/screenshots/examples_renderer_textures.jpg)
 ![Tetrahedron](/screenshots/Tetrahedron.jpg)
 ![Triangle](/screenshots/Triangle.jpg)
 
