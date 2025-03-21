@@ -44,12 +44,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 /* This function runs once per frame, and is the heart of the program. */
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    //const double now = ((double)SDL_GetTicks()) / 1000.0;  /* convert from milliseconds to seconds. */
+    const double now = ((double)SDL_GetTicks()) / 1000.0;  /* convert from milliseconds to seconds. */
     /* choose the color for the frame we will draw. The sine wave trick makes it fade between colors smoothly. */
-    //const float red = (float) (0.5 + 0.5 * SDL_sin(now));
-    //const float green = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
-    //const float blue = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
-    //SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+    const float red = (float) (0.5 + 0.5 * SDL_sin(now));
+    const float green = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    const float blue = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
+    SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 
     /* clear the window to the draw color. */
     SDL_RenderClear(renderer);

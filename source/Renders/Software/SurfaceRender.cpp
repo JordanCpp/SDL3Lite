@@ -62,6 +62,11 @@ void SurfaceRender::FillRect(const Vec2f& pos, const Vec2f& size)
 	_pixelPainter.FillRect(_surface, pos, size, _color);
 }
 
+void SurfaceRender::Line(const SDL::Vec2f& first, const SDL::Vec2f& last)
+{
+	_pixelPainter.Line(_surface, first, last, _color);
+}
+
 void SurfaceRender::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
 }

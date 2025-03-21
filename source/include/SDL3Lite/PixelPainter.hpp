@@ -24,35 +24,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Renders_Software_SoftwareTexture_hpp
-#define SDL3Lite_Renders_Software_SoftwareTexture_hpp
+#ifndef SDL3Lite_Renders_Software_PixelPainter_hpp
+#define SDL3Lite_Renders_Software_PixelPainter_hpp
 
-#include <SDL3/pstdint.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/SDL_Texture.hpp>
-#include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/PixelCopier.hpp>
+#include <SDL3Lite/Color.hpp>
 
 namespace SDL
 {
-	class SoftwareRender;
-
-	class SoftwareTexture : public SDL_Texture
+	class PixelPainter
 	{
 	public:
-		~SoftwareTexture();
-		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp);
-		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels);
-		const Vec2i& GetSize();
-		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
-	public:
-		Surface* GetSurface();
+		void Clear(Surface* dest, const Color& color);
+		void FillRect(Surface* dest, const Vec2f& pos, const Vec2f& size, const Color& color);
+		void Line(Surface* dest, const Vec2f& first, const Vec2f& last, const Color& color);
 	private:
-		PixelCopier    _pixelCopier;
-	    SDL_Renderer*  _render;
-		Vec2i          _size;
-		Surface        _surface;
 	};
 }
 

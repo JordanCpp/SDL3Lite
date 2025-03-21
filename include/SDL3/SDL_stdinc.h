@@ -24,36 +24,28 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Renders_Software_SoftwareTexture_hpp
-#define SDL3Lite_Renders_Software_SoftwareTexture_hpp
+#ifndef SDL3Lite_SDL_stdinc_h
+#define SDL3Lite_SDL_stdinc_h
 
-#include <SDL3/pstdint.h>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3Lite/SDL_Texture.hpp>
-#include <SDL3Lite/SDL_Renderer.hpp>
-#include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/PixelCopier.hpp>
+#include <SDL3/SDL_Types.h>
 
-namespace SDL
-{
-	class SoftwareRender;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-	class SoftwareTexture : public SDL_Texture
-	{
-	public:
-		~SoftwareTexture();
-		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp);
-		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels);
-		const Vec2i& GetSize();
-		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
-	public:
-		Surface* GetSurface();
-	private:
-		PixelCopier    _pixelCopier;
-	    SDL_Renderer*  _render;
-		Vec2i          _size;
-		Surface        _surface;
-	};
+#define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
+
+#define SDL_PI_D (3.141592653589793238462643383279502884)
+
+extern SDL_DECLSPEC double SDLCALL SDL_sin(double x);
+extern SDL_DECLSPEC float  SDLCALL SDL_sinf(float x);
+extern SDL_DECLSPEC float  SDLCALL SDL_cosf(float x);
+
+extern SDL_DECLSPEC float  SDLCALL SDL_randf(void);
+extern SDL_DECLSPEC Sint32 SDLCALL SDL_rand(Sint32 n);
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif

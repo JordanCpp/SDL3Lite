@@ -29,8 +29,8 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/SDL_Renderer.hpp>
 #include <SDL3Lite/SDL_Window.hpp>
-#include <SDL3Lite/Renders/Software/PixelPainter.hpp>
-#include <SDL3Lite/Renders/Software/PixelCopier.hpp>
+#include <SDL3Lite/PixelPainter.hpp>
+#include <SDL3Lite/PixelCopier.hpp>
 
 namespace SDL
 {
@@ -44,6 +44,7 @@ namespace SDL
 		void SetColor(const Color& color);
 		void Clear();
 		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Line(const SDL::Vec2f& first, const SDL::Vec2f& last);
 		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
 	private:
 		PixelPainter _pixelPainter;

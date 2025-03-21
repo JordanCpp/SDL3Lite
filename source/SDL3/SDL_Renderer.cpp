@@ -61,6 +61,11 @@ SDL_Renderer* SDL_CreateRenderer(SDL_Window *window, const char *name)
 
 bool SDL_CreateWindowAndRenderer(const char* title, int width, int height, SDL_WindowFlags window_flags, SDL_Window** window, SDL_Renderer** renderer)
 {
+	if (window_flags == 0)
+	{
+		window_flags = SDL_WINDOW_OPENGL;
+	}
+
 	SDL_Window* singleWindow = SDL_CreateWindowImplementation(
 		SDL::GetApplication().GetWindows(),
 		SDL::GetApplication().GetOpenGLAttributes(),
@@ -105,6 +110,13 @@ bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, U
 	return true;
 }
 
+SDL_DECLSPEC bool SDLCALL SDL_SetRenderDrawColorFloat(SDL_Renderer* renderer, float r, float g, float b, float a)
+{
+	assert(renderer);
+
+	return SDL_SetRenderDrawColor(renderer, (Uint8)(float)(r * 255), (Uint8)(float)(g * 255), (Uint8)(float)(b * 255), (Uint8)(float)(a * 255));
+}
+
 bool SDL_RenderClear(SDL_Renderer* renderer)
 {
 	assert(renderer);
@@ -119,6 +131,40 @@ void SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect)
 	assert(renderer);
 
 	renderer->FillRect(SDL::Vec2f(rect->x, rect->y), SDL::Vec2f(rect->w, rect->h));
+}
+
+bool SDL_RenderFillRects(SDL_Renderer* renderer, const SDL_FRect* rects, int count)
+{
+	return false;
+}
+
+bool SDL_RenderRect(SDL_Renderer* renderer, const SDL_FRect* rect)
+{
+	return false;
+}
+
+bool SDL_RenderRects(SDL_Renderer* renderer, const SDL_FRect* rects, int count)
+{
+	return false;
+}
+
+bool SDL_RenderLine(SDL_Renderer* renderer, float x1, float y1, float x2, float y2)
+{
+	assert(renderer);
+
+	renderer->Line(SDL::Vec2f(x1, y1), SDL::Vec2f(x2, y2));
+
+	return true;
+}
+
+bool SDL_RenderLines(SDL_Renderer* renderer, const SDL_FPoint* points, int count)
+{
+	return false;
+}
+
+bool SDL_RenderPoints(SDL_Renderer* renderer, const SDL_FPoint* points, int count)
+{
+	return false;
 }
 
 bool SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_FRect* srcrect, const SDL_FRect* dstrect)

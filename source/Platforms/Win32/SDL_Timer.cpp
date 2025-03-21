@@ -24,60 +24,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Renders/Software/PixelCopier.hpp>
+#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Platforms/Win32/Win32.hpp>
 
-using namespace SDL;
-
-void PixelCopier::Copy(uint8_t* dstPixels, int dstBpp, const Vec2i& dstArea, const Vec2i& dstPos, const Vec2i& dstSize, uint8_t* srcPixels, int srcBpp, const Vec2i& srcArea, const Vec2i& srcPos, const Vec2i& srcSize)
+Uint64 SDL_GetTicks(void)
 {
-	size_t x = dstPos.x;
-	size_t y = dstPos.y;
 
-	size_t dstSizeX    = dstArea.x;
-	size_t dstSizeY    = dstArea.y;
-	size_t dstIndex    = 0;
+#if defined(_WIN64)
+	return GetTickCount64();
+#elif defined(_WIN32)
+	return GetTickCount();
+#endif
 
-	size_t srcSizeX    = srcArea.x;
-	size_t srcSizeY    = srcArea.y;
-	size_t srcIndex    = 0;
-
-	size_t limitSizeX = 0;
-	size_t limitSizeY = 0;
-
-	if (srcSizeX + x > dstSizeX)
-	{
-		limitSizeX = dstSizeX - x;
-	}
-	else
-	{
-		limitSizeX = srcSizeX;
-	}
-
-	if (srcSizeY + y > dstSizeY)
-	{
-		limitSizeY = dstSizeY - y;
-	}
-	else
-	{
-		limitSizeY = srcSizeY;
-	}
-
-	for (size_t i = 0; i < limitSizeX; i++)
-	{
-		for (size_t j = 0; j < limitSizeY; j++)
-		{
-			dstIndex = (dstSizeX * (y + j) + (x + i)) * dstBpp;
-			srcIndex = (srcSizeX * j + i) * srcBpp;
-
-#if defined (_WIN32)
-			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 0];
-			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
-			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 2];
-#else
-			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 0];
-			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
-			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 2];
-#endif  
-		}
-	}
 }

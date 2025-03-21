@@ -32,7 +32,8 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
-#include "OpenGLAttributes.hpp"
+#include <SDL3Lite/OpenGLAttributes.hpp>
+#include <SDL3Lite/AppMetaData.hpp>
 
 namespace SDL
 {
@@ -42,6 +43,7 @@ namespace SDL
 		Application();
 		~Application();
 		std::vector<SDL_Window*>& GetWindows();
+		AppMetaData& GetAppMetaData();
 		EventHandler& GetEventHandler();
 		OpenGLAttributes& GetOpenGLAttributes();
 		Result& GetResult();
@@ -51,6 +53,7 @@ namespace SDL
 		std::vector<SDL_Window*> _windows;
 		Result                   _result;
 		OpenGLAttributes         _openGLAttributes;
+		AppMetaData              _appMetaData;
 		EventHandler             _eventHandler;
 	};
 

@@ -44,6 +44,11 @@ std::vector<SDL_Window*>& Application::GetWindows()
 	return _windows;
 }
 
+AppMetaData& Application::GetAppMetaData()
+{
+	return _appMetaData;
+}
+
 EventHandler& Application::GetEventHandler()
 {
 	return _eventHandler;

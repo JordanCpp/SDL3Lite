@@ -24,21 +24,31 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_Renders_Software_PixelPainter_hpp
-#define SDL3Lite_Renders_Software_PixelPainter_hpp
+#include <SDL3/SDL_stdinc.h>
+#include <stdlib.h>
+#include <math.h>
 
-#include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Color.hpp>
-
-namespace SDL
+double SDL_sin(double x)
 {
-	class PixelPainter
-	{
-	public:
-		void Clear(Surface* dest, const Color& color);
-		void FillRect(Surface* dest, const Vec2f& pos, const Vec2f& size, const Color& color);
-	private:
-	};
+	return sin(x);
 }
 
-#endif
+float SDL_sinf(float x)
+{
+	return (float)sin((double)(x));
+}
+
+float SDL_cosf(float x)
+{
+	return (float)cos((double)(x));
+}
+
+float SDL_randf(void)
+{
+	return (float)(rand()) / (float)(RAND_MAX);
+}
+
+Sint32 SDL_rand(Sint32 n)
+{
+	return 0 + rand() % (n - 0);
+}

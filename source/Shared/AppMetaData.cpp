@@ -27,3 +27,33 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/AppMetaData.hpp>
 
 using namespace SDL;
+
+const std::string& AppMetaData::GetName()
+{
+	return _name;
+}
+
+void AppMetaData::SetName(const std::string& name)
+{
+	_name = name;
+}
+
+const std::string& AppMetaData::GetVersion()
+{
+	return _version;
+}
+
+void AppMetaData::SetVersion(const std::string& version)
+{
+	_version = version;
+}
+
+const std::string& AppMetaData::GetIdentifier()
+{
+	return _identifier;
+}
+
+void AppMetaData::SetIdentifier(const std::string& identifier)
+{
+	_identifier = identifier;
+}

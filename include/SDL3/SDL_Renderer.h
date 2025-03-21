@@ -43,8 +43,15 @@ extern SDL_DECLSPEC bool          SDLCALL SDL_CreateWindowAndRenderer(const char
 extern SDL_DECLSPEC void          SDLCALL SDL_DestroyRenderer(SDL_Renderer* renderer);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPresent(SDL_Renderer* renderer);
 extern SDL_DECLSPEC bool          SDLCALL SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+extern SDL_DECLSPEC bool          SDLCALL SDL_SetRenderDrawColorFloat(SDL_Renderer* renderer, float r, float g, float b, float a);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderClear(SDL_Renderer* renderer);
 extern SDL_DECLSPEC void          SDLCALL SDL_RenderFillRect(SDL_Renderer* renderer, SDL_FRect* rect);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderFillRects(SDL_Renderer* renderer, const SDL_FRect* rects, int count);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderRect(SDL_Renderer* renderer, const SDL_FRect* rect);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderRects(SDL_Renderer* renderer, const SDL_FRect* rects, int count);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderLine(SDL_Renderer* renderer, float x1, float y1, float x2, float y2);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderLines(SDL_Renderer* renderer, const SDL_FPoint* points, int count);
+extern SDL_DECLSPEC bool          SDLCALL SDL_RenderPoints(SDL_Renderer* renderer, const SDL_FPoint* points, int count);
 extern SDL_DECLSPEC bool          SDLCALL SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, const SDL_FRect* srcrect, const SDL_FRect* dstrect);
 extern SDL_DECLSPEC bool          SDLCALL SDL_GetRenderViewport(SDL_Renderer* renderer, SDL_Rect* rect);
 #ifdef __cplusplus

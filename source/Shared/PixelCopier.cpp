@@ -24,68 +24,60 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Renders/Software/PixelPainter.hpp>
+#include <SDL3Lite/PixelCopier.hpp>
 
 using namespace SDL;
 
-void PixelPainter::Clear(Surface* dest, const Color& color)
+void PixelCopier::Copy(uint8_t* dstPixels, int dstBpp, const Vec2i& dstArea, const Vec2i& dstPos, const Vec2i& dstSize, uint8_t* srcPixels, int srcBpp, const Vec2i& srcArea, const Vec2i& srcPos, const Vec2i& srcSize)
 {
-	size_t w        = dest->GetSize().x;
-	size_t h        = dest->GetSize().y;
-	size_t bpp      = dest->GetBpp();
-	uint8_t* pixels = dest->GetPixels();
+	size_t x = dstPos.x;
+	size_t y = dstPos.y;
 
-	if (bpp == 3)
+	size_t dstSizeX    = dstArea.x;
+	size_t dstSizeY    = dstArea.y;
+	size_t dstIndex    = 0;
+
+	size_t srcSizeX    = srcArea.x;
+	size_t srcSizeY    = srcArea.y;
+	size_t srcIndex    = 0;
+
+	size_t limitSizeX = 0;
+	size_t limitSizeY = 0;
+
+	if (srcSizeX + x > dstSizeX)
 	{
-		for (size_t i = 0; i < w * h * bpp; i += bpp)
-		{
-#if defined(_WIN32)
-			pixels[i + 0] = color.b;
-			pixels[i + 1] = color.g;
-			pixels[i + 2] = color.r;
-#else
-			pixels[i + 0] = color.r;
-			pixels[i + 1] = color.g;
-			pixels[i + 2] = color.b;
-#endif
-
-		}
+		limitSizeX = dstSizeX - x;
 	}
-}
-
-void PixelPainter::FillRect(Surface* dest, const Vec2f& pos, const Vec2f& size, const Color& color)
-{
-	size_t x = (size_t)pos.x;
-	size_t y = (size_t)pos.y;
-	size_t w = (size_t)size.x;
-	size_t h = (size_t)size.y;
-
-	size_t surfW        = dest->GetSize().x;
-	size_t surfH        = dest->GetSize().y;
-	size_t surfBpp      = dest->GetBpp();
-	uint8_t* surfPixels = dest->GetPixels();
-
-	if (surfBpp == 3)
+	else
 	{
-		for (size_t i = 0; i < size.x; i++)
-		{
-			for (size_t j = 0; j < size.y; j++)
-			{
-				size_t index = (surfW * (y + j) + (x + i)) * surfBpp;
+		limitSizeX = srcSizeX;
+	}
 
-				if (index < surfW * surfH * surfBpp)
-				{
-#if defined(_WIN32)
-					surfPixels[index + 0] = color.b;
-					surfPixels[index + 1] = color.g;
-					surfPixels[index + 2] = color.r;
+	if (srcSizeY + y > dstSizeY)
+	{
+		limitSizeY = dstSizeY - y;
+	}
+	else
+	{
+		limitSizeY = srcSizeY;
+	}
+
+	for (size_t i = 0; i < limitSizeX; i++)
+	{
+		for (size_t j = 0; j < limitSizeY; j++)
+		{
+			dstIndex = (dstSizeX * (y + j) + (x + i)) * dstBpp;
+			srcIndex = (srcSizeX * j + i) * srcBpp;
+
+#if defined (_WIN32)
+			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 0];
+			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 2];
 #else
-					surfPixels[index + 0] = color.r;
-					surfPixels[index + 1] = color.g;
-					surfPixels[index + 2] = color.b;
-#endif
-				}
-			}
+			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 0];
+			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 2];
+#endif  
 		}
 	}
 }

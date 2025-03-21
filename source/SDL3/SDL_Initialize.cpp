@@ -29,6 +29,10 @@ DEALINGS IN THE SOFTWARE.
 
 bool SDL_SetAppMetadata(const char* appname, const char* appversion, const char* appidentifier)
 {
+	SDL::GetApplication().GetAppMetaData().SetName(appname);
+	SDL::GetApplication().GetAppMetaData().SetVersion(appversion);
+	SDL::GetApplication().GetAppMetaData().SetIdentifier(appidentifier);
+
 	return true;
 }
 

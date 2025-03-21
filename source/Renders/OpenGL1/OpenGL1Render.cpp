@@ -106,6 +106,21 @@ void OpenGL1Render::FillRect(const Vec2f& pos, const Vec2f& size)
     glEnd();
 }
 
+void OpenGL1Render::Line(const SDL::Vec2f& first, const SDL::Vec2f& last)
+{
+    GLclampf r;
+    GLclampf g;
+    GLclampf b;
+
+    Normalize(_color, r, g, b);
+
+    glBegin(GL_LINES);
+    glColor3f(r, g, b);
+    glVertex2f(first.x, first.y);
+    glVertex2f(last.x, last.y);
+    glEnd();
+}
+
 void OpenGL1Render::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
     OpenGL1Texture* tex = (OpenGL1Texture*)texture;

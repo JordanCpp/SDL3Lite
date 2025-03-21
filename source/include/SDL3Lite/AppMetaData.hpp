@@ -34,7 +34,18 @@ namespace SDL
 	class AppMetaData
 	{
 	public:
+		const std::string& GetName();
+		void SetName(const std::string& name);
+
+		const std::string& GetVersion();
+		void SetVersion(const std::string& version);
+
+		const std::string& GetIdentifier();
+		void SetIdentifier(const std::string& identifier);
 	private:
+		std::string _name;
+		std::string _version;
+		std::string _identifier;
 	};
 }
 

@@ -43,6 +43,7 @@ public:
 	virtual void SetColor(const SDL::Color& color) = 0;
 	virtual void Clear() = 0;
 	virtual void FillRect(const SDL::Vec2f& pos, const SDL::Vec2f& size) = 0;
+	virtual void Line(const SDL::Vec2f& first, const SDL::Vec2f& last) = 0;
 	virtual void Draw(SDL_Texture* texture, const SDL::Rect2f& dst, const SDL::Rect2f& src) = 0;
 };
 

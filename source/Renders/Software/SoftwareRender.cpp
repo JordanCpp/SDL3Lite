@@ -64,6 +64,11 @@ void SoftwareRender::FillRect(const Vec2f& pos, const Vec2f& size)
 	_pixelPainter.FillRect(_window->GetSurface(), pos, size, _color);
 }
 
+void SoftwareRender::Line(const SDL::Vec2f& first, const SDL::Vec2f& last)
+{
+	_pixelPainter.Line(_window->GetSurface(), first, last, _color);
+}
+
 void SoftwareRender::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
 {
 	SDL_Rect dest   = { (int)dst.x, (int)dst.y, (int)dst.w, (int)dst.h };

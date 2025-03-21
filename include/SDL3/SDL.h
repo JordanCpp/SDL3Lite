@@ -27,6 +27,8 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_h
 #define SDL3Lite_SDL_h
 
+#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL_Point.h>
 #include <SDL3/SDL_AppResult.h>
 #include <SDL3/SDL_Rect.h>
 #include <SDL3/SDL_Types.h>

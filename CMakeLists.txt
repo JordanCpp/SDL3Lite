@@ -75,3 +75,15 @@ target_link_libraries(Software SDL3)
 
 add_executable(clear.c "clear.c")
 target_link_libraries(clear.c SDL3)
+
+add_executable(primitives "primitives.c")
+target_link_libraries(primitives SDL3)
+
+add_executable(lines "lines.c")
+target_link_libraries(lines SDL3)
+
+add_executable(rectangles "rectangles.c")
+target_link_libraries(rectangles SDL3)
+
+add_executable(textures2 "textures2.c")
+target_link_libraries(textures2 SDL3)

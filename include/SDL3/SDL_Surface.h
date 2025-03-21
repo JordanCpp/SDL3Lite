@@ -251,6 +251,9 @@ typedef struct SDL_Surface SDL_Surface;
 extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_CreateSurface(int width, int height, SDL_PixelFormat format);
 extern SDL_DECLSPEC void         SDLCALL SDL_DestroySurface(SDL_Surface* surface);
 
+#define SDL_ALPHA_OPAQUE_FLOAT (1.0f)
+#define SDL_ALPHA_OPAQUE       (255)
+
 #ifdef __cplusplus
 }
 #endif
