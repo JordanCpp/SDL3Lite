@@ -68,16 +68,19 @@ void PixelCopier::Copy(uint8_t* dstPixels, int dstBpp, const Vec2i& dstArea, con
 		{
 			dstIndex = (dstSizeX * (y + j) + (x + i)) * dstBpp;
 			srcIndex = (srcSizeX * j + i) * srcBpp;
-
+			
+			if (dstIndex < dstSizeX * dstSizeY * dstBpp)
+			{
 #if defined (_WIN32)
-			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 0];
-			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
-			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 2];
+				dstPixels[dstIndex + 2] = srcPixels[srcIndex + 0];
+				dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+				dstPixels[dstIndex + 0] = srcPixels[srcIndex + 2];
 #else
-			dstPixels[dstIndex + 0] = srcPixels[srcIndex + 0];
-			dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
-			dstPixels[dstIndex + 2] = srcPixels[srcIndex + 2];
+				dstPixels[dstIndex + 0] = srcPixels[srcIndex + 0];
+				dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+				dstPixels[dstIndex + 2] = srcPixels[srcIndex + 2];
 #endif  
+			}
 		}
 	}
 }

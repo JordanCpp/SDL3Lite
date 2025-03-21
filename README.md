@@ -45,6 +45,7 @@ TBD
 ## Supported 2D renders
 
 - OpenGL 1.2
+- Software
 
 ## License
 
