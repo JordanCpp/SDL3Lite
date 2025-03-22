@@ -24,45 +24,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Win32/Library.hpp>
+#include <SDL3Lite/Platforms/Win32/SupportedAccelerator.hpp>
 
 using namespace SDL;
 
-Library::Library(Result& result) :
-	_result(result),
-	_module(NULL)
+SupportedAccelerator::SupportedAccelerator() :
+	_openGL32(_result)
 {
 }
 
-Library::~Library()
+bool SupportedAccelerator::IsOpenGL1_2()
 {
-	Close();
-}
-
-bool Library::Open(const std::string& path)
-{
-	_module = LoadLibrary(path.c_str());
-
-	return (_module != NULL);
-}
-
-void Library::Close()
-{
-	if (_module != NULL)
+	if (_openGL32.Open("opengl32.dll"))
 	{
-		FreeLibrary(_module);
-		_module = NULL;
-	}
-}
-
-SDL_FunctionPointer Library::Load(const std::string& name)
-{
-	SDL_FunctionPointer result = (SDL_FunctionPointer)GetProcAddress(_module, name.c_str());
-
-	if (result == NULL)
-	{
-		_result.Message("Could not load library: " + std::string(name));
+		return true;
 	}
 
-	return result;
+	return false;
 }

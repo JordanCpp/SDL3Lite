@@ -28,9 +28,9 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Platforms_MainWindow_hpp
 
 #if defined(_WIN32)
-#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
+    #include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
 #elif defined (__unix__)
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
+    #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 #endif
 
 #endif

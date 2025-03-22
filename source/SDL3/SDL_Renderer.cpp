@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
 #include <SDL3Lite/Renders/Software/SurfaceRender.hpp>
+#include <SDL3Lite/Platforms/SupportedAccelerator.hpp>
 #include <assert.h>
 
 SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* window, const char* name)
@@ -63,7 +64,12 @@ bool SDL_CreateWindowAndRenderer(const char* title, int width, int height, SDL_W
 {
 	if (window_flags == 0)
 	{
-		window_flags = SDL_WINDOW_OPENGL;
+		SDL::SupportedAccelerator supportedAccelerator;
+
+		if (supportedAccelerator.IsOpenGL1_2())
+		{
+			window_flags = SDL_WINDOW_OPENGL;
+		}
 	}
 
 	SDL_Window* singleWindow = SDL_CreateWindowImplementation(
