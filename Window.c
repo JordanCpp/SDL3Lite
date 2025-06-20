@@ -32,7 +32,7 @@ DEALINGS IN THE SOFTWARE.
 int main()
 {
     SDL_Window* window = NULL;
-    bool done = false;
+    bool done          = false;
 
     if (!SDL_Init(SDL_INIT_VIDEO))
     {

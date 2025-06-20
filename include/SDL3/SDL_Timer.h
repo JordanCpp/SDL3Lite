@@ -24,10 +24,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Timer_h
-#define SDL3Lite_SDL_Timer_h
+#ifndef SDL3Lite_SDL_timer_h
+#define SDL3Lite_SDL_timer_h
 
-#include <SDL3/SDL_Types.h>
+#include <SDL3/SDL_stdinc.h>
 
 #ifdef __cplusplus
 extern "C" {

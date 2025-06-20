@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Result_hpp
 #define SDL3Lite_Result_hpp
 
-#include <string>
+#include <SDL3Lite/String.hpp>
 
 namespace SDL
 {
@@ -36,13 +36,13 @@ namespace SDL
 	public:
 		Result();
 		bool Ok();
-		const std::string& Message();
-		void Message(const std::string& message);
-		void Message(const std::string& message, const std::string& detail);
+		const String& Message();
+		void Message(const String& message);
+		void Message(const String& message, const String& detail);
 		void Clear();
 	private:
-		bool        _ok;
-		std::string _message;
+		bool   _ok;
+		String _message;
 	};
 }
 

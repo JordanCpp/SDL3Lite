@@ -24,14 +24,20 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Initialize_h
-#define SDL3Lite_SDL_Initialize_h
-
-#include <SDL3/SDL_Types.h>
+#ifndef SDL3Lite_SDL_init_h
+#define SDL3Lite_SDL_init_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+    typedef enum SDL_AppResult
+    {
+        SDL_APP_CONTINUE,   /**< Value that requests that the app continue from the main callbacks. */
+        SDL_APP_SUCCESS,    /**< Value that requests termination with success from the main callbacks. */
+        SDL_APP_FAILURE     /**< Value that requests termination with error from the main callbacks. */
+    } SDL_AppResult;
+
 
 	/**
 	 * Initialization flags for SDL_Init and/or SDL_InitSubSystem

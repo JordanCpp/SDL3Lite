@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_Rect_h
 #define SDL3Lite_SDL_Rect_h
 
-#include <SDL3/SDL_Types.h>
+#include <SDL3/SDL_stdinc.h>
 
 #ifdef __cplusplus
 extern "C" {

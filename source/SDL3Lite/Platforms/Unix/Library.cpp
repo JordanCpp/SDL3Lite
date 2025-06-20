@@ -39,7 +39,7 @@ Library::~Library()
 	Close();
 }
 
-bool Library::Open(const std::string& path)
+bool Library::Open(const String& path)
 {
 	return false;
 }
@@ -52,7 +52,7 @@ void Library::Close()
 	}
 }
 
-SDL_FunctionPointer Library::Load(const std::string& name)
+SDL_FunctionPointer Library::Load(const String& name)
 {
 	return (SDL_FunctionPointer)dlsym(_library, name.c_str());
 }

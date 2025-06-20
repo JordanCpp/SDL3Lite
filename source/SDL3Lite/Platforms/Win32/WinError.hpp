@@ -27,16 +27,16 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Win32_WinError_hpp
 #define SDL3Lite_Win32_WinError_hpp
 
-#include <string>
+#include <SDL3Lite/String.hpp>
 
 namespace SDL
 {
 	class WindowError
 	{
 	public:
-		const std::string& GetErrorMessage();
+		const String& GetErrorMessage();
 	private:
-		std::string _message;
+		String _message;
 	};
 }
 

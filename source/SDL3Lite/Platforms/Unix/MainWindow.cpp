@@ -36,7 +36,7 @@ const size_t eventMask =
   | KeyPressMask
   | KeyReleaseMask;
 
-MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
+MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
 	_result(&result),
 	_eventHandler(&eventHandler),
 	_baseWindow(pos, size, title),
@@ -77,12 +77,12 @@ void SDL::MainWindow::SetSize(const Vec2i& size)
 	_baseWindow.SetSize(size);
 }
 
-const std::string& MainWindow::GetTitle()
+const String& MainWindow::GetTitle()
 {
 	return _baseWindow.GetTitle();
 }
 
-void MainWindow::SetTitle(const std::string& title)
+void MainWindow::SetTitle(const String& title)
 {
 	_baseWindow.SetTitle(title);
 }

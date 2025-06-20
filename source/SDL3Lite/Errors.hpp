@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Errors_hpp
 #define SDL3Lite_Errors_hpp
 
-#include <SDL3/SDL_Errors.h>
+#include <SDL3/SDL_error.h>
 
 const char* SDL_GetErrorImplementation(SDL::Application& application);
 

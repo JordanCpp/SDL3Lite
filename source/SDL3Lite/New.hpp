@@ -24,25 +24,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Palette_h
-#define SDL3Lite_SDL_Palette_h
+#ifndef SDL3Lite_New_hpp
+#define SDL3Lite_New_hpp
 
-#include <SDL3/SDL_Color.h>
+#include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void* operator new(size_t size);
+void operator delete(void* ptr);
 
-    typedef struct SDL_Palette
-    {
-        int ncolors;        /**< number of elements in `colors`. */
-        SDL_Color* colors;  /**< an array of colors, `ncolors` long. */
-        Uint32 version;     /**< internal use only, do not touch. */
-        int refcount;       /**< internal use only, do not touch. */
-    } SDL_Palette;
-
-#ifdef __cplusplus
-}
-#endif
+void* operator new[](size_t size);
+void operator delete[](void* ptr);
 
 #endif

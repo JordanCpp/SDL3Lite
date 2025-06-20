@@ -38,19 +38,19 @@ bool Result::Ok()
 	return _ok;
 }
 
-const std::string& Result::Message()
+const String& Result::Message()
 {
 	return _message;
 }
 
-void Result::Message(const std::string& message)
+void Result::Message(const String& message)
 {
 	_ok = false;
 
 	_message = message;
 }
 
-void Result::Message(const std::string& message, const std::string& detail)
+void Result::Message(const String& message, const String& detail)
 {
 	_ok = false;
 

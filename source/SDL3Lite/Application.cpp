@@ -39,7 +39,7 @@ Application::~Application()
 {
 }
 
-std::vector<SDL_Window*>& Application::GetWindows()
+Vector<SDL_Window*>& Application::GetWindows()
 {
 	return _windows;
 }

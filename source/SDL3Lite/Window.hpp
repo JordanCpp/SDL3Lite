@@ -27,10 +27,9 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Window_hpp
 #define SDL3Lite_Window_hpp
 
-#include <string>
-#include <vector>
-#include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Window.h>
+#include <SDL3/SDL_video.h>
+#include <SDL3Lite/Vector.hpp>
+#include <SDL3Lite/String.hpp>
 #include <SDL3Lite/Surface.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
@@ -45,13 +44,13 @@ public:
 	virtual void SetPos(const SDL::Vec2i& pos) = 0;
 	virtual const SDL::Vec2i& GetSize() = 0;
 	virtual void SetSize(const SDL::Vec2i& size) = 0;
-	virtual const std::string& GetTitle() = 0;
-	virtual void SetTitle(const std::string& title) = 0;
+	virtual const SDL::String& GetTitle() = 0;
+	virtual void SetTitle(const SDL::String& title) = 0;
 	virtual SDL_WindowFlags GetFlags() = 0;
 	virtual void PollEvents() = 0;
 	virtual bool Present() = 0;
 };
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
+SDL_Window* SDL_CreateWindowImplementation(SDL::Vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
 
 #endif

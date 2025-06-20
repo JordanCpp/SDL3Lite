@@ -24,8 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/OpenGL/GLUtils.hpp>
 #include <assert.h>
+#include <SDL3Lite/OpenGL/GLUtils.hpp>
 
 namespace SDL
 {

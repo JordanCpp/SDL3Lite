@@ -24,8 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Application.hpp>
 #include <assert.h>
+#include <SDL3Lite/Application.hpp>
 
 bool SDL_SetAppMetadata(const char* appname, const char* appversion, const char* appidentifier)
 {

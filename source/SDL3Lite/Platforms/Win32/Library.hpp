@@ -38,9 +38,9 @@ namespace SDL
 	public:
 		Library(SDL::Result& result);
 		~Library();
-		bool Open(const std::string& path);
+		bool Open(const String& path);
 		void Close();
-		SDL_FunctionPointer Load(const std::string& name);
+		SDL_FunctionPointer Load(const String& name);
 	private:
 		SDL::Result& _result;
 		HMODULE      _module;

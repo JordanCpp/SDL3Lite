@@ -24,6 +24,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/FileStream.hpp>
+#ifndef SDL3Lite_SDL_iostream_h
+#define SDL3Lite_SDL_iostream_h
 
-using namespace SDL;
+#include <SDL3/SDL_stdinc.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct SDL_IOStream SDL_IOStream;
+
+extern SDL_DECLSPEC SDL_IOStream* SDLCALL SDL_IOFromFile(const char* file, const char* mode);
+extern SDL_DECLSPEC bool          SDLCALL SDL_CloseIO(SDL_IOStream* context);
+extern SDL_DECLSPEC size_t        SDLCALL SDL_ReadIO(SDL_IOStream* context, void* ptr, size_t size);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

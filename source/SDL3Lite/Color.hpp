@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Color_hpp
 #define SDL3Lite_Color_hpp
 
-#include <SDL3/SDL_Color.h>
+#include <SDL3/SDL_pixels.h>
 
 namespace SDL
 {

@@ -27,15 +27,15 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SharedObject_hpp
 #define SDL3Lite_SharedObject_hpp
 
-#include <SDL3/SDL_SharedObject.h>
+#include <SDL3/SDL_loadso.h>
 
 struct SDL_SharedObject
 {
 public:
 	virtual ~SDL_SharedObject() {};
-	virtual bool Open(const std::string& path) = 0;
+	virtual bool Open(const SDL::String& path) = 0;
 	virtual void Close() = 0;
-	virtual SDL_FunctionPointer Load(const std::string& path) = 0;
+	virtual SDL_FunctionPointer Load(const SDL::String& path) = 0;
 };
 
 SDL_SharedObject* SDL_LoadObjectImplementation(SDL::Result& result, const char* sofile);

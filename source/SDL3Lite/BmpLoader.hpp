@@ -39,7 +39,7 @@ namespace SDL
 	public:
 		BmpLoader(Result& result);
 		~BmpLoader();
-		bool Reset(const std::string& path);
+		bool Reset(const String& path);
 		const Vec2i& GetSize();
 		int GetBpp();
 		uint8_t* GetPixels();
@@ -47,9 +47,8 @@ namespace SDL
 		void Clear();
 		Result&  _result;
 		uint8_t* _pixels;
-		int      _bpp;
 		Vec2i    _size;
-
+		int      _bpp;
 	};
 }
 

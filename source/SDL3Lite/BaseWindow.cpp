@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-BaseWindow::BaseWindow(const Vec2i& pos, const Vec2i& size, const std::string& title) :
+BaseWindow::BaseWindow(const Vec2i& pos, const Vec2i& size, const String& title) :
 	_pos(pos),
 	_size(size),
 	_title(title)
@@ -55,12 +55,12 @@ void BaseWindow::SetSize(const Vec2i& size)
 	_size = size;
 }
 
-const std::string& BaseWindow::GetTitle()
+const String& BaseWindow::GetTitle()
 {
 	return _title;
 }
 
-void BaseWindow::SetTitle(const std::string& title)
+void BaseWindow::SetTitle(const String& title)
 {
 	_title = title;
 }

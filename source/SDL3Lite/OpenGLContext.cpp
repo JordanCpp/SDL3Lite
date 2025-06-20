@@ -24,10 +24,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <assert.h>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/Window.hpp>
 #include <SDL3Lite/OpenGLContext.hpp>
-#include <assert.h>
 
 bool SDL_GL_SetAttribute(SDL_GLAttr attr, int value)
 {

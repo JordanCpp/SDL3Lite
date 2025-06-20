@@ -23,13 +23,12 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-
+#include <stdio.h>
+#include <SDL3/SDL.h>
+#include <SDL3Lite/BmpLoader.hpp>
 #include <SDL3Lite/Platforms/MainWindow.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
-#include <SDL3Lite/BmpLoader.hpp>
-#include <SDL3/SDL.h>
-#include <stdio.h>
 
 using namespace SDL;
 

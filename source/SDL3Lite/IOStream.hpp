@@ -24,19 +24,39 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Errors_h
-#define SDL3Lite_SDL_Errors_h
+#ifndef SDL3Lite_IOStream_hpp
+#define SDL3Lite_IOStream_hpp
 
-#include <SDL3/SDL_Types.h>
+#include <stdio.h>
+#include <SDL3/SDL_iostream.h>
+#include <SDL3Lite/String.hpp>
+#include <SDL3Lite/Result.hpp>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+struct SDL_IOStream
+{
+public:
+	virtual ~SDL_IOStream() {};
+	virtual bool IOFromFile(const SDL::String& file, const SDL::String& mode) = 0;
+	virtual bool CloseIO() = 0;
+	virtual size_t ReadIO(void* ptr, size_t size) = 0;
+};
 
-extern SDL_DECLSPEC const char* SDLCALL SDL_GetError();
-
-#ifdef __cplusplus
+namespace SDL
+{
+	class IOStream : public SDL_IOStream
+	{
+	public:
+		IOStream(Result& _result);
+		~IOStream();
+		bool IOFromFile(const SDL::String& file, const SDL::String& mode);
+		bool CloseIO();
+		size_t ReadIO(void* ptr, size_t size);
+	private:
+		Result& _result;
+		FILE*   _file;
+	};
 }
-#endif
+
+SDL_IOStream* SDL_IOFromFileImplementation(SDL::Result& result, const SDL::String& file, const SDL::String& mode);
 
 #endif

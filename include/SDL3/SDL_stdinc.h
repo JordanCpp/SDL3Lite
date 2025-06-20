@@ -27,15 +27,66 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_stdinc_h
 #define SDL3Lite_SDL_stdinc_h
 
-#include <SDL3/SDL_Types.h>
+#include <SDL3/pstdint.h>
+#include <SDL3/pstdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**************************************************************************************
+                                          Defines
+**************************************************************************************/
+
+#define SDLCALL
+
+#if defined(_WIN32)
+    #define SDL3LITE_EXPORT __declspec(dllexport)
+    #define SDL3LITE_IMPORT __declspec(dllimport)
+#elif defined(__unix__)
+    #define SDL3LITE_EXPORT __attribute__((visibility("default")))
+    #define SDL3LITE_IMPORT
+#else
+    #define SDL3LITE_EXPORT
+    #define SDL3LITE_IMPORT
+#endif
+
+#if defined(SDL3LITE_STATIC)
+    #define SDL_DECLSPEC
+#else
+    #if defined(SDL3LITE_SHARED)
+        #define SDL_DECLSPEC SDL3LITE_EXPORT
+    #else
+        #define SDL_DECLSPEC SDL3LITE_IMPORT
+    #endif
+#endif
+
+/**************************************************************************************
+                                           Types
+**************************************************************************************/
+
+typedef int8_t   Sint8;
+typedef uint8_t  Uint8;
+
+typedef int16_t  Sint16;
+typedef uint16_t Uint16;
+
+typedef int32_t  Sint32;
+typedef uint32_t Uint32;
+
+typedef int64_t  Sint64;
+typedef uint64_t Uint64;
+
+#define SDL_UINT64_C(c)  UINT64_C(c)
+
+typedef Uint32 SDL_DisplayID;
+
 #define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
 
 #define SDL_PI_D (3.141592653589793238462643383279502884)
+
+extern SDL_DECLSPEC void* SDLCALL SDL_malloc(size_t size);
+extern SDL_DECLSPEC void  SDLCALL SDL_free(void* mem);
 
 extern SDL_DECLSPEC double SDLCALL SDL_sin(double x);
 extern SDL_DECLSPEC float  SDLCALL SDL_sinf(float x);

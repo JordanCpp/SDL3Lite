@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
+OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
 	_openGLAttributes(openGLAttributes),
 	_result(&result),
 	_renderContext(NULL),
@@ -160,12 +160,12 @@ void OpenGLWindow::SetSize(const Vec2i& size)
 	_mainWindow.SetSize(size);
 }
 
-const std::string& OpenGLWindow::GetTitle()
+const String& OpenGLWindow::GetTitle()
 {
 	return _mainWindow.GetTitle();
 }
 
-void OpenGLWindow::SetTitle(const std::string& title)
+void OpenGLWindow::SetTitle(const String& title)
 {
 	_mainWindow.SetTitle(title);
 }

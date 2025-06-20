@@ -39,7 +39,7 @@ Library::~Library()
 	Close();
 }
 
-bool Library::Open(const std::string& path)
+bool Library::Open(const String& path)
 {
 	_module = LoadLibrary(path.c_str());
 
@@ -55,13 +55,13 @@ void Library::Close()
 	}
 }
 
-SDL_FunctionPointer Library::Load(const std::string& name)
+SDL_FunctionPointer Library::Load(const String& name)
 {
 	SDL_FunctionPointer result = (SDL_FunctionPointer)GetProcAddress(_module, name.c_str());
 
 	if (result == NULL)
 	{
-		_result.Message("Could not load library: " + std::string(name));
+		_result.Message("Could not load library: " + String(name));
 	}
 
 	return result;

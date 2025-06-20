@@ -28,32 +28,32 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-const std::string& AppMetaData::GetName()
+const String& AppMetaData::GetName()
 {
 	return _name;
 }
 
-void AppMetaData::SetName(const std::string& name)
+void AppMetaData::SetName(const String& name)
 {
 	_name = name;
 }
 
-const std::string& AppMetaData::GetVersion()
+const String& AppMetaData::GetVersion()
 {
 	return _version;
 }
 
-void AppMetaData::SetVersion(const std::string& version)
+void AppMetaData::SetVersion(const String& version)
 {
 	_version = version;
 }
 
-const std::string& AppMetaData::GetIdentifier()
+const String& AppMetaData::GetIdentifier()
 {
 	return _identifier;
 }
 
-void AppMetaData::SetIdentifier(const std::string& identifier)
+void AppMetaData::SetIdentifier(const String& identifier)
 {
 	_identifier = identifier;
 }

@@ -24,9 +24,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/SDL.h>
 #include <time.h>
 #include <stdlib.h>
+#include <SDL3/SDL.h>
 
 #define WINDOW_WIDTH  (640)
 #define WINDOW_HEIGTH (480)

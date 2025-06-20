@@ -24,13 +24,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <assert.h>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/Renderer.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Render.hpp>
 #include <SDL3Lite/Renders/Software/SoftwareRender.hpp>
 #include <SDL3Lite/Renders/Software/SurfaceRender.hpp>
 #include <SDL3Lite/Platforms/SupportedAccelerator.hpp>
-#include <assert.h>
 
 SDL_Renderer* SDL_CreateRendererImplementation(SDL::Result& result, SDL_Window* window, const char* name)
 {

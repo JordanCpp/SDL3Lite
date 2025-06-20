@@ -24,16 +24,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Bmp_h
-#define SDL3Lite_SDL_Bmp_h
+#ifndef SDL3Lite_SDL_error_h
+#define SDL3Lite_SDL_error_h
 
-#include <SDL3/SDL_Surface.h>
+#include <SDL3/SDL_stdinc.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_LoadBMP(const char* file);
+extern SDL_DECLSPEC const char* SDLCALL SDL_GetError();
 
 #ifdef __cplusplus
 }

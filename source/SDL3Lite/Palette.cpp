@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3Lite/Palette.hpp>
 #include <SDL3Lite/Color.hpp>
+#include <SDL3Lite/New.hpp>
 
 using namespace SDL;
 

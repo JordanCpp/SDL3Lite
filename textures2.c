@@ -16,8 +16,8 @@ static SDL_Texture *texture   = NULL;
 static int texture_width      = 0;
 static int texture_height     = 0;
 
-#define WINDOW_WIDTH  640
-#define WINDOW_HEIGHT 480
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGHT (480)
 
 /* This function runs once at startup. */
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
@@ -27,12 +27,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     SDL_SetAppMetadata("Example Renderer Textures", "1.0", "com.example.renderer-textures");
 
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
+    if (!SDL_Init(SDL_INIT_VIDEO)) 
+    {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("examples/renderer/textures", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer)) {
+    if (!SDL_CreateWindowAndRenderer("examples/renderer/textures", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer)) 
+    {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
@@ -45,8 +47,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
        Load a .bmp into a surface, move it to a texture from there. */
 
     surface = SDL_LoadBMP("sample.bmp");
-
-    if (!surface) {
+    if (!surface)
+    {
         SDL_Log("Couldn't load bitmap: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
@@ -68,9 +70,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 /* This function runs when a new event (mouse input, keypresses, etc) occurs. */
 SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
-    if (event->type == SDL_EVENT_QUIT) {
+    if (event->type == SDL_EVENT_QUIT) 
+    {
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
     }
+
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 

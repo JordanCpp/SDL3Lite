@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/pstdint.h>
 #include <SDL3Lite/Vec2.hpp>
-#include <SDL3/SDL_Texture.h>
+#include <SDL3/SDL_render.h>
 
 struct SDL_Texture
 {

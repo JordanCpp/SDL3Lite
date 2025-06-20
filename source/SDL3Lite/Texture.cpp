@@ -24,8 +24,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Renderer.hpp>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Surface.hpp>
+#include <SDL3Lite/Renderer.hpp>
 #include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
 #include <SDL3Lite/Renders/Software/SoftwareTexture.hpp>
 

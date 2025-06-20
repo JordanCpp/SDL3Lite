@@ -38,14 +38,14 @@ namespace SDL
 	class MainWindow
 	{
 	public:
-		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode);
 		~MainWindow();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();
 		void SetSize(const Vec2i& size);
-		const std::string& GetTitle();
-		void SetTitle(const std::string& title);
+		const String& GetTitle();
+		void SetTitle(const String& title);
 		void PollEvents();
 		SDL_WindowFlags GetFlags();
 	private:

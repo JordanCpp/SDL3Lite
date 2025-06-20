@@ -27,25 +27,25 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_AppMetaData_hpp
 #define SDL3Lite_AppMetaData_hpp
 
-#include <string>
+#include <SDL3Lite/String.hpp>
 
 namespace SDL
 {
 	class AppMetaData
 	{
 	public:
-		const std::string& GetName();
-		void SetName(const std::string& name);
+		const String& GetName();
+		void SetName(const String& name);
 
-		const std::string& GetVersion();
-		void SetVersion(const std::string& version);
+		const String& GetVersion();
+		void SetVersion(const String& version);
 
-		const std::string& GetIdentifier();
-		void SetIdentifier(const std::string& identifier);
+		const String& GetIdentifier();
+		void SetIdentifier(const String& identifier);
 	private:
-		std::string _name;
-		std::string _version;
-		std::string _identifier;
+		String _name;
+		String _version;
+		String _identifier;
 	};
 }
 

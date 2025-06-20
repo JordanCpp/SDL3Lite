@@ -24,19 +24,35 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Renderer_h
-#define SDL3Lite_SDL_Renderer_h
+#ifndef SDL3Lite_SDL_render_h
+#define SDL3Lite_SDL_render_h
 
 #include <SDL3/SDL_Rect.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Texture.h>
+#include <SDL3/SDL_video.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct SDL_Renderer SDL_Renderer;
-typedef struct SDL_Texture  SDL_Texture;
+    typedef struct SDL_Renderer SDL_Renderer;
+    typedef struct SDL_Texture  SDL_Texture;
+
+    typedef enum SDL_TextureAccess
+    {
+        SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
+        SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
+        SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
+    } SDL_TextureAccess;
+
+    typedef struct SDL_Texture  SDL_Texture;
+    typedef struct SDL_Renderer SDL_Renderer;
+
+    extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h);
+    extern SDL_DECLSPEC void         SDLCALL SDL_DestroyTexture(SDL_Texture* texture);
+    extern SDL_DECLSPEC bool         SDLCALL SDL_UpdateTexture(SDL_Texture* texture, const SDL_Rect* rect, const void* pixels, int pitch);
+    extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface);
+
+
 
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateSoftwareRenderer(SDL_Surface* surface);
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateRenderer(SDL_Window* window, const char* name);

@@ -28,19 +28,14 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_SDL_h
 
 #include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
+#include <SDL3/SDL_init.h>
 #include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
+#include <SDL3/SDL_loadso.h>
+#include <SDL3/SDL_video.h>
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_error.h>
+#include <SDL3/SDL_surface.h>
+#include <SDL3/SDL_render.h>
 #include <SDL3/SDL_Log.h>
 #include <SDL3/SDL_Timer.h>
 

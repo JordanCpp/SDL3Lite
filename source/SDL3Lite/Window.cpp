@@ -24,12 +24,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <assert.h>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
-#include <assert.h>
 
-SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags)
+SDL_Window* SDL_CreateWindowImplementation(SDL::Vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags)
 {
 	SDL_Window* window = NULL;
 

@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/SDL_Surface.h>
 #include <SDL3Lite/Vec2.hpp>
-#include <vector>
+#include <SDL3Lite/Vector.hpp>
 
 namespace SDL
 {
@@ -43,8 +43,8 @@ namespace SDL
 		const Vec2i& GetSize();
 		uint8_t* GetPixels();
 	private:
-		Vec2i                _size;
-		std::vector<uint8_t> _pixels;
+		Vec2i           _size;
+		Vector<uint8_t> _pixels;
 	};
 }
 

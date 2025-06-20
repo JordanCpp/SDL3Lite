@@ -24,24 +24,75 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_SharedObject_h
-#define SDL3Lite_SDL_SharedObject_h
+#include <assert.h>
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/IOStream.hpp>
 
-#include <SDL3/SDL_Types.h>
+using namespace SDL;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+SDL_IOStream* SDL_IOFromFileImplementation(Result& result, const SDL::String& file, const SDL::String& mode)
+{
+	SDL_IOStream* ioStream = new IOStream(result);
 
-typedef void (*SDL_FunctionPointer)(void);
-typedef struct SDL_SharedObject SDL_SharedObject;
+	if (ioStream->IOFromFile(file, mode))
+	{
+		return ioStream;
+	}
 
-extern SDL_DECLSPEC SDL_SharedObject*   SDLCALL SDL_LoadObject(const char* sofile);
-extern SDL_DECLSPEC SDL_FunctionPointer SDLCALL SDL_LoadFunction(SDL_SharedObject* handle, const char* name);
-extern SDL_DECLSPEC void                SDLCALL SDL_UnloadObject(SDL_SharedObject* handle);
+	delete ioStream;
 
-#ifdef __cplusplus
+	return NULL;
 }
-#endif
 
-#endif
+IOStream::IOStream(Result& result) :
+	_result(result),
+	_file(NULL)
+{
+}
+
+IOStream::~IOStream()
+{
+}
+
+bool IOStream::IOFromFile(const String& file, const String& mode)
+{
+	_file = fopen(file.c_str(), mode.c_str());
+
+	return _file != NULL;
+}
+
+bool IOStream::CloseIO()
+{
+	return false;
+}
+
+size_t IOStream::ReadIO(void* ptr, size_t size)
+{
+	size_t result = fread(ptr, size, 1, _file);
+
+	return result;
+}
+
+
+SDL_IOStream* SDL_IOFromFile(const char* file, const char* mode)
+{
+	return SDL_IOFromFileImplementation(SDL::GetApplication().GetResult(), file, mode);
+}
+
+bool SDL_CloseIO(SDL_IOStream* context)
+{
+	assert(context);
+
+	context->CloseIO();
+
+	delete context;
+
+	return true;
+}
+
+size_t SDL_ReadIO(SDL_IOStream* context, void* ptr, size_t size)
+{
+	assert(context);
+
+	return context->ReadIO(ptr, size);
+}

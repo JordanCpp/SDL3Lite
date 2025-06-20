@@ -24,25 +24,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Color_h
-#define SDL3Lite_SDL_Color_h
+#include <SDL3/SDL_stdinc.h>
+#include <SDL3Lite/New.hpp>
 
-#include <SDL3/SDL_Types.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-    typedef struct SDL_Color
-    {
-        Uint8 r;
-        Uint8 g;
-        Uint8 b;
-        Uint8 a;
-    } SDL_Color;
-
-#ifdef __cplusplus
+void* operator new(size_t size)
+{
+    return SDL_malloc(size);
 }
-#endif
 
-#endif
+void operator delete(void* ptr)
+{
+    SDL_free(ptr);
+}
+
+void* operator new[](size_t size)
+{
+    return SDL_malloc(size);
+}
+
+void operator delete[](void* ptr)
+{
+    SDL_free(ptr);
+}

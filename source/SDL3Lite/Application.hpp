@@ -27,8 +27,8 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Application_hpp
 #define SDL3Lite_Application_hpp
 
-#include <vector>
 #include <SDL3/SDL.h>
+#include <SDL3Lite/Vector.hpp>
 #include <SDL3Lite/Vec2.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
@@ -42,7 +42,7 @@ namespace SDL
 	public:
 		Application();
 		~Application();
-		std::vector<SDL_Window*>& GetWindows();
+		Vector<SDL_Window*>& GetWindows();
 		AppMetaData& GetAppMetaData();
 		EventHandler& GetEventHandler();
 		OpenGLAttributes& GetOpenGLAttributes();
@@ -50,11 +50,11 @@ namespace SDL
 		void PollEvents();
 		bool PollEvent(SDL_Event& dest);
 	private:
-		std::vector<SDL_Window*> _windows;
-		Result                   _result;
-		OpenGLAttributes         _openGLAttributes;
-		AppMetaData              _appMetaData;
-		EventHandler             _eventHandler;
+		Vector<SDL_Window*> _windows;
+		Result              _result;
+		OpenGLAttributes    _openGLAttributes;
+		AppMetaData         _appMetaData;
+		EventHandler        _eventHandler;
 	};
 
 	Application& GetApplication();

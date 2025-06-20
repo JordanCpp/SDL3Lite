@@ -13,8 +13,8 @@
 static SDL_Window *window     = NULL;
 static SDL_Renderer *renderer = NULL;
 
-#define WINDOW_WIDTH  640
-#define WINDOW_HEIGHT 480
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGHT (480)
 
 /* This function runs once at startup. */
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])

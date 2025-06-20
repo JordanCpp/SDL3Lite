@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-const std::string& WindowError::GetErrorMessage()
+const String& WindowError::GetErrorMessage()
 {
     DWORD ident = GetLastError();
     assert(ident != 0);

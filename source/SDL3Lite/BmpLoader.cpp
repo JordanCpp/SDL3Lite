@@ -49,7 +49,7 @@ BmpLoader::~BmpLoader()
 	Clear();
 }
 
-bool BmpLoader::Reset(const std::string& path)
+bool BmpLoader::Reset(const String& path)
 {
 	Clear();
 

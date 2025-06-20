@@ -9,6 +9,9 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+#define WINDOW_WIDTH  (640)
+#define WINDOW_HEIGTH (480)
+
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window     = NULL;
 static SDL_Renderer *renderer = NULL;
@@ -18,12 +21,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
     SDL_SetAppMetadata("Example Renderer Lines", "1.0", "com.example.renderer-lines");
 
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
+    if (!SDL_Init(SDL_INIT_VIDEO)) 
+    {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("examples/renderer/lines", 640, 480, 0, &window, &renderer)) {
+    if (!SDL_CreateWindowAndRenderer("examples/renderer/lines", WINDOW_WIDTH, WINDOW_HEIGTH, 0, &window, &renderer)) 
+    {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
@@ -34,9 +39,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 /* This function runs when a new event (mouse input, keypresses, etc) occurs. */
 SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
-    if (event->type == SDL_EVENT_QUIT) {
+    if (event->type == SDL_EVENT_QUIT) 
+    {
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
     }
+
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
@@ -50,7 +57,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
        (0, 0) is the top left of the window, and larger numbers go down
        and to the right. This isn't how geometry works, but this is pretty
        standard in 2D graphics. */
-    static const SDL_FPoint line_points[] = {
+    static const SDL_FPoint line_points[] = 
+    {
         { 100, 354 }, { 220, 230 }, { 140, 230 }, { 320, 100 }, { 500, 230 },
         { 420, 230 }, { 540, 354 }, { 400, 354 }, { 100, 354 }
     };
@@ -72,7 +80,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     /* here's a bunch of lines drawn out from a center point in a circle. */
     /* we randomize the color of each line, so it functions as animation. */
-    for (i = 0; i < 360; i++) {
+    for (i = 0; i < 360; i++) 
+    {
         const float size = 30.0f;
         const float x = 320.0f;
         const float y = 95.0f - (size / 2.0f);

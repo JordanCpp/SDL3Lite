@@ -24,9 +24,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/SDL_Log.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <SDL3/SDL_Log.h>
 
 void SDL_Log(const char* fmt, ...)
 {

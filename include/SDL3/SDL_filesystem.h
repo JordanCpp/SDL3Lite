@@ -24,62 +24,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Types_h
-#define SDL3Lite_SDL_Types_h
+#ifndef SDL3Lite_SDL_filesystem_h
+#define SDL3Lite_SDL_filesystem_h
 
-#include <SDL3/pstdint.h>
-#include <SDL3/pstdbool.h>
+#include <SDL3/SDL_Types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**************************************************************************************
-                                      Defines
-**************************************************************************************/
 
-#define SDLCALL
-
-#if defined(_WIN32)
-    #define SDL3LITE_EXPORT __declspec(dllexport)
-    #define SDL3LITE_IMPORT __declspec(dllimport)
-#elif defined(__unix__)
-    #define SDL3LITE_EXPORT __attribute__((visibility("default")))
-    #define SDL3LITE_IMPORT
-#else
-    #define SDL3LITE_EXPORT
-    #define SDL3LITE_IMPORT
-#endif
-
-#if defined(SDL3LITE_STATIC)
-    #define SDL_DECLSPEC
-#else
-    #if defined(SDL3LITE_SHARED)
-        #define SDL_DECLSPEC SDL3LITE_EXPORT
-    #else
-        #define SDL_DECLSPEC SDL3LITE_IMPORT
-    #endif
-#endif
-
-/**************************************************************************************
-                                       Types
-**************************************************************************************/
-
-typedef int8_t   Sint8;
-typedef uint8_t  Uint8;
-
-typedef int16_t  Sint16;
-typedef uint16_t Uint16;
-
-typedef int32_t  Sint32;
-typedef uint32_t Uint32;
-
-typedef int64_t  Sint64;
-typedef uint64_t Uint64;
-
-#define SDL_UINT64_C(c)  UINT64_C(c)
-
-typedef Uint32 SDL_DisplayID;
 
 #ifdef __cplusplus
 }

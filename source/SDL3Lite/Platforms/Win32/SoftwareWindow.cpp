@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace SDL;
 
-SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode) :
+SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
 	_mainWindow(result, eventHandler, pos, size, title, mode),
 	_surface(GetSize(), SDL_PIXELFORMAT_RGB24)
 {
@@ -60,12 +60,12 @@ void SoftwareWindow::SetSize(const Vec2i& size)
 	_mainWindow.SetSize(size);
 }
 
-const std::string& SoftwareWindow::GetTitle()
+const String& SoftwareWindow::GetTitle()
 {
 	return _mainWindow.GetTitle();
 }
 
-void SoftwareWindow::SetTitle(const std::string& title)
+void SoftwareWindow::SetTitle(const String& title)
 {
 	_mainWindow.SetTitle(title);
 }

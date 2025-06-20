@@ -36,14 +36,14 @@ namespace SDL
 	class SoftwareWindow : public SDL_Window
 	{
 	public:
-		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode);
 		SDL::Surface* GetSurface();
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();
 		void SetSize(const Vec2i& size);
-		const std::string& GetTitle();
-		void SetTitle(const std::string& title);
+		const String& GetTitle();
+		void SetTitle(const String& title);
 		SDL_WindowFlags GetFlags();
 		bool Present();
 		void PollEvents();

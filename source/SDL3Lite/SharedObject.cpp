@@ -24,10 +24,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <assert.h>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Application.hpp>
 #include <SDL3Lite/SharedObject.hpp>
 #include <SDL3Lite/Platforms/Library.hpp>
-#include <assert.h>
 
 SDL_SharedObject* SDL_LoadObjectImplementation(SDL::Result& result, const char* sofile)
 {

@@ -24,16 +24,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_FileStream_hpp
-#define SDL3Lite_FileStream_hpp
+#ifndef SDL3Lite_SDL_Color_h
+#define SDL3Lite_SDL_Color_h
 
-namespace SDL
-{
-	class FileStream
-	{
-	public:
-	private:
-	};
+#include <SDL3/SDL_stdinc.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    typedef struct SDL_Color
+    {
+        Uint8 r;
+        Uint8 g;
+        Uint8 b;
+        Uint8 a;
+    } SDL_Color;
+
+    typedef struct SDL_Palette
+    {
+        int ncolors;        /**< number of elements in `colors`. */
+        SDL_Color* colors;  /**< an array of colors, `ncolors` long. */
+        Uint32 version;     /**< internal use only, do not touch. */
+        int refcount;       /**< internal use only, do not touch. */
+    } SDL_Palette;
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif

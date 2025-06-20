@@ -24,9 +24,26 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/SDL_stdinc.h>
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <SDL3/SDL_stdinc.h>
+
+void* SDL_malloc(size_t size)
+{
+	void* result = malloc(size);
+
+	assert(result != NULL);
+
+	return result;
+}
+
+void SDL_free(void* mem)
+{
+	assert(mem != NULL);
+
+	free(mem);
+}
 
 double SDL_sin(double x)
 {

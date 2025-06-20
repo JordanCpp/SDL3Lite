@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <assert.h>
+#include <SDL3Lite/New.hpp>
 #include <SDL3Lite/Surface.hpp>
 
 using namespace SDL;

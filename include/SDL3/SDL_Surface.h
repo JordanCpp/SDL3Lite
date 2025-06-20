@@ -24,10 +24,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Surface_h
-#define SDL3Lite_SDL_Surface_h
+#ifndef SDL3Lite_SDL_surface_h
+#define SDL3Lite_SDL_surface_h
 
-#include <SDL3/SDL_Types.h>
+#include <SDL3/SDL_stdinc.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -253,6 +253,8 @@ extern SDL_DECLSPEC void         SDLCALL SDL_DestroySurface(SDL_Surface* surface
 
 #define SDL_ALPHA_OPAQUE_FLOAT (1.0f)
 #define SDL_ALPHA_OPAQUE       (255)
+
+extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_LoadBMP(const char* file);
 
 #ifdef __cplusplus
 }

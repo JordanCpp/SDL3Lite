@@ -27,25 +27,25 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_BaseWindow_hpp
 #define SDL3Lite_BaseWindow_hpp
 
-#include <string>
-#include "Vec2.hpp"
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/String.hpp>
 
 namespace SDL
 {
 	class BaseWindow
 	{
 	public:
-		BaseWindow(const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title);
+		BaseWindow(const SDL::Vec2i& pos, const SDL::Vec2i& size, const String& title);
 		const Vec2i& GetPos();
 		void SetPos(const Vec2i& pos);
 		const Vec2i& GetSize();
 		void SetSize(const Vec2i& size);
-		const std::string& GetTitle();
-		void SetTitle(const std::string& title);
+		const String& GetTitle();
+		void SetTitle(const String& title);
 	private:
 		Vec2i       _pos;
 		Vec2i       _size;
-		std::string _title;
+		String _title;
 	};
 }
 
