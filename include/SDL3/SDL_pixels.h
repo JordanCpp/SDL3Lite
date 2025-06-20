@@ -24,8 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_Color_h
-#define SDL3Lite_SDL_Color_h
+#ifndef SDL3Lite_SDL_pixels_h
+#define SDL3Lite_SDL_pixels_h
 
 #include <SDL3/SDL_stdinc.h>
 
