@@ -24,24 +24,50 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Renderer.hpp>
+#include <SDL3Lite/Surface.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <SDL3Lite/Renders/Software/SoftwareTexture.hpp>
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+SDL_Texture* SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h)
+{
+	SDL_Texture* texture = NULL;
 
-#endif
+	if (renderer->GetFlags() & SDL_WINDOW_OPENGL)
+	{
+		texture = new SDL::OpenGL1Texture(renderer, SDL::Vec2i(w, h), 3);
+	}
+	else
+	{
+		texture = new SDL::SoftwareTexture(renderer, SDL::Vec2i(w, h), 3);
+	}
+
+	return texture;
+}
+
+void SDL_DestroyTexture(SDL_Texture* texture)
+{
+	delete texture;
+}
+
+bool SDL_UpdateTexture(SDL_Texture* texture, const SDL_Rect* rect, const void* pixels, int pitch)
+{
+	texture->Update(SDL::Vec2i(rect->x, rect->y), SDL::Vec2i(rect->w, rect->h), (uint8_t*)pixels, pitch);
+
+	return true;
+}
+
+SDL_Texture* SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface)
+{
+	SDL_Texture* result = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STATIC, surface->w, surface->h);
+
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = surface->w;
+	rect.h = surface->h;
+
+	SDL_UpdateTexture(result, &rect, surface->pixels, surface->pitch);
+		
+	return result;
+}

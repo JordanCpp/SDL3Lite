@@ -24,24 +24,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_BmpLoader_hpp
+#define SDL3Lite_BmpLoader_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <stdio.h>
+#include <SDL3/pstdint.h>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/Vec2.hpp>
+
+namespace SDL
+{
+	class BmpLoader
+	{
+	public:
+		BmpLoader(Result& result);
+		~BmpLoader();
+		bool Reset(const std::string& path);
+		const Vec2i& GetSize();
+		int GetBpp();
+		uint8_t* GetPixels();
+	private:
+		void Clear();
+		Result&  _result;
+		uint8_t* _pixels;
+		int      _bpp;
+		Vec2i    _size;
+
+	};
+}
 
 #endif

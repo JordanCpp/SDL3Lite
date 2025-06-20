@@ -24,24 +24,38 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
+#define SDL3Lite_Renders_OpenGL1_OpenGL1Render_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Renderer.hpp>
+#include <SDL3Lite/OpenGL/Mat4f.hpp>
+#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
+#include <SDL3Lite/Renders/OpenGL1/OpenGL1Texture.hpp>
+#include <SDL3Lite/Rect2f.hpp>
+
+namespace SDL
+{
+	class OpenGL1Texture;
+
+	class OpenGL1Render : public SDL_Renderer
+	{
+	public:
+	    OpenGL1Render(Result& result, SDL_Window* window);
+		SDL_WindowFlags GetFlags();
+		const Vec2i& GetSize();
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Line(const SDL::Vec2f& first, const SDL::Vec2f& last);
+		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
+	private:
+		Result&     _result;
+		SDL_Window* _window;
+	    Color       _color;
+		Mat4f       _projection;
+		Mat4f       _modelView;
+	};
+}
 
 #endif

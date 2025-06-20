@@ -24,24 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Vec2_hpp
+#define SDL3Lite_Vec2_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
 #include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+
+namespace SDL
+{
+	class Vec2i : public SDL_Point
+	{
+	public:
+		Vec2i();
+		Vec2i(int x, int y);
+		const Vec2i& operator=(Vec2i& v);
+		const Vec2i& operator=(const Vec2i& v);
+	};
+
+	class Vec2f : public SDL_FPoint
+	{
+	public:
+		Vec2f();
+		Vec2f(float x, float y);
+		const Vec2f& operator=(Vec2f& v);
+		const Vec2f& operator=(const Vec2f& v);
+	};
+}
 
 #endif

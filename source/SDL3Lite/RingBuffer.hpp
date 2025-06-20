@@ -24,24 +24,78 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_RingBuffer_hpp
+#define SDL3Lite_RingBuffer_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <stddef.h>
+#include <string.h>
+
+namespace SDL
+{
+	template<class T, size_t COUNT>
+	class RingBuffer
+	{
+	public:
+		RingBuffer() :
+			_head(-1),
+			_tail(0),
+			_length(0),
+			_capacity(COUNT)
+		{
+			memset(&_content, 0, sizeof(T) * COUNT);
+		}
+
+		bool IsEmpty()
+		{
+			return _length == 0;
+		}
+
+		bool IsFull()
+		{
+			return _length == _capacity;
+		}
+
+		int NextPosition(int position)
+		{
+			return (position + 1) % _capacity;
+		}
+
+		bool Dequeue(T& element)
+		{
+			if (!IsEmpty())
+			{
+				element = _content[_tail];
+				_tail = NextPosition(_tail);
+				_length--;
+
+				return true;
+			}
+
+			return false;
+		}
+
+		void Enqueue(const T& element)
+		{
+			_head = NextPosition(_head);
+
+			_content[_head] = element;
+
+			if (IsFull())
+			{
+				_tail = NextPosition(_tail);
+			}
+			else
+			{
+				_length++;
+			}
+		}
+	private:
+		T   _content[COUNT];
+		int _head;
+		int _tail;
+		int _length;
+		int _capacity;
+	};
+}
 
 #endif

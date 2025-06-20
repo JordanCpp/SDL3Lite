@@ -24,24 +24,34 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Window_hpp
+#define SDL3Lite_Window_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
+#include <string>
+#include <vector>
+#include <SDL3Lite/Vec2.hpp>
 #include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Surface.hpp>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+#include <SDL3Lite/OpenGLAttributes.hpp>
+
+struct SDL_Window
+{
+public:
+	virtual ~SDL_Window() {};
+	virtual SDL::Surface* GetSurface() = 0;
+	virtual const SDL::Vec2i& GetPos() = 0;
+	virtual void SetPos(const SDL::Vec2i& pos) = 0;
+	virtual const SDL::Vec2i& GetSize() = 0;
+	virtual void SetSize(const SDL::Vec2i& size) = 0;
+	virtual const std::string& GetTitle() = 0;
+	virtual void SetTitle(const std::string& title) = 0;
+	virtual SDL_WindowFlags GetFlags() = 0;
+	virtual void PollEvents() = 0;
+	virtual bool Present() = 0;
+};
+
+SDL_Window* SDL_CreateWindowImplementation(std::vector<SDL_Window*>& windows, SDL::OpenGLAttributes& openGLAttributes, SDL::Result& result, SDL::EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
 
 #endif

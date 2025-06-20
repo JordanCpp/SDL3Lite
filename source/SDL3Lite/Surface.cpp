@@ -24,24 +24,62 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <assert.h>
+#include <SDL3Lite/Surface.hpp>
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+using namespace SDL;
 
-#endif
+Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_size(size)
+{
+	flags    = 0;
+	format   = pixelFormat;
+	w        = _size.x;
+	h        = _size.y;
+	pitch    = 3;
+	_pixels.resize(w * h * pitch);
+	pixels   = &_pixels[0];
+	refcount = 0;
+	reserved = NULL;
+}
+
+Surface::~Surface()
+{
+}
+
+int Surface::GetBpp()
+{
+	return pitch;
+}
+
+SDL_PixelFormat Surface::GetPixelFormat()
+{
+	return format;
+}
+
+const Vec2i& Surface::GetSize()
+{
+	return _size;
+}
+
+uint8_t* Surface::GetPixels()
+{
+	return (uint8_t*)pixels;
+}
+
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format)
+{
+	return new SDL::Surface(SDL::Vec2i(width, height), format);
+}
+
+SDL_Surface* SDL_CreateSurface(int width, int height, SDL_PixelFormat format)
+{
+	return SDL_CreateSurfaceImplementation(width, height, format);
+}
+
+void SDL_DestroySurface(SDL_Surface* surface)
+{
+	assert(surface);
+
+	delete surface;
+}

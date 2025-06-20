@@ -24,24 +24,34 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_Software_SoftwareRender_hpp
+#define SDL3Lite_Renders_Software_SoftwareRender_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Renderer.hpp>
+#include <SDL3Lite/Window.hpp>
+#include <SDL3Lite/PixelPainter.hpp>
+#include <SDL3Lite/PixelCopier.hpp>
+
+namespace SDL
+{
+	class SoftwareRender : public SDL_Renderer
+	{
+	public:
+		SoftwareRender(SDL_Window* window);
+		SDL_WindowFlags GetFlags();
+		const Vec2i& GetSize();
+		void Present();
+		void SetColor(const Color& color);
+		void Clear();
+		void FillRect(const Vec2f& pos, const Vec2f& size);
+		void Line(const SDL::Vec2f& first, const SDL::Vec2f& last);
+		void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
+	private:
+		PixelPainter _pixelPainter;
+		PixelCopier  _pixelCopier;
+		Color        _color;
+		SDL_Window*  _window;
+	};
+}
 
 #endif

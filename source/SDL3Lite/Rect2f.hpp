@@ -24,24 +24,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Rect2f_hpp
+#define SDL3Lite_Rect2f_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3/SDL_Rect.h>
+
+namespace SDL
+{
+	class Rect2f : public SDL_FRect
+	{
+	public:
+		Rect2f();
+		Rect2f(float x, float y, float w, float h);
+		Rect2f(const SDL_FRect& rect);
+		const Rect2f& operator=(Rect2f& v);
+		const Rect2f& operator=(const Rect2f& v);
+		const Rect2f& operator=(SDL_FRect* v);
+		const Rect2f& operator=(const SDL_FRect* v);
+	};
+}
 
 #endif

@@ -24,24 +24,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_Software_SoftwareTexture_hpp
+#define SDL3Lite_Renders_Software_SoftwareTexture_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3/pstdint.h>
+#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Texture.hpp>
+#include <SDL3Lite/Renderer.hpp>
+#include <SDL3Lite/Surface.hpp>
+#include <SDL3Lite/PixelCopier.hpp>
+
+namespace SDL
+{
+	class SoftwareRender;
+
+	class SoftwareTexture : public SDL_Texture
+	{
+	public:
+		~SoftwareTexture();
+		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp);
+		SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, uint8_t* pixels);
+		const Vec2i& GetSize();
+		bool Update(const Vec2i& pos, const Vec2i& size, uint8_t* pixels, int bpp);
+	public:
+		Surface* GetSurface();
+	private:
+		PixelCopier    _pixelCopier;
+	    SDL_Renderer*  _render;
+		Vec2i          _size;
+		Surface        _surface;
+	};
+}
 
 #endif

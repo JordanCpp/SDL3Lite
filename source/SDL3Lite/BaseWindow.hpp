@@ -24,24 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_BaseWindow_hpp
+#define SDL3Lite_BaseWindow_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <string>
+#include "Vec2.hpp"
+
+namespace SDL
+{
+	class BaseWindow
+	{
+	public:
+		BaseWindow(const SDL::Vec2i& pos, const SDL::Vec2i& size, const std::string& title);
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+	private:
+		Vec2i       _pos;
+		Vec2i       _size;
+		std::string _title;
+	};
+}
 
 #endif

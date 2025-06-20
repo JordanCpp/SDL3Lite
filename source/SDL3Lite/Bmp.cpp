@@ -24,24 +24,41 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Bmp.hpp>
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/BmpLoader.hpp>
+#include <SDL3Lite/Surface.hpp>
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+SDL_Surface* SDL_LoadBMP(const char* file)
+{
+	return SDL_LoadBMPImplementation(SDL::GetApplication().GetResult(), file);
+}
 
-#endif
+SDL_Surface* SDL_LoadBMPImplementation(SDL::Result& result, const char* file)
+{
+	SDL_Surface* surface = NULL;
+
+	SDL::BmpLoader bmpLoader(result);
+
+	if (bmpLoader.Reset(file))
+	{
+		surface = new SDL::Surface(bmpLoader.GetSize(), SDL_PIXELFORMAT_RGB24);
+
+		int width  = surface->w;
+		int heigth = surface->h;
+		int bpp    = surface->pitch;
+
+		size_t bytes = width * heigth * bpp;
+		uint8_t* dst = (uint8_t*)surface->pixels;
+		uint8_t* src = bmpLoader.GetPixels();
+
+		for (size_t i = 0; i < bytes; i += bpp)
+		{
+			dst[i + 0] = src[i + 0];
+			dst[i + 1] = src[i + 1];
+			dst[i + 2] = src[i + 2];
+		}
+	}
+
+	return surface;
+}

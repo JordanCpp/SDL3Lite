@@ -24,24 +24,26 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/Events.hpp>
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+int SDL_PollEventImplementation(SDL::Application& application, SDL_Event* dest)
+{
+	SDL_Event event;
 
-#endif
+	if (application.PollEvent(event))
+	{
+		memcpy(dest, &event, sizeof(SDL_Event));
+
+		return 1;
+	}
+
+	application.PollEvents();
+
+	return 0;
+}
+
+int SDL_PollEvent(SDL_Event* dest)
+{
+	return SDL_PollEventImplementation(SDL::GetApplication(), dest);
+}

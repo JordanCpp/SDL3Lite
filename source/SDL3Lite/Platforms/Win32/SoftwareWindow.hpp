@@ -24,24 +24,34 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Win32_SoftwareWindow_hpp
+#define SDL3Lite_Win32_SoftwareWindow_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Window.hpp>
+#include <SDL3Lite/Surface.hpp>
+#include <SDL3Lite/Platforms/Win32/MainWindow.hpp>
+
+namespace SDL
+{
+	class SoftwareWindow : public SDL_Window
+	{
+	public:
+		SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const std::string& title, SDL_WindowFlags mode);
+		SDL::Surface* GetSurface();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const std::string& GetTitle();
+		void SetTitle(const std::string& title);
+		SDL_WindowFlags GetFlags();
+		bool Present();
+		void PollEvents();
+	private:
+		MainWindow _mainWindow;
+		Surface    _surface;
+		BITMAPINFO _bitmapInfo;
+	};
+}
 
 #endif

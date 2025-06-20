@@ -24,24 +24,41 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Application.hpp>
+#include <SDL3Lite/SharedObject.hpp>
+#include <SDL3Lite/Platforms/Library.hpp>
+#include <assert.h>
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+SDL_SharedObject* SDL_LoadObjectImplementation(SDL::Result& result, const char* sofile)
+{
+	SDL_SharedObject* sharedObject = new SDL::Library(result);
 
-#endif
+	if (sharedObject->Open(sofile))
+	{
+		return sharedObject;
+	}
+
+	return NULL;
+}
+
+SDL_SharedObject* SDL_LoadObject(const char* sofile)
+{
+	return SDL_LoadObjectImplementation(SDL::GetApplication().GetResult(), sofile);
+}
+
+void SDL_UnloadObject(SDL_SharedObject* handle)
+{
+	assert(handle);
+
+	handle->Close();
+
+	delete handle;
+}
+
+SDL_FunctionPointer SDL_LoadFunction(SDL_SharedObject* handle, const char* name)
+{
+	assert(handle);
+	assert(name);
+
+	return handle->Load(name);
+}

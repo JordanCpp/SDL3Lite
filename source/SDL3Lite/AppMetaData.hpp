@@ -24,24 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_AppMetaData_hpp
+#define SDL3Lite_AppMetaData_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <string>
+
+namespace SDL
+{
+	class AppMetaData
+	{
+	public:
+		const std::string& GetName();
+		void SetName(const std::string& name);
+
+		const std::string& GetVersion();
+		void SetVersion(const std::string& version);
+
+		const std::string& GetIdentifier();
+		void SetIdentifier(const std::string& identifier);
+	private:
+		std::string _name;
+		std::string _version;
+		std::string _identifier;
+	};
+}
 
 #endif

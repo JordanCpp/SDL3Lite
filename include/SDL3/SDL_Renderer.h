@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_Renderer_h
 #define SDL3Lite_SDL_Renderer_h
 
+#include <SDL3/SDL_Rect.h>
 #include <SDL3/SDL_Window.h>
 #include <SDL3/SDL_Texture.h>
 

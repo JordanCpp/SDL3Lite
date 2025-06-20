@@ -24,24 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Surface_hpp
+#define SDL3Lite_Surface_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
 #include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3Lite/Vec2.hpp>
+#include <vector>
+
+namespace SDL
+{
+	class Surface : public SDL_Surface
+	{
+	public:
+		Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
+		~Surface();
+		int GetBpp();
+		SDL_PixelFormat GetPixelFormat();
+		const Vec2i& GetSize();
+		uint8_t* GetPixels();
+	private:
+		Vec2i                _size;
+		std::vector<uint8_t> _pixels;
+	};
+}
+
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format);
 
 #endif

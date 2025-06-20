@@ -24,24 +24,57 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_OpenGLAttributes_hpp
+#define SDL3Lite_OpenGLAttributes_hpp
 
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_AppResult.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_Types.h>
-#include <SDL3/SDL_SharedObject.h>
-#include <SDL3/SDL_Initialize.h>
-#include <SDL3/SDL_Renderer.h>
-#include <SDL3/SDL_Window.h>
-#include <SDL3/SDL_Events.h>
-#include <SDL3/SDL_Errors.h>
-#include <SDL3/SDL_GLContext.h>
-#include <SDL3/SDL_Surface.h>
-#include <SDL3/SDL_Texture.h>
-#include <SDL3/SDL_Bmp.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+namespace SDL
+{
+	class OpenGLAttributes
+	{
+	public:
+		OpenGLAttributes();
+
+		int GetRedSize();
+		void SetRedSize(int value);
+
+		int GetGreenSize();
+		void SetGreenSize(int value);
+
+		int GetBlueSize();
+		void SetBlueSize(int value);
+
+		int GetAlphaSize();
+		void SetAlphaSize(int value);
+
+		int GetAccumRedSize();
+		void SetAccumRedSize(int value);
+
+		int GetAccumGreenSize();
+		void SetAccumGreenSize(int value);
+
+		int GetAccumBlueSize();
+		void SetAccumBlueSize(int value);
+
+		int GetAccumAlphaSize();
+		void SetAccumAlphaSize(int value);
+
+		int GetMajor();
+		void SetMajor(int value);
+
+		int GetMinor();
+		void SetMinor(int value);
+	private:
+		int _redSize;
+		int _greenSize;
+		int _blueSize;
+		int _alphaSize;
+		int _accumRedSize;
+		int _accumGreenSize;
+		int _accumBlueSize;
+		int _accumAlphaSize;
+		int _major;
+		int _minor;
+	};
+}
 
 #endif
