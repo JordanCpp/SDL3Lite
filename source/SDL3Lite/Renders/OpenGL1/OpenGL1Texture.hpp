@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <OpenGL.h>
 #include <SDL3/pstdint.h>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/Texture.hpp>
 #include <SDL3Lite/Renderer.hpp>
 

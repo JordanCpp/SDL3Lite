@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <SDL3/pstdint.h>
 #include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 
 namespace SDL
 {

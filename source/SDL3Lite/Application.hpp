@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/SDL.h>
 #include <SDL3Lite/Vector.hpp>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/EventHandler.hpp>
 #include <SDL3Lite/OpenGLAttributes.hpp>

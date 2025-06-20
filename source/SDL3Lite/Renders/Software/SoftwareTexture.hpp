@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Renders_Software_SoftwareTexture_hpp
 
 #include <SDL3/pstdint.h>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/Texture.hpp>
 #include <SDL3Lite/Renderer.hpp>
 #include <SDL3Lite/Surface.hpp>

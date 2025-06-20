@@ -24,62 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Vec2.hpp>
+#ifndef SDL3Lite_Vec2i_hpp
+#define SDL3Lite_Vec2i_hpp
 
-using namespace SDL;
+#include <SDL3/SDL_rect.h>
 
-Vec2i::Vec2i()
+namespace SDL
 {
-	x = 0;
-	y = 0;
+	class Vec2i : public SDL_Point
+	{
+	public:
+		Vec2i();
+		Vec2i(int x, int y);
+		const Vec2i& operator=(Vec2i& v);
+		const Vec2i& operator=(const Vec2i& v);
+	};
+
+	class Vec2f : public SDL_FPoint
+	{
+	public:
+		Vec2f();
+		Vec2f(float x, float y);
+		const Vec2f& operator=(Vec2f& v);
+		const Vec2f& operator=(const Vec2f& v);
+	};
 }
 
-Vec2i::Vec2i(int x, int y)
-{
-	this->x = x;
-	this->y = y;
-}
-
-const Vec2i& Vec2i::operator=(Vec2i& v)
-{
-	x = v.x;
-	y = v.y;
-
-	return *this;
-}
-
-const Vec2i& Vec2i::operator=(const Vec2i& v)
-{
-	x = v.x;
-	y = v.y;
-
-	return *this;
-}
-
-Vec2f::Vec2f()
-{
-	x = 0;
-	y = 0;
-}
-
-Vec2f::Vec2f(float x, float y)
-{
-	this->x = x;
-	this->y = y;
-}
-
-const Vec2f& Vec2f::operator=(Vec2f& v)
-{
-	x = v.x;
-	y = v.y;
-
-	return *this;
-}
-
-const Vec2f& Vec2f::operator=(const Vec2f& v)
-{
-	x = v.x;
-	y = v.y;
-
-	return *this;
-}
+#endif

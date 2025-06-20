@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Renderer_hpp
 
 #include <SDL3/SDL_video.h>
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/Rect2f.hpp>
 #include <SDL3Lite/Color.hpp>
 #include <SDL3Lite/Result.hpp>

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_BaseWindow_hpp
 #define SDL3Lite_BaseWindow_hpp
 
-#include <SDL3Lite/Vec2.hpp>
+#include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/String.hpp>
 
 namespace SDL
