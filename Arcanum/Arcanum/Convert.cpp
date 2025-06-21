@@ -24,12 +24,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
+#include <string.h>
 #include <Arcanum/Convert.hpp>
 
 using namespace Arcanum;
 
-Convert::Convert()
+Convert::Convert() :
+    _result()
 {
+    memset(_buffer, 0, Max);
 }
 
 const char* Convert::ToChars(intmax_t num, uint8_t base)

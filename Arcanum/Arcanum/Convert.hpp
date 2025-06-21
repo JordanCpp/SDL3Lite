@@ -37,10 +37,14 @@ namespace Arcanum
 		Convert();
 		const char* ToChars(intmax_t num, uint8_t base = 10);
 	private:
+		enum
+		{
+			Max = 32
+		};
 		void Swap(char& t1, char& t2);
 		void Reverse(char* str, size_t length);
-		char _buffer[32];
 		int  _result;
+		char _buffer[32];
 	};
 }
 
