@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <sys/time.h>
 #include <unistd.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3/SDL_timer.h>
 
 Uint64 SDL_GetTicks(void)
 {

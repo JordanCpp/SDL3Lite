@@ -40,7 +40,7 @@ void* SDL_malloc(size_t size)
 
 void SDL_free(void* mem)
 {
-	assert(mem != NULL);
+	//assert(mem != NULL);
 
 	free(mem);
 }

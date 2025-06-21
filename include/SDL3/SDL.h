@@ -36,7 +36,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_render.h>
-#include <SDL3/SDL_Log.h>
-#include <SDL3/SDL_Timer.h>
+#include <SDL3/SDL_log.h>
+#include <SDL3/SDL_timer.h>
 
 #endif

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_SoftwareWindow_hpp
 #define SDL3Lite_Unix_SoftwareWindow_hpp
 
-#include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Window.hpp>
 #include <SDL3Lite/Surface.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 

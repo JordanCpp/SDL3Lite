@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Surface_hpp
 #define SDL3Lite_Surface_hpp
 
-#include <SDL3/SDL_Surface.h>
+#include <SDL3/SDL_surface.h>
 #include <SDL3Lite/Vec2i.hpp>
 #include <SDL3Lite/Vector.hpp>
 

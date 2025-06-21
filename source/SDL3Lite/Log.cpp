@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <SDL3/SDL_Log.h>
+#include <SDL3/SDL_log.h>
 
 void SDL_Log(const char* fmt, ...)
 {

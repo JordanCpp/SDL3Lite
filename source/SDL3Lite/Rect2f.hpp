@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Rect2f_hpp
 #define SDL3Lite_Rect2f_hpp
 
-#include <SDL3/SDL_Rect.h>
+#include <SDL3/SDL_rect.h>
 
 namespace SDL
 {

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_MainWindow_hpp
 #define SDL3Lite_Unix_MainWindow_hpp
 
-#include <SDL3/SDL_Window.h>
+#include <SDL3/SDL_video.h>
 #include <SDL3Lite/Result.hpp>
 #include <SDL3Lite/BaseWindow.hpp>
 #include <SDL3Lite/EventHandler.hpp>

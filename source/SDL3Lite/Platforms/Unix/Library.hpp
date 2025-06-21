@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <dlfcn.h>
 #include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/SDL3/SDL_SharedObject.hpp>
+#include <SDL3Lite/SharedObject.hpp>
 
 namespace SDL
 {

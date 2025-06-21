@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_SDL_video_h
 #define SDL3Lite_SDL_video_h
 
-#include <SDL3/SDL_Surface.h>
+#include <SDL3/SDL_surface.h>
 
 #ifdef __cplusplus
 extern "C" {

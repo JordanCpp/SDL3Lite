@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Events_hpp
 #define SDL3Lite_Events_hpp
 
-#include <SDL3/SDL_Events.h>
+#include <SDL3/SDL_events.h>
 
 int SDL_PollEventInmplementation(SDL::Application& application, SDL_Event* dest);
 

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_OpenGL1Window_hpp
 #define SDL3Lite_Unix_OpenGL1Window_hpp
 
-#include <SDL3Lite/SDL_Window.hpp>
+#include <SDL3Lite/Window.hpp>
 #include <SDL3Lite/OpenGLAttributes.hpp>
 #include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
 
