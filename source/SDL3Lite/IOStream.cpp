@@ -48,7 +48,9 @@ SDL_IOStream* SDL_IOFromFileImplementation(Result& result, const SDL::String& fi
 
 IOStream::IOStream(Result& result) :
 	_result(result),
-	_file(NULL)
+	_file(NULL),
+	_pos(0),
+	_size(0)
 {
 }
 
@@ -60,21 +62,59 @@ bool IOStream::IOFromFile(const String& file, const String& mode)
 {
 	_file = fopen(file.c_str(), mode.c_str());
 
-	return _file != NULL;
+	if (_file != NULL)
+	{
+		fseek(_file, 0, SEEK_END);
+		_size = ftell(_file);
+		_pos = 0;
+		fseek(_file, 0, SEEK_SET);
+	}
+
+	return (_file != NULL);
 }
 
 bool IOStream::CloseIO()
 {
-	return false;
+	if (_file != NULL)
+	{
+		fclose(_file);
+	}
+
+	return true;
 }
 
 size_t IOStream::ReadIO(void* ptr, size_t size)
 {
-	size_t result = fread(ptr, 1, size, _file);
+	size_t bytes = fread(ptr, 1, size, _file);
+	_pos += bytes;
+
+	return bytes;
+}
+
+size_t IOStream::WriteIO(const void* ptr, size_t size)
+{
+	size_t bytes = fwrite(ptr, 1, size, _file);
+	_pos += bytes;
+
+	return bytes;
+}
+
+Sint64 IOStream::SeekIO(Sint64 offset, SDL_IOWhence whence)
+{
+	int result = fseek(_file, (long)offset, whence);
+	
+	if (result == 0) 
+	{
+		_pos = ftell(_file);
+	}
 
 	return result;
 }
 
+Sint64 IOStream::GetIOSize()
+{
+	return _size;
+}
 
 SDL_IOStream* SDL_IOFromFile(const char* file, const char* mode)
 {
@@ -97,4 +137,25 @@ size_t SDL_ReadIO(SDL_IOStream* context, void* ptr, size_t size)
 	assert(context);
 
 	return context->ReadIO(ptr, size);
+}
+
+size_t SDL_WriteIO(SDL_IOStream* context, const void* ptr, size_t size)
+{
+	assert(context);
+
+	return context->WriteIO(ptr, size);
+}
+
+Sint64 SDL_SeekIO(SDL_IOStream* context, Sint64 offset, SDL_IOWhence whence)
+{
+	assert(context);
+
+	return context->SeekIO(offset, whence);
+}
+
+Sint64 SDL_GetIOSize(SDL_IOStream* context)
+{
+	assert(context);
+
+	return context->GetIOSize();
 }

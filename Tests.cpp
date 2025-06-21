@@ -258,7 +258,7 @@ void SDL_SoftwareRenderTest()
 
 void SDL_OIStreamTest()
 {
-    SDL_IOStream* stream = SDL_IOFromFile("sample.bmp", "r");
+    SDL_IOStream* stream = SDL_IOFromFile("sample.bmp", "rb");
 
     SDL_TEST(stream != NULL);
 

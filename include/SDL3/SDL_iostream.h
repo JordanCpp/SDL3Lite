@@ -35,9 +35,29 @@ extern "C" {
 
 typedef struct SDL_IOStream SDL_IOStream;
 
+typedef enum SDL_IOStatus
+{
+    SDL_IO_STATUS_READY,     /**< Everything is ready (no errors and not EOF). */
+    SDL_IO_STATUS_ERROR,     /**< Read or write I/O error */
+    SDL_IO_STATUS_EOF,       /**< End of file */
+    SDL_IO_STATUS_NOT_READY, /**< Non blocking I/O, not ready */
+    SDL_IO_STATUS_READONLY,  /**< Tried to write a read-only buffer */
+    SDL_IO_STATUS_WRITEONLY  /**< Tried to read a write-only buffer */
+} SDL_IOStatus;
+
+typedef enum SDL_IOWhence
+{
+    SDL_IO_SEEK_SET,  /**< Seek from the beginning of data */
+    SDL_IO_SEEK_CUR,  /**< Seek relative to current read point */
+    SDL_IO_SEEK_END   /**< Seek relative to the end of data */
+} SDL_IOWhence;
+
 extern SDL_DECLSPEC SDL_IOStream* SDLCALL SDL_IOFromFile(const char* file, const char* mode);
 extern SDL_DECLSPEC bool          SDLCALL SDL_CloseIO(SDL_IOStream* context);
 extern SDL_DECLSPEC size_t        SDLCALL SDL_ReadIO(SDL_IOStream* context, void* ptr, size_t size);
+extern SDL_DECLSPEC size_t        SDLCALL SDL_WriteIO(SDL_IOStream* context, const void* ptr, size_t size);
+extern SDL_DECLSPEC Sint64        SDLCALL SDL_SeekIO(SDL_IOStream* context, Sint64 offset, SDL_IOWhence whence);
+extern SDL_DECLSPEC Sint64        SDLCALL SDL_GetIOSize(SDL_IOStream* context);
 
 #ifdef __cplusplus
 }

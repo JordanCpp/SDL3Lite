@@ -39,6 +39,9 @@ public:
 	virtual bool IOFromFile(const SDL::String& file, const SDL::String& mode) = 0;
 	virtual bool CloseIO() = 0;
 	virtual size_t ReadIO(void* ptr, size_t size) = 0;
+	virtual size_t WriteIO(const void* ptr, size_t size) = 0;
+	virtual Sint64 SeekIO(Sint64 offset, SDL_IOWhence whence) = 0;
+	virtual Sint64 GetIOSize() = 0;
 };
 
 namespace SDL
@@ -51,9 +54,14 @@ namespace SDL
 		bool IOFromFile(const SDL::String& file, const SDL::String& mode);
 		bool CloseIO();
 		size_t ReadIO(void* ptr, size_t size);
+		size_t WriteIO(const void* ptr, size_t size);
+		Sint64 SeekIO(Sint64 offset, SDL_IOWhence whence);
+		Sint64 GetIOSize();
 	private:
 		Result& _result;
 		FILE*   _file;
+		size_t  _pos;
+		size_t  _size;
 	};
 }
 
