@@ -127,7 +127,7 @@ const Vec2i& MainWindow::GetSize()
 	return _baseWindow.GetSize();
 }
 
-void SDL::MainWindow::SetSize(const Vec2i& size)
+void MainWindow::SetSize(const Vec2i& size)
 {
 	_baseWindow.SetSize(size);
 }

@@ -77,5 +77,35 @@ SDL_Surface* SDL_GetWindowSurface(SDL_Window* window)
 
 bool SDL_UpdateWindowSurface(SDL_Window* window)
 {
+	assert(window);
+
 	return window->Present();
+}
+
+const char* SDL_GetWindowTitle(SDL_Window* window)
+{
+	assert(window);
+
+	return window->GetTitle().c_str();
+}
+
+bool SDL_SetWindowTitle(SDL_Window* window, const char* title)
+{
+	assert(window);
+
+	window->SetTitle(title);
+
+	return true;
+}
+
+bool SDL_GetWindowSize(SDL_Window* window, int* w, int* h)
+{
+	assert(window);
+
+	SDL::Vec2i size = window->GetSize();
+
+	w = &size.x;
+	h = &size.y;
+
+	return true;
 }

@@ -86,3 +86,8 @@ target_link_libraries(rectangles SDL3)
 
 add_executable(textures2 "textures2.c")
 target_link_libraries(textures2 SDL3)
+
+include_directories("Arcanum")
+FILE(GLOB ARCANUM_SOURCES "Arcanum/Arcanum/*.cpp" )
+add_executable(Arcanum ${ARCANUM_SOURCES})
+target_link_libraries(Arcanum SDL3)

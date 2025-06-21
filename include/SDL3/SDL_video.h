@@ -80,6 +80,9 @@ extern SDL_DECLSPEC SDL_Window*  SDLCALL SDL_CreateWindow(const char* title, int
 extern SDL_DECLSPEC void         SDLCALL SDL_DestroyWindow(SDL_Window* window);
 extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_GetWindowSurface(SDL_Window* window);
 extern SDL_DECLSPEC bool         SDLCALL SDL_UpdateWindowSurface(SDL_Window* window);
+extern SDL_DECLSPEC const char*  SDLCALL SDL_GetWindowTitle(SDL_Window* window);
+extern SDL_DECLSPEC bool         SDLCALL SDL_SetWindowTitle(SDL_Window* window, const char* title);
+extern SDL_DECLSPEC bool         SDLCALL SDL_GetWindowSize(SDL_Window* window, int* w, int* h);
 
 /**
  * An enumeration of OpenGL configuration attributes.
