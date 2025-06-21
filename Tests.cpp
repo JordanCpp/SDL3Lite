@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3Lite/Platforms/MainWindow.hpp>
 #include <SDL3Lite/Platforms/OpenGLWindow.hpp>
 #include <SDL3Lite/Platforms/SoftwareWindow.hpp>
+#include <SDL3/SDL_iostream.h>
 
 using namespace SDL;
 
@@ -255,6 +256,19 @@ void SDL_SoftwareRenderTest()
 
 }
 
+void SDL_OIStreamTest()
+{
+    SDL_IOStream* stream = SDL_IOFromFile("sample.bmp", "r");
+
+    SDL_TEST(stream != NULL);
+
+    const size_t count = 1024;
+    char buffer[count];
+    SDL_TEST(SDL_ReadIO(stream, buffer, count) == count);
+
+    SDL_TEST(SDL_CloseIO(stream) == true);
+}
+
 int main()
 {
     TestRingBuffer();
@@ -269,6 +283,8 @@ int main()
     SDL_WindowTest();
     SDL_RendererTest();
     SDL_SoftwareRenderTest();
+
+    SDL_OIStreamTest();
 
     return 0;
 }

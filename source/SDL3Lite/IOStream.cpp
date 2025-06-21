@@ -41,6 +41,8 @@ SDL_IOStream* SDL_IOFromFileImplementation(Result& result, const SDL::String& fi
 
 	delete ioStream;
 
+	result.Message("File Not Found ", file);
+
 	return NULL;
 }
 
@@ -68,7 +70,7 @@ bool IOStream::CloseIO()
 
 size_t IOStream::ReadIO(void* ptr, size_t size)
 {
-	size_t result = fread(ptr, size, 1, _file);
+	size_t result = fread(ptr, 1, size, _file);
 
 	return result;
 }
