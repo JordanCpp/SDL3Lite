@@ -95,6 +95,8 @@ extern SDL_DECLSPEC float  SDLCALL SDL_cosf(float x);
 extern SDL_DECLSPEC float  SDLCALL SDL_randf(void);
 extern SDL_DECLSPEC Sint32 SDLCALL SDL_rand(Sint32 n);
 
+extern SDL_DECLSPEC int SDLCALL SDL_abs(int x);
+
 #ifdef __cplusplus
 }
 #endif

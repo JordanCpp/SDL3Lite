@@ -69,3 +69,8 @@ Sint32 SDL_rand(Sint32 n)
 {
 	return 0 + rand() % (n - 0);
 }
+
+int SDL_abs(int x)
+{
+	return abs(x);
+}

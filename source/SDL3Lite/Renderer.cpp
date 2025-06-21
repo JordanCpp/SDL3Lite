@@ -117,7 +117,7 @@ bool SDL_SetRenderDrawColor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, U
 	return true;
 }
 
-SDL_DECLSPEC bool SDLCALL SDL_SetRenderDrawColorFloat(SDL_Renderer* renderer, float r, float g, float b, float a)
+bool SDL_SetRenderDrawColorFloat(SDL_Renderer* renderer, float r, float g, float b, float a)
 {
 	assert(renderer);
 

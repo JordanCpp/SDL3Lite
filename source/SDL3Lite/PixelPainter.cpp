@@ -24,7 +24,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <math.h>
+#include <SDL3/SDL_stdinc.h>
 #include <SDL3Lite/PixelPainter.hpp>
 
 using namespace SDL;
@@ -112,8 +112,8 @@ void PixelPainter::Line(Surface* dest, const Vec2f& first, const Vec2f& last, co
 	int error;
 	int error2;
 
-	deltaX = abs(x2 - x1);
-	deltaY = abs(y2 - y1);
+	deltaX = SDL_abs(x2 - x1);
+	deltaY = SDL_abs(y2 - y1);
 	signX = x1 < x2 ? 1 : -1;
 	signY = y1 < y2 ? 1 : -1;
 
