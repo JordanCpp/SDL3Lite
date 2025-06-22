@@ -30,6 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/SDL.h>
 #include <Arcanum/FpsCounter.hpp>
 #include <Arcanum/Convert.hpp>
+#include <Arcanum/SpriteManager.hpp>
 
 namespace Arcanum
 {
@@ -41,11 +42,12 @@ namespace Arcanum
 		void Run();
 	private:
 		void Draw();
-		bool          _running;
-		SDL_Window*   _window;
-		SDL_Renderer* _renderer;
-		FpsCounter    _fpsCounter;
-		Convert       _convert;
+		bool           _running;
+		SDL_Window*    _window;
+		SDL_Renderer*  _renderer;
+		FpsCounter     _fpsCounter;
+		Convert        _convert;
+		SpriteManager* _spriteManager;
 	};
 }
 

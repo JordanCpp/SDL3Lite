@@ -24,46 +24,46 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <Arcanum/FpsCounter.hpp>
+#include <stdexcept>
+#include <Arcanum/SpriteManager.hpp>
 
 using namespace Arcanum;
 
-FpsCounter::FpsCounter() :
-	_current(0),
-	_delta(0),
-	_old(0),
-	_fps(0)
+SpriteManager::SpriteManager(SDL_Renderer* renderer) :
+	_renderer(renderer)
 {
 }
 
-void FpsCounter::Start()
+SDL_Texture* SpriteManager::GetImage(const std::string& path)
 {
-	_current = SDL_GetTicks();
-}
+	SDL_Texture* result = NULL;
 
-bool FpsCounter::Calc()
-{
-	_fps++;
+	std::map<std::string, SDL_Texture*>::iterator i = _textures.find(path);
 
-	_delta = SDL_GetTicks() - _current;
-
-	_old += _delta;
-
-	if (_old >= 1000)
+	if (i == _textures.end())
 	{
-		return  true;
+		SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+		
+		if (surface == NULL)
+		{
+			throw std::runtime_error(SDL_GetError());
+		}
+
+		result = SDL_CreateTextureFromSurface(_renderer, surface);
+
+		if (result == NULL)
+		{
+			throw std::runtime_error(SDL_GetError());
+		}
+
+		SDL_DestroySurface(surface);
+
+		_textures.insert(std::pair<std::string, SDL_Texture*>(path, result));
+	}
+	else
+	{
+		result = i->second;
 	}
 
-	return false;
-}
-
-Uint64 FpsCounter::Fps()
-{
-	return _fps;
-}
-
-void FpsCounter::Clear()
-{
-	_fps = 0;
-	_old = 0;
+	return result;
 }

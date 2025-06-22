@@ -38,6 +38,7 @@ add_executable(Tests "Tests.cpp" ${SOURCES})
 target_link_libraries(Tests ${DEPS_LIBRARIES})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/sample.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Adv_engine_0_0_0.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 add_executable(Multiple "Multiple.c")
 target_link_libraries(Multiple SDL3)

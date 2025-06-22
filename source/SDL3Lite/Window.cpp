@@ -104,8 +104,8 @@ bool SDL_GetWindowSize(SDL_Window* window, int* w, int* h)
 
 	SDL::Vec2i size = window->GetSize();
 
-	w = &size.x;
-	h = &size.y;
+	*w = *&size.x;
+	*h = *&size.y;
 
 	return true;
 }

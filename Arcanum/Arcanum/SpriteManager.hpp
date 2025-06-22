@@ -24,46 +24,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <Arcanum/FpsCounter.hpp>
+#ifndef Arcanum_SpriteManager_hpp
+#define Arcanum_SpriteManager_hpp
 
-using namespace Arcanum;
+#include <map>
+#include <string>
+#include <SDL3/SDL.h>
 
-FpsCounter::FpsCounter() :
-	_current(0),
-	_delta(0),
-	_old(0),
-	_fps(0)
+namespace Arcanum
 {
-}
-
-void FpsCounter::Start()
-{
-	_current = SDL_GetTicks();
-}
-
-bool FpsCounter::Calc()
-{
-	_fps++;
-
-	_delta = SDL_GetTicks() - _current;
-
-	_old += _delta;
-
-	if (_old >= 1000)
+	class SpriteManager
 	{
-		return  true;
-	}
-
-	return false;
+	public:
+		SpriteManager(SDL_Renderer* renderer);
+		SDL_Texture* GetImage(const std::string& path);
+	private:
+		SDL_Renderer* _renderer;
+		std::map<std::string, SDL_Texture*> _textures;
+	};
 }
 
-Uint64 FpsCounter::Fps()
-{
-	return _fps;
-}
-
-void FpsCounter::Clear()
-{
-	_fps = 0;
-	_old = 0;
-}
+#endif

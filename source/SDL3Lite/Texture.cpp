@@ -72,3 +72,16 @@ SDL_Texture* SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* s
 		
 	return result;
 }
+
+bool SDL_GetTextureSize(SDL_Texture* texture, float* w, float* h)
+{
+	SDL::Vec2f size;
+
+	size.x = (float)texture->GetSize().x;
+	size.y = (float)texture->GetSize().y;
+
+	*w = *&size.x;
+	*h = *&size.y;
+
+	return true;
+}

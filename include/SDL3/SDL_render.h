@@ -51,7 +51,7 @@ extern "C" {
     extern SDL_DECLSPEC void         SDLCALL SDL_DestroyTexture(SDL_Texture* texture);
     extern SDL_DECLSPEC bool         SDLCALL SDL_UpdateTexture(SDL_Texture* texture, const SDL_Rect* rect, const void* pixels, int pitch);
     extern SDL_DECLSPEC SDL_Texture* SDLCALL SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface);
-
+    extern SDL_DECLSPEC bool         SDLCALL SDL_GetTextureSize(SDL_Texture* texture, float* w, float* h);
 
 
 extern SDL_DECLSPEC SDL_Renderer* SDLCALL SDL_CreateSoftwareRenderer(SDL_Surface* surface);

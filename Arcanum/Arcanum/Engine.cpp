@@ -32,7 +32,8 @@ using namespace Arcanum;
 Engine::Engine() :
     _running(true),
 	_window(NULL),
-	_renderer(NULL)
+	_renderer(NULL),
+    _spriteManager(NULL)
 {
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -50,6 +51,8 @@ Engine::Engine() :
     {
         throw std::runtime_error(SDL_GetError());
     }
+
+    _spriteManager = new SpriteManager(_renderer);
 }
 
 Engine::~Engine()
@@ -89,5 +92,15 @@ void Engine::Draw()
 {
     SDL_SetRenderDrawColor(_renderer, 0, 162, 232, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(_renderer);
+
+    SDL_Texture* texture = _spriteManager->GetImage("Adv_engine_0_0_0.bmp");
+
+    SDL_FRect dst_rect;
+    dst_rect.x = 0.0f;
+    dst_rect.y = 0.0f;
+
+    SDL_GetTextureSize(texture, &dst_rect.w, &dst_rect.h);
+    SDL_RenderTexture(_renderer, texture, NULL, &dst_rect);
+
     SDL_RenderPresent(_renderer);
 }
