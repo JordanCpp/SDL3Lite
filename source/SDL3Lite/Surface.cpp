@@ -84,3 +84,10 @@ void SDL_DestroySurface(SDL_Surface* surface)
 
 	delete surface;
 }
+
+bool SDL_SetSurfaceColorKey(SDL_Surface* surface, bool enabled, Uint32 key)
+{
+	assert(surface);
+
+	return true;
+}

@@ -24,48 +24,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdexcept>
-#include <Arcanum/SpriteManager.hpp>
+#ifndef SDL3Lite_Pixels_hpp
+#define SDL3Lite_Pixels_hpp
 
-using namespace Arcanum;
+#include <SDL3/SDL_pixels.h>
 
-SpriteManager::SpriteManager(SDL_Renderer* renderer) :
-	_renderer(renderer)
-{
-}
-
-SDL_Texture* SpriteManager::GetImage(const std::string& path)
-{
-	SDL_Texture* result = NULL;
-
-	std::map<std::string, SDL_Texture*>::iterator i = _textures.find(path);
-
-	if (i == _textures.end())
-	{
-		SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-		
-		if (surface == NULL)
-		{
-			throw std::runtime_error(SDL_GetError());
-		}
-
-		SDL_SetSurfaceColorKey(surface, true, 0);
-
-		result = SDL_CreateTextureFromSurface(_renderer, surface);
-
-		if (result == NULL)
-		{
-			throw std::runtime_error(SDL_GetError());
-		}
-
-		SDL_DestroySurface(surface);
-
-		_textures.insert(std::pair<std::string, SDL_Texture*>(path, result));
-	}
-	else
-	{
-		result = i->second;
-	}
-
-	return result;
-}
+#endif

@@ -24,48 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdexcept>
-#include <Arcanum/SpriteManager.hpp>
+#include <SDL3Lite/Pixels.hpp>
 
-using namespace Arcanum;
-
-SpriteManager::SpriteManager(SDL_Renderer* renderer) :
-	_renderer(renderer)
+Uint32 SDL_MapRGB(const SDL_PixelFormatDetails* format, const SDL_Palette* palette, Uint8 r, Uint8 g, Uint8 b)
 {
-}
+    uint32_t result = 0;
 
-SDL_Texture* SpriteManager::GetImage(const std::string& path)
-{
-	SDL_Texture* result = NULL;
+    if (format->bits_per_pixel == 32)
+    {
+        result |= (r & 0xFF) << 16;
+        result |= (g & 0xFF) << 8;
+        result |= (b & 0xFF);
+    }
+    else if (format->bits_per_pixel == 24)
+    {
+        result |= (r & 0xFF) << 16;
+        result |= (g & 0xFF) << 8;
+        result |= (b & 0xFF);
+    }
+    else if (format->bits_per_pixel == 16)
+    {
+        result |= (r & 0xF8) << 8;
+        result |= (g & 0xFC) << 3;
+        result |= (b & 0xF8) >> 3;
+    }
 
-	std::map<std::string, SDL_Texture*>::iterator i = _textures.find(path);
-
-	if (i == _textures.end())
-	{
-		SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-		
-		if (surface == NULL)
-		{
-			throw std::runtime_error(SDL_GetError());
-		}
-
-		SDL_SetSurfaceColorKey(surface, true, 0);
-
-		result = SDL_CreateTextureFromSurface(_renderer, surface);
-
-		if (result == NULL)
-		{
-			throw std::runtime_error(SDL_GetError());
-		}
-
-		SDL_DestroySurface(surface);
-
-		_textures.insert(std::pair<std::string, SDL_Texture*>(path, result));
-	}
-	else
-	{
-		result = i->second;
-	}
-
-	return result;
+    return result;
 }

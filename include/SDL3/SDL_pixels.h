@@ -262,6 +262,10 @@ extern "C" {
         Uint8 Ashift;
     } SDL_PixelFormatDetails;
 
+
+
+extern SDL_DECLSPEC Uint32 SDLCALL SDL_MapRGB(const SDL_PixelFormatDetails* format, const SDL_Palette* palette, Uint8 r, Uint8 g, Uint8 b);
+
 #ifdef __cplusplus
 }
 #endif
