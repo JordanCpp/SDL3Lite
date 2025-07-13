@@ -85,8 +85,9 @@ typedef Uint32 SDL_DisplayID;
 
 #define SDL_PI_D (3.141592653589793238462643383279502884)
 
-extern SDL_DECLSPEC void* SDLCALL SDL_malloc(size_t size);
-extern SDL_DECLSPEC void  SDLCALL SDL_free(void* mem);
+extern SDL_DECLSPEC void*  SDLCALL SDL_malloc(size_t size);
+extern SDL_DECLSPEC void   SDLCALL SDL_free(void* mem);
+extern SDL_DECLSPEC void*  SDLCALL SDL_memcpy(void* dst, const void* src, size_t len);
 
 extern SDL_DECLSPEC double SDLCALL SDL_sin(double x);
 extern SDL_DECLSPEC float  SDLCALL SDL_sinf(float x);

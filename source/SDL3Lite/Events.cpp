@@ -33,7 +33,7 @@ int SDL_PollEventImplementation(SDL::Application& application, SDL_Event* dest)
 
 	if (application.PollEvent(event))
 	{
-		memcpy(dest, &event, sizeof(SDL_Event));
+		SDL_memcpy(dest, &event, sizeof(SDL_Event));
 
 		return 1;
 	}

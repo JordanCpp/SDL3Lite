@@ -47,7 +47,7 @@ namespace SDL
 				return *this;
 			}
 
-			memcpy(&_values, source._values, sizeof(_values));
+			SDL_memcpy(&_values, source._values, sizeof(_values));
 
 			return *this;
 		}

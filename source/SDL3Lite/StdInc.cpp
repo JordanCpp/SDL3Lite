@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <math.h>
+#include <string.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <SDL3/SDL_stdinc.h>
@@ -43,6 +44,11 @@ void SDL_free(void* mem)
 	//assert(mem != NULL);
 
 	free(mem);
+}
+
+void* SDL_memcpy(void* dst, const void* src, size_t len)
+{
+	return memcpy(dst, src, len);
 }
 
 double SDL_sin(double x)
