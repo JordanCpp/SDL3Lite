@@ -25,29 +25,32 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdio.h>
+#include <SDL3/Types.h>
 #include <SDL3/BmpLoad.hpp>
 
 #pragma pack(push, 1)
-typedef struct {
-    uint16_t file_type;
-    uint32_t file_size;
-    uint16_t reserved1;
-    uint16_t reserved2;
-    uint32_t offset_data;
+typedef struct 
+{
+    Uint16 file_type;
+    Uint32 file_size;
+    Uint16 reserved1;
+    Uint16 reserved2;
+    Uint32 offset_data;
 } BMPFileHeader;
 
-typedef struct {
-    uint32_t size;
-    int32_t width;
-    int32_t height;
-    uint16_t planes;
-    uint16_t bit_count;
-    uint32_t compression;
-    uint32_t size_image;
-    int32_t x_pixels_per_meter;
-    int32_t y_pixels_per_meter;
-    uint32_t colors_used;
-    uint32_t colors_important;
+typedef struct 
+{
+    Uint32 size;
+    Sint32 width;
+    Sint32 height;
+    Uint16 planes;
+    Uint16 bit_count;
+    Uint32 compression;
+    Uint32 size_image;
+    Sint32 x_pixels_per_meter;
+    Sint32 y_pixels_per_meter;
+    Uint32 colors_used;
+    Uint32 colors_important;
 } BMPInfoHeader;
 #pragma pack(pop)
 
@@ -118,8 +121,8 @@ bool BmpLoader::Reset(const String& path)
         _bpp = 1;
     }
 
-    const uint32_t row_stride      = (_size.x * info_header.bit_count + 31) / 32 * 4;
-    const uint32_t pixel_data_size = row_stride * _size.y;
+    const Uint32 row_stride      = (_size.x * info_header.bit_count + 31) / 32 * 4;
+    const Uint32 pixel_data_size = row_stride * _size.y;
 
     _pixels.resize(pixel_data_size);
 
@@ -145,14 +148,14 @@ bool BmpLoader::Reset(const String& path)
 
         for (int y = 0; y < _size.y; ++y) 
         {
-            uint8_t* row = _pixels.data() + y * row_stride;
+            Uint8* row = _pixels.data() + y * row_stride;
 
             for (int x = 0; x < _size.x; ++x) 
             {
-                uint8_t* pixel = row + x * channels;
-                uint8_t tmp = pixel[0];
-                pixel[0] = pixel[2];
-                pixel[2] = tmp;
+                Uint8* pixel = row + x * channels;
+                Uint8 tmp    = pixel[0];
+                pixel[0]     = pixel[2];
+                pixel[2]     = tmp;
             }
         }
     }
@@ -170,7 +173,7 @@ int BmpLoader::GetBpp()
     return _bpp;
 }
 
-uint8_t* BmpLoader::GetPixels()
+Uint8* BmpLoader::GetPixels()
 {
     return _pixels.data();
 }

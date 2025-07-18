@@ -256,7 +256,7 @@ public:
 			return false;
 		}
 
-		return (memcmp(_content, rhs, length) == 0);
+		return (SDL_memcpy(_content, rhs, length) == 0);
 	}
 private:
 	size_t _capacity;
