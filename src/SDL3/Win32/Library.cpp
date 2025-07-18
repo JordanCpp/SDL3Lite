@@ -24,19 +24,43 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/Win32/Library.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+Library::Library(Result& result) :
+	_result(result),
+	_module(NULL)
+{
+}
 
-#endif
+Library::~Library()
+{
+	Close();
+}
+
+bool Library::Open(const String& path)
+{
+	_module = LoadLibrary(path.c_str());
+
+	return (_module != NULL);
+}
+
+void Library::Close()
+{
+	if (_module != NULL)
+	{
+		FreeLibrary(_module);
+		_module = NULL;
+	}
+}
+
+SDL_FunctionPointer Library::Load(const String& name)
+{
+	SDL_FunctionPointer result = (SDL_FunctionPointer)GetProcAddress(_module, name.c_str());
+
+	if (result == NULL)
+	{
+		_result.Message("Could not load library: " + String(name));
+	}
+
+	return result;
+}

@@ -24,19 +24,55 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Dos16/MainWin.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+MainWindow::MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
+	_result(&result),
+	_eventHandler(&eventHandler),
+	_baseWindow(pos, size, title),
+	_WindowFlags(mode)
+{
+}
 
-#endif
+MainWindow::~MainWindow()
+{
+}
+
+const Vec2i& MainWindow::GetPos()
+{
+	return _baseWindow.GetPos();
+}
+
+void MainWindow::SetPos(const Vec2i& pos)
+{
+	_baseWindow.SetPos(pos);
+}
+
+const Vec2i& MainWindow::GetSize()
+{
+	return _baseWindow.GetSize();
+}
+
+void MainWindow::SetSize(const Vec2i& size)
+{
+	_baseWindow.SetSize(size);
+}
+
+const String& MainWindow::GetTitle()
+{
+	return _baseWindow.GetTitle();
+}
+
+void MainWindow::SetTitle(const String& title)
+{
+	_baseWindow.SetTitle(title);
+}
+
+SDL_WindowFlags MainWindow::GetFlags()
+{
+	return _WindowFlags;
+}
+
+void MainWindow::PollEvents()
+{
+}

@@ -24,19 +24,42 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <assert.h>
+#include <SDL3/New.hpp>
+#include <SDL3/App.hpp>
+#include <SDL3/SObject.hpp>
+#include <SDL3/Library.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+SDL_SharedObject* SDL_LoadObjectImplementation(Result& result, const char* sofile)
+{
+	SDL_SharedObject* sharedObject = new Library(result);
 
-#endif
+	if (sharedObject->Open(sofile))
+	{
+		return sharedObject;
+	}
+
+	return NULL;
+}
+
+SDL_SharedObject* SDL_LoadObject(const char* sofile)
+{
+	return SDL_LoadObjectImplementation(GetApplication().GetResult(), sofile);
+}
+
+void SDL_UnloadObject(SDL_SharedObject* handle)
+{
+	assert(handle);
+
+	handle->Close();
+
+	delete handle;
+}
+
+SDL_FunctionPointer SDL_LoadFunction(SDL_SharedObject* handle, const char* name)
+{
+	assert(handle);
+	assert(name);
+
+	return handle->Load(name);
+}

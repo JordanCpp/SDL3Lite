@@ -24,19 +24,20 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_OpenGL_GLUtils_hpp
+#define SDL3Lite_OpenGL_GLUtils_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <OpenGL.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Rect2f.hpp>
+#include <SDL3/Color.hpp>
+
+int SelectTextureSize(const Vec2i& size);
+void Normalize(const Color& color, GLclampf& r, GLclampf& g, GLclampf& b);
+GLuint CreateTexture(GLsizei width, GLsizei heigth, GLint format);
+void DestroyTexture(GLint id);
+GLint BppToFormat(int bpp);
+void CopyTexture(GLuint id, const Vec2i& dstPos, const Vec2i& srcSize, Uint8* pixels, int bpp);
+void DrawTexture(const Rect2f& dst, const Rect2f& src, size_t textureSize);
 
 #endif

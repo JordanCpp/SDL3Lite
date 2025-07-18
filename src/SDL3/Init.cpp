@@ -24,19 +24,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <assert.h>
+#include <SDL3/App.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+bool SDL_SetAppMetadata(const char* appname, const char* appversion, const char* appidentifier)
+{
+	GetApplication().GetAppMetaData().SetName(appname);
+	GetApplication().GetAppMetaData().SetVersion(appversion);
+	GetApplication().GetAppMetaData().SetIdentifier(appidentifier);
 
-#endif
+	return true;
+}
+
+int SDL_Init(SDL_InitFlags flags)
+{
+	assert(flags > 0);
+
+	return 1;
+}
+
+void SDL_Quit()
+{
+}

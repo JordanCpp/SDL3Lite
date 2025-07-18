@@ -24,19 +24,27 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Vec2i_hpp
+#define SDL3Lite_Vec2i_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
 #include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+
+class Vec2i : public SDL_Point
+{
+public:
+	Vec2i();
+	Vec2i(int x, int y);
+	const Vec2i& operator=(Vec2i& v);
+	const Vec2i& operator=(const Vec2i& v);
+};
+
+class Vec2f : public SDL_FPoint
+{
+public:
+	Vec2f();
+	Vec2f(float x, float y);
+	const Vec2f& operator=(Vec2f& v);
+	const Vec2f& operator=(const Vec2f& v);
+};
 
 #endif

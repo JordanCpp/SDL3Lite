@@ -24,19 +24,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Win32_Library_hpp
+#define SDL3Lite_Win32_Library_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Result.hpp>
+#include <SDL3/SObject.hpp>
+#include <SDL3/Win32/Win32.hpp>
+
+class Library : public SDL_SharedObject
+{
+public:
+	Library(Result& result);
+	~Library();
+	bool Open(const String& path);
+	void Close();
+	SDL_FunctionPointer Load(const String& name);
+private:
+	Result& _result;
+	HMODULE _module;
+};
 
 #endif

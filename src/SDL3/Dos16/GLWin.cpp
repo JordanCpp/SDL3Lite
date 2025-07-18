@@ -24,19 +24,65 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Dos16/GLWin.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
+	_openGLAttributes(openGLAttributes),
+	_result(&result),
+	_mainWindow(result, eventHandler, pos, size, title, mode)
+{
+}
 
-#endif
+OpenGLWindow::~OpenGLWindow()
+{
+}
+
+Surface* OpenGLWindow::GetSurface()
+{
+	return NULL;
+}
+
+const Vec2i& OpenGLWindow::GetPos()
+{
+	return _mainWindow.GetPos();
+}
+
+void OpenGLWindow::SetPos(const Vec2i& pos)
+{
+	_mainWindow.SetPos(pos);
+}
+
+const Vec2i& OpenGLWindow::GetSize()
+{
+	return _mainWindow.GetSize();
+}
+
+void OpenGLWindow::SetSize(const Vec2i& size)
+{
+	_mainWindow.SetSize(size);
+}
+
+const String& OpenGLWindow::GetTitle()
+{
+	return _mainWindow.GetTitle();
+}
+
+void OpenGLWindow::SetTitle(const String& title)
+{
+	_mainWindow.SetTitle(title);
+}
+
+SDL_WindowFlags OpenGLWindow::GetFlags()
+{
+	return _mainWindow.GetFlags();
+}
+
+bool OpenGLWindow::Present()
+{
+	return false;
+}
+
+void OpenGLWindow::PollEvents()
+{
+	_mainWindow.PollEvents();
+}

@@ -24,19 +24,75 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_RingBuf_hpp
+#define SDL3Lite_RingBuf_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <string.h>
+#include <SDL3/Types.h>
+
+template<class T, size_t COUNT>
+class RingBuffer
+{
+public:
+	RingBuffer() :
+		_head(-1),
+		_tail(0),
+		_length(0),
+		_capacity(COUNT)
+	{
+		memset(&_content, 0, sizeof(T) * COUNT);
+	}
+
+	bool IsEmpty()
+	{
+		return _length == 0;
+	}
+
+	bool IsFull()
+	{
+		return _length == _capacity;
+	}
+
+	int NextPosition(int position)
+	{
+		return (position + 1) % _capacity;
+	}
+
+	bool Dequeue(T& element)
+	{
+		if (!IsEmpty())
+		{
+			element = _content[_tail];
+			_tail = NextPosition(_tail);
+			_length--;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	void Enqueue(const T& element)
+	{
+		_head = NextPosition(_head);
+
+		_content[_head] = element;
+
+		if (IsFull())
+		{
+			_tail = NextPosition(_tail);
+		}
+		else
+		{
+			_length++;
+		}
+	}
+private:
+	T   _content[COUNT];
+	int _head;
+	int _tail;
+	int _length;
+	int _capacity;
+};
 
 #endif

@@ -22,14 +22,13 @@ endif()
 
 include_directories("dependencies")
 include_directories("include")
-include_directories("source")
+include_directories("src")
 
 FILE(GLOB SOURCES
-"source/SDL3Lite/OpenGL/*.cpp" 
-"source/SDL3Lite/Platforms/${PLATFORM_FOLDER}/*.cpp"
-"source/SDL3Lite/Renders/Software/*.cpp"
-"source/SDL3Lite/Renders/OpenGL1/*.cpp"
-"source/SDL3Lite/*.cpp")
+"src/SDL3/OpenGL/*.cpp" 
+"src/SDL3/${PLATFORM_FOLDER}/*.cpp"
+"src/SDL3/Renders/OpenGL1/*.cpp"
+"src/SDL3/*.cpp")
 
 add_library(SDL3 SHARED ${SOURCES})
 target_link_libraries(SDL3 ${DEPS_LIBRARIES})

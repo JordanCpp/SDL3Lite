@@ -24,19 +24,42 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Rect_h
+#define SDL3Lite_Rect_h
 
 #include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    typedef struct SDL_Point
+    {
+        int x;
+        int y;
+    } SDL_Point;
+
+
+    typedef struct SDL_FPoint
+    {
+        float x;
+        float y;
+    } SDL_FPoint;
+
+typedef struct SDL_FRect
+{
+    float x, y;
+    float w, h;
+} SDL_FRect;
+
+typedef struct SDL_Rect
+{
+    int x, y;
+    int w, h;
+} SDL_Rect;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

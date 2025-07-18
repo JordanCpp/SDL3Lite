@@ -24,19 +24,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Window_hpp
+#define SDL3Lite_Window_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
 #include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Vector.hpp>
+#include <SDL3/String.hpp>
+#include <SDL3/Surface.hpp>
+#include <SDL3/Result.hpp>
+#include <SDL3/EventH.hpp>
+#include <SDL3/GLAttr.hpp>
+
+struct SDL_Window
+{
+public:
+	virtual ~SDL_Window() {};
+	virtual Surface* GetSurface() = 0;
+	virtual const Vec2i& GetPos() = 0;
+	virtual void SetPos(const Vec2i& pos) = 0;
+	virtual const Vec2i& GetSize() = 0;
+	virtual void SetSize(const Vec2i& size) = 0;
+	virtual const String& GetTitle() = 0;
+	virtual void SetTitle(const String& title) = 0;
+	virtual SDL_WindowFlags GetFlags() = 0;
+	virtual void PollEvents() = 0;
+	virtual bool Present() = 0;
+};
+
+SDL_Window* SDL_CreateWindowImplementation(Vector<SDL_Window*>& windows, OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const char* title, int w, int h, SDL_WindowFlags flags);
 
 #endif

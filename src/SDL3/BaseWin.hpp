@@ -24,19 +24,26 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_BaseWin_hpp
+#define SDL3Lite_BaseWin_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/String.hpp>
+
+class BaseWindow
+{
+public:
+	BaseWindow(const Vec2i& pos, const Vec2i& size, const String& title);
+	const Vec2i& GetPos();
+	void SetPos(const Vec2i& pos);
+	const Vec2i& GetSize();
+	void SetSize(const Vec2i& size);
+	const String& GetTitle();
+	void SetTitle(const String& title);
+private:
+	Vec2i  _pos;
+	Vec2i  _size;
+	String _title;
+};
 
 #endif

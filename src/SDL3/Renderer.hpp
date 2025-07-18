@@ -24,19 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renderer_hpp
+#define SDL3Lite_Renderer_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
 #include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Rect2f.hpp>
+#include <SDL3/Color.hpp>
+#include <SDL3/Result.hpp>
+#include <SDL3/Texture.hpp>
+
+struct SDL_Renderer
+{
+public:
+	virtual ~SDL_Renderer() {};
+	virtual SDL_WindowFlags GetFlags() = 0;
+	virtual const Vec2i& GetSize() = 0;
+	virtual void Present() = 0;
+	virtual void SetColor(const Color& color) = 0;
+	virtual void Clear() = 0;
+	virtual void FillRect(const Vec2f& pos, const Vec2f& size) = 0;
+	virtual void Line(const Vec2f& first, const Vec2f& last) = 0;
+	virtual void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src) = 0;
+};
+
+SDL_Renderer* SDL_CreateRendererImplementation(Result& result, SDL_Window* window, const char* name);
 
 #endif

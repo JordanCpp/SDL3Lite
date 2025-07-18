@@ -24,19 +24,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Rect2f_hpp
+#define SDL3Lite_Rect2f_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
 #include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+
+class Rect2f : public SDL_FRect
+{
+public:
+	Rect2f();
+	Rect2f(float x, float y, float w, float h);
+	Rect2f(const SDL_FRect& rect);
+	const Rect2f& operator=(Rect2f& v);
+	const Rect2f& operator=(const Rect2f& v);
+	const Rect2f& operator=(SDL_FRect* v);
+	const Rect2f& operator=(const SDL_FRect* v);
+};
 
 #endif

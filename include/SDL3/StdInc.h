@@ -24,19 +24,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_StdInc_h
+#define SDL3Lite_StdInc_h
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef Uint32 SDL_DisplayID;
+
+#define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
+
+#define SDL_PI_D (3.141592653589793238462643383279502884)
+
+extern SDL_DECLSPEC void*  SDLCALL SDL_malloc(size_t size);
+extern SDL_DECLSPEC void   SDLCALL SDL_free(void* mem);
+extern SDL_DECLSPEC void*  SDLCALL SDL_memcpy(void* dst, const void* src, size_t len);
+
+extern SDL_DECLSPEC double SDLCALL SDL_sin(double x);
+extern SDL_DECLSPEC float  SDLCALL SDL_sinf(float x);
+extern SDL_DECLSPEC float  SDLCALL SDL_cosf(float x);
+
+extern SDL_DECLSPEC float  SDLCALL SDL_randf(void);
+extern SDL_DECLSPEC Sint32 SDLCALL SDL_rand(Sint32 n);
+
+extern SDL_DECLSPEC int SDLCALL SDL_abs(int x);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

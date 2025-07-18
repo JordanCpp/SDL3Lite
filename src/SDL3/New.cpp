@@ -24,19 +24,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
-
 #include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/New.hpp>
 
-#endif
+void* operator new(size_t size)
+{
+    return SDL_malloc(size);
+}
+
+void operator delete(void* ptr)
+{
+    SDL_free(ptr);
+}
+
+void* operator new[](size_t size)
+{
+    return SDL_malloc(size);
+}
+
+void operator delete[](void* ptr)
+{
+    SDL_free(ptr);
+}

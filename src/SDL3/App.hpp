@@ -24,19 +24,37 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_App_hpp
+#define SDL3Lite_App_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/SDL.h>
+#include <SDL3/Vector.hpp>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Result.hpp>
+#include <SDL3/EventH.hpp>
+#include <SDL3/GLAttr.hpp>
+#include <SDL3/AppMeta.hpp>
+
+class Application
+{
+public:
+	Application();
+	~Application();
+	Vector<SDL_Window*>& GetWindows();
+	AppMetaData& GetAppMetaData();
+	EventHandler& GetEventHandler();
+	OpenGLAttributes& GetOpenGLAttributes();
+	Result& GetResult();
+	void PollEvents();
+	bool PollEvent(SDL_Event& dest);
+private:
+	Vector<SDL_Window*> _windows;
+	Result              _result;
+	OpenGLAttributes    _openGLAttributes;
+	AppMetaData         _appMetaData;
+	EventHandler        _eventHandler;
+};
+
+Application& GetApplication();
 
 #endif

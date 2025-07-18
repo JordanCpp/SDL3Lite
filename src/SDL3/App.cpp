@@ -24,19 +24,65 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/App.hpp>
+#include <SDL3/Window.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+static Application MainApplication;
 
-#endif
+Application::Application()
+{
+}
+
+Application::~Application()
+{
+}
+
+Vector<SDL_Window*>& Application::GetWindows()
+{
+	return _windows;
+}
+
+AppMetaData& Application::GetAppMetaData()
+{
+	return _appMetaData;
+}
+
+EventHandler& Application::GetEventHandler()
+{
+	return _eventHandler;
+}
+
+OpenGLAttributes& Application::GetOpenGLAttributes()
+{
+	return _openGLAttributes;
+}
+
+Result& Application::GetResult()
+{
+	return _result;
+}
+
+void Application::PollEvents()
+{
+	for (size_t i = 0; i < _windows.size(); i++)
+	{
+		_windows[i]->PollEvents();
+	}
+}
+
+bool Application::PollEvent(SDL_Event& dest)
+{
+	if (!_eventHandler.Empty())
+	{
+		_eventHandler.Pop(dest);
+
+		return true;
+	}
+
+	return false;
+}
+
+Application& GetApplication()
+{
+	return MainApplication;
+}

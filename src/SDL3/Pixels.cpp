@@ -24,19 +24,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/Pixels.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+Uint32 SDL_MapRGB(const SDL_PixelFormatDetails* format, const SDL_Palette* palette, Uint8 r, Uint8 g, Uint8 b)
+{
+    Uint32 result = 0;
 
-#endif
+    if (format->bits_per_pixel == 32)
+    {
+        result |= (r & 0xFF) << 16;
+        result |= (g & 0xFF) << 8;
+        result |= (b & 0xFF);
+    }
+    else if (format->bits_per_pixel == 24)
+    {
+        result |= (r & 0xFF) << 16;
+        result |= (g & 0xFF) << 8;
+        result |= (b & 0xFF);
+    }
+    else if (format->bits_per_pixel == 16)
+    {
+        result |= (r & 0xF8) << 8;
+        result |= (g & 0xFC) << 3;
+        result |= (b & 0xF8) >> 3;
+    }
+
+    return result;
+}

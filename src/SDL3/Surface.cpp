@@ -24,19 +24,68 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <assert.h>
+#include <SDL3/New.hpp>
+#include <SDL3/Surface.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_size(size)
+{
+	flags    = 0;
+	format   = pixelFormat;
+	w        = _size.x;
+	h        = _size.y;
+	pitch    = 3;
+	_pixels.resize(w * h * pitch);
+	pixels   = &_pixels[0];
+	refcount = 0;
+	reserved = NULL;
+}
 
-#endif
+Surface::~Surface()
+{
+}
+
+int Surface::GetBpp()
+{
+	return pitch;
+}
+
+SDL_PixelFormat Surface::GetPixelFormat()
+{
+	return format;
+}
+
+const Vec2i& Surface::GetSize()
+{
+	return _size;
+}
+
+Uint8* Surface::GetPixels()
+{
+	return (Uint8*)pixels;
+}
+
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format)
+{
+	return new Surface(Vec2i(width, height), format);
+}
+
+SDL_Surface* SDL_CreateSurface(int width, int height, SDL_PixelFormat format)
+{
+	return SDL_CreateSurfaceImplementation(width, height, format);
+}
+
+void SDL_DestroySurface(SDL_Surface* surface)
+{
+	assert(surface);
+
+	delete surface;
+}
+
+bool SDL_SetSurfaceColorKey(SDL_Surface* surface, bool enabled, Uint32 key)
+{
+	assert(surface);
+
+	return true;
+}

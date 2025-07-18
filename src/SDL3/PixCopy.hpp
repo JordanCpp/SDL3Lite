@@ -24,19 +24,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_PixCopy_hpp
+#define SDL3Lite_PixCopy_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Surface.hpp>
+
+class PixelCopier
+{
+public:
+	void Copy(Uint8* dstPixels, int dstBpp, const Vec2i& dstArea, const Vec2i& dstPos, const Vec2i& dstSize, Uint8* srcPixels, int srcBpp, const Vec2i& srcArea, const Vec2i& srcPos, const Vec2i& srcSize);
+private:
+};
 
 #endif

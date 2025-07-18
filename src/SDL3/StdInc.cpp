@@ -24,19 +24,59 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
-
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
 #include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
 
-#endif
+void* SDL_malloc(size_t size)
+{
+	void* result = malloc(size);
+
+	assert(result != NULL);
+
+	return result;
+}
+
+void SDL_free(void* mem)
+{
+	//assert(mem != NULL);
+
+	free(mem);
+}
+
+void* SDL_memcpy(void* dst, const void* src, size_t len)
+{
+	return memcpy(dst, src, len);
+}
+
+double SDL_sin(double x)
+{
+	return sin(x);
+}
+
+float SDL_sinf(float x)
+{
+	return (float)sin((double)(x));
+}
+
+float SDL_cosf(float x)
+{
+	return (float)cos((double)(x));
+}
+
+float SDL_randf(void)
+{
+	return (float)(rand()) / (float)(RAND_MAX);
+}
+
+Sint32 SDL_rand(Sint32 n)
+{
+	return 0 + rand() % (n - 0);
+}
+
+int SDL_abs(int x)
+{
+	return abs(x);
+}

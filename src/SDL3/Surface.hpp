@@ -24,19 +24,27 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Surface_hpp
+#define SDL3Lite_Surface_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
 #include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Vector.hpp>
+
+class Surface : public SDL_Surface
+{
+public:
+	Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
+	~Surface();
+	int GetBpp();
+	SDL_PixelFormat GetPixelFormat();
+	const Vec2i& GetSize();
+	Uint8* GetPixels();
+private:
+	Vec2i         _size;
+	Vector<Uint8> _pixels;
+};
+
+SDL_Surface* SDL_CreateSurfaceImplementation(int width, int height, SDL_PixelFormat format);
 
 #endif

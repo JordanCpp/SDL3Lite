@@ -24,19 +24,62 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/Renders/OpenGL1/GL1Tex.hpp>
+#include <SDL3/OpenGL/GLUtils.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+OpenGL1Texture::~OpenGL1Texture()
+{
+	DestroyTexture(_texture);
+}
 
-#endif
+OpenGL1Texture::OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp) :
+	_render(render),
+	_texture(0),
+	_size(size)
+{
+	GLint format = BppToFormat(bpp);
+
+	int sz = SelectTextureSize(_size);
+
+	_quad = Vec2i(sz, sz);
+
+	_texture = CreateTexture(_quad.x, _quad.y, format);
+}
+
+OpenGL1Texture::OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp, Uint8* pixels) :
+	_render(render),
+	_texture(0),
+	_size(size)
+{
+	GLint format = BppToFormat(bpp);
+
+	int sz = SelectTextureSize(_size);
+
+	_quad = Vec2i(sz, sz);
+
+	_texture = CreateTexture(_quad.x, _quad.y, format);
+
+	CopyTexture(_texture, Vec2i(0, 0), _size, pixels, bpp);
+}
+
+const Vec2i& OpenGL1Texture::GetSize()
+{
+	return _size;
+}
+
+const Vec2i& OpenGL1Texture::GetQuad()
+{
+	return _quad;
+}
+
+bool OpenGL1Texture::Update(const Vec2i& pos, const Vec2i& size, Uint8* pixels, int bpp)
+{
+	CopyTexture(GetTexture(), pos, size, pixels, bpp);
+
+	return true;
+}
+
+GLuint OpenGL1Texture::GetTexture()
+{
+	return _texture;
+}

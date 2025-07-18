@@ -24,73 +24,61 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <string.h>
-#include <Arcanum/Convert.hpp>
+#include <SDL3/PixCopy.hpp>
 
-using namespace Arcanum;
-
-Convert::Convert() :
-    _result()
+void PixelCopier::Copy(Uint8* dstPixels, int dstBpp, const Vec2i& dstArea, const Vec2i& dstPos, const Vec2i& dstSize, Uint8* srcPixels, int srcBpp, const Vec2i& srcArea, const Vec2i& srcPos, const Vec2i& srcSize)
 {
-    memset(_buffer, 0, Max);
-}
+	size_t x = dstPos.x;
+	size_t y = dstPos.y;
 
-const char* Convert::ToChars(int num, Uint8 base)
-{
-    int i = 0;
-    bool isNegative = false;
+	size_t dstSizeX    = dstArea.x;
+	size_t dstSizeY    = dstArea.y;
+	size_t dstIndex    = 0;
 
-    /* Handle 0 explicitly, otherwise empty string is printed for 0 */
-    if (num == 0)
-    {
-        _buffer[i++] = '0';
-        _buffer[i] = '\0';
-    }
+	size_t srcSizeX    = srcArea.x;
+	size_t srcSizeY    = srcArea.y;
+	size_t srcIndex    = 0;
 
-    // In standard itoa(), negative numbers are handled only with
-    // base 10. Otherwise numbers are considered unsigned.
-    if (num < 0 && base == 10)
-    {
-        isNegative = true;
-        num = -num;
-    }
+	size_t limitSizeX = 0;
+	size_t limitSizeY = 0;
 
-    // Process individual digits
-    while (num != 0)
-    {
-        int rem = num % base;
-        _buffer[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-        num = num / base;
-    }
+	if (srcSizeX + x > dstSizeX)
+	{
+		limitSizeX = dstSizeX - x;
+	}
+	else
+	{
+		limitSizeX = srcSizeX;
+	}
 
-    // If number is negative, append '-'
-    if (isNegative)
-        _buffer[i++] = '-';
+	if (srcSizeY + y > dstSizeY)
+	{
+		limitSizeY = dstSizeY - y;
+	}
+	else
+	{
+		limitSizeY = srcSizeY;
+	}
 
-    _buffer[i] = '\0'; // Append string terminator
-
-    // Reverse the string
-    Reverse(_buffer, i);
-
-    return _buffer;
-}
-
-void Convert::Swap(char& t1, char& t2)
-{
-    char tmp = t1;
-    t1 = t2;
-    t2 = tmp;
-}
-
-void Convert::Reverse(char* str, size_t length)
-{
-    size_t start = 0;
-    size_t end = length - 1;
-
-    while (start < end)
-    {
-        Swap(*(str + start), *(str + end));
-        start++;
-        end--;
-    }
+	for (size_t i = 0; i < limitSizeX; i++)
+	{
+		for (size_t j = 0; j < limitSizeY; j++)
+		{
+			dstIndex = (dstSizeX * (y + j) + (x + i)) * dstBpp;
+			srcIndex = (srcSizeX * j + i) * srcBpp;
+			
+			if (dstIndex < dstSizeX * dstSizeY * dstBpp)
+			{
+#if defined (_WIN32)
+				dstPixels[dstIndex + 2] = srcPixels[srcIndex + 0];
+				dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+				dstPixels[dstIndex + 0] = srcPixels[srcIndex + 2];
+#else
+				dstPixels[dstIndex + 0] = srcPixels[srcIndex + 0];
+				dstPixels[dstIndex + 1] = srcPixels[srcIndex + 1];
+				dstPixels[dstIndex + 2] = srcPixels[srcIndex + 2];
+#endif  
+			}
+		}
+	}
 }

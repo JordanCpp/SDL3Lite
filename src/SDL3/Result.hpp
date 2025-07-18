@@ -24,19 +24,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Result_hpp
+#define SDL3Lite_Result_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/String.hpp>
+
+class Result
+{
+public:
+	Result();
+	bool Ok();
+	const String& Message();
+	void Message(const String& message);
+	void Message(const String& message, const String& detail);
+	void Clear();
+private:
+	bool   _ok;
+	String _message;
+};
 
 #endif

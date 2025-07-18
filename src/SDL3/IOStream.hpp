@@ -24,19 +24,44 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_IOStream_hpp
+#define SDL3Lite_IOStream_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <stdio.h>
+#include <SDL3/IOStream.h>
+#include <SDL3/String.hpp>
+#include <SDL3/Result.hpp>
+
+struct SDL_IOStream
+{
+public:
+	virtual ~SDL_IOStream() {};
+	virtual bool IOFromFile(const String& file, const String& mode) = 0;
+	virtual bool CloseIO() = 0;
+	virtual size_t ReadIO(void* ptr, size_t size) = 0;
+	virtual size_t WriteIO(const void* ptr, size_t size) = 0;
+	virtual Sint64 SeekIO(Sint64 offset, SDL_IOWhence whence) = 0;
+	virtual Sint64 GetIOSize() = 0;
+};
+
+class IOStream : public SDL_IOStream
+{
+public:
+	IOStream(Result& _result);
+	~IOStream();
+	bool IOFromFile(const String& file, const String& mode);
+	bool CloseIO();
+	size_t ReadIO(void* ptr, size_t size);
+	size_t WriteIO(const void* ptr, size_t size);
+	Sint64 SeekIO(Sint64 offset, SDL_IOWhence whence);
+	Sint64 GetIOSize();
+private:
+	Result& _result;
+	FILE*   _file;
+	size_t  _pos;
+	size_t  _size;
+};
+
+SDL_IOStream* SDL_IOFromFileImplementation(Result& result, const String& file, const String& mode);
 
 #endif

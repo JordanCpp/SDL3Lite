@@ -24,19 +24,54 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_GLAttr_hpp
+#define SDL3Lite_GLAttr_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+class OpenGLAttributes
+{
+public:
+	OpenGLAttributes();
+
+	int GetRedSize();
+	void SetRedSize(int value);
+
+	int GetGreenSize();
+	void SetGreenSize(int value);
+
+	int GetBlueSize();
+	void SetBlueSize(int value);
+
+	int GetAlphaSize();
+	void SetAlphaSize(int value);
+
+	int GetAccumRedSize();
+	void SetAccumRedSize(int value);
+
+	int GetAccumGreenSize();
+	void SetAccumGreenSize(int value);
+
+	int GetAccumBlueSize();
+	void SetAccumBlueSize(int value);
+
+	int GetAccumAlphaSize();
+	void SetAccumAlphaSize(int value);
+
+	int GetMajor();
+	void SetMajor(int value);
+
+	int GetMinor();
+	void SetMinor(int value);
+private:
+	int _redSize;
+	int _greenSize;
+	int _blueSize;
+	int _alphaSize;
+	int _accumRedSize;
+	int _accumGreenSize;
+	int _accumBlueSize;
+	int _accumAlphaSize;
+	int _major;
+	int _minor;
+};
 
 #endif

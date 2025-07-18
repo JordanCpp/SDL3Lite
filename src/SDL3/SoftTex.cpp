@@ -24,19 +24,39 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/SoftTex.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+SoftwareTexture::~SoftwareTexture()
+{
+}
 
-#endif
+SoftwareTexture::SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp) :
+	_render(render),
+	_size(size),
+	_surface(size)
+{
+}
+
+SoftwareTexture::SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, Uint8* pixels) :
+	_render(render),
+	_size(size),
+	_surface(size)
+{
+}
+
+const Vec2i& SoftwareTexture::GetSize()
+{
+	return _size;
+}
+
+bool SoftwareTexture::Update(const Vec2i& pos, const Vec2i& size, Uint8* pixels, int bpp)
+{
+	_pixelCopier.Copy(_surface.GetPixels(), _surface.GetBpp(), _surface.GetSize(), pos, size, pixels, bpp, size, pos, size);
+
+	return true;
+}
+
+Surface* SoftwareTexture::GetSurface()
+{
+	return &_surface;
+}

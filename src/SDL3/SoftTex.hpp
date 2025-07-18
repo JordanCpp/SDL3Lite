@@ -24,19 +24,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_Software_SoftTex_hpp
+#define SDL3Lite_Renders_Software_SoftTex_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Types.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Texture.hpp>
+#include <SDL3/Renderer.hpp>
+#include <SDL3/Surface.hpp>
+#include <SDL3/PixCopy.hpp>
+
+class SoftwareRender;
+
+class SoftwareTexture : public SDL_Texture
+{
+public:
+	~SoftwareTexture();
+	SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp);
+	SoftwareTexture(SDL_Renderer* render, const Vec2i& size, int bpp, Uint8* pixels);
+	const Vec2i& GetSize();
+	bool Update(const Vec2i& pos, const Vec2i& size, Uint8* pixels, int bpp);
+public:
+	Surface* GetSurface();
+private:
+	PixelCopier    _pixelCopier;
+	SDL_Renderer* _render;
+	Vec2i          _size;
+	Surface        _surface;
+};
 
 #endif

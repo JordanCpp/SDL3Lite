@@ -24,19 +24,61 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3Lite/Dos16/MainWin.hpp>
+#include <SDL3Lite/Dos16/SoftWin.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
+	_mainWindow(result, eventHandler, pos, size, title, mode),
+	_surface(GetSize(), SDL_PIXELFORMAT_RGB24)
+{
+}
 
-#endif
+Surface* SoftwareWindow::GetSurface()
+{
+	return &_surface;
+}
+
+const Vec2i& SoftwareWindow::GetPos()
+{
+	return _mainWindow.GetPos();
+}
+
+void SoftwareWindow::SetPos(const Vec2i& pos)
+{
+	_mainWindow.SetPos(pos);
+}
+
+const Vec2i& SoftwareWindow::GetSize()
+{
+	return _mainWindow.GetSize();
+}
+
+void SoftwareWindow::SetSize(const Vec2i& size)
+{
+	_mainWindow.SetSize(size);
+}
+
+const String& SoftwareWindow::GetTitle()
+{
+	return _mainWindow.GetTitle();
+}
+
+void SoftwareWindow::SetTitle(const String& title)
+{
+	_mainWindow.SetTitle(title);
+}
+
+SDL_WindowFlags SoftwareWindow::GetFlags()
+{
+	return _mainWindow.GetFlags();
+}
+
+bool SoftwareWindow::Present()
+{
+	return true;
+}
+
+void SoftwareWindow::PollEvents()
+{
+	_mainWindow.PollEvents();
+}

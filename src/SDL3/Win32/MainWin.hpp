@@ -24,19 +24,45 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Win32_MainWin_hpp
+#define SDL3Lite_Win32_MainWin_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
+
 #include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/BaseWin.hpp>
+#include <SDL3/Result.hpp>
+#include <SDL3/EventH.hpp>
+#include <SDL3/Win32/WinError.hpp>
+#include <SDL3/Win32/Win32.hpp>
+
+class MainWindow
+{
+public:
+	MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode);
+	~MainWindow();
+	const Vec2i& GetPos();
+	void SetPos(const Vec2i& pos);
+	const Vec2i& GetSize();
+	void SetSize(const Vec2i& size);
+	const String& GetTitle();
+	void SetTitle(const String& title);
+	SDL_WindowFlags GetFlags();
+	void PollEvents();
+public:
+	HWND GetHwnd();
+	HDC GetHdc();
+private:
+	LRESULT CALLBACK Handler(UINT Message, WPARAM WParam, LPARAM LParam);
+	static LRESULT CALLBACK WndProc(HWND Hwnd, UINT Message, WPARAM WParam, LPARAM LParam);
+	Result* _result;
+	EventHandler* _eventHandler;
+	HWND            _hwnd;
+	HDC             _hdc;
+	WindowError     _windowError;
+	MSG             _message;
+	BaseWindow      _baseWindow;
+	WNDCLASSA       _windowClass;
+	SDL_WindowFlags _WindowFlags;
+};
 
 #endif

@@ -24,19 +24,48 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Unix_MainWin_hpp
+#define SDL3Lite_Unix_MainWin_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/SDL_video.h>
+#include <SDL3Lite/Result.hpp>
+#include <SDL3Lite/BaseWindow.hpp>
+#include <SDL3Lite/EventHandler.hpp>
+#include <SDL3Lite/Platforms/Unix/GLX.hpp>
+
+namespace SDL
+{
+	class MainWindow
+	{
+	public:
+		MainWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode);
+		~MainWindow();
+		const Vec2i& GetPos();
+		void SetPos(const Vec2i& pos);
+		const Vec2i& GetSize();
+		void SetSize(const Vec2i& size);
+		const String& GetTitle();
+		void SetTitle(const String& title);
+		void PollEvents();
+		SDL_WindowFlags GetFlags();
+	private:
+		Result*         _result;
+		EventHandler*   _eventHandler;
+		BaseWindow      _baseWindow;
+		Display*        _Display;
+	    int             _Screen;
+	    Window          _Root;
+	    Window          _Window;
+	    size_t          _EventMask;
+		SDL_WindowFlags _windowFlags;
+	public:
+	    Display* GetDisplay();
+	    int GetScreen();
+	    Window GetRoot();
+	    Window GetWindow();
+		void SetWindow(Window window);
+		size_t GetEventMask();
+	};
+}
 
 #endif

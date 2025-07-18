@@ -24,19 +24,73 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/BmpLoad.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
-
+#if (_MSC_VER <= 1600)
+    #define STBI_NO_THREAD_LOCALS
+    #define STBI_NO_SIMD
 #endif
+
+#define STBI_ONLY_BMP
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+BmpLoader::BmpLoader(Result& result) :
+	_result(result),
+	_pixels(NULL),
+	_bpp(0)
+{
+}
+
+BmpLoader::~BmpLoader()
+{
+	Clear();
+}
+
+bool BmpLoader::Reset(const String& path)
+{
+	Clear();
+
+	int width       = 0;
+	int height      = 0;
+	int channels    = 0;
+	Uint8* pixels   = NULL;
+
+	pixels = stbi_load(path.c_str(), &width, &height, &channels, STBI_default);
+
+	if (pixels == NULL)
+	{
+		_result.Message("Can't load file: ", path);
+	}
+	else
+	{
+		_size   = Vec2i(width, height);
+		_bpp    = channels;
+		_pixels = pixels;
+	}
+
+	return _result.Ok();
+}
+
+const Vec2i& BmpLoader::GetSize()
+{
+	return _size;
+}
+
+int BmpLoader::GetBpp()
+{
+	return _bpp;
+}
+
+Uint8* BmpLoader::GetPixels()
+{
+	return _pixels;
+}
+
+void BmpLoader::Clear()
+{
+	if (_pixels != NULL)
+	{
+		stbi_image_free(_pixels);
+	}
+}

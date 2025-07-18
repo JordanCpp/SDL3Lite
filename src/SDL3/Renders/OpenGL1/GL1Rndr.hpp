@@ -24,19 +24,35 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_OpenGL1_GL1Rndr_hpp
+#define SDL3Lite_Renders_OpenGL1_GL1Rndr_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Renderer.hpp>
+#include <SDL3/OpenGL/Mat4f.hpp>
+#include <SDL3/GLWin.hpp>
+#include <SDL3/Renders/OpenGL1/GL1Tex.hpp>
+#include <SDL3/Rect2f.hpp>
+
+class OpenGL1Texture;
+
+class OpenGL1Render : public SDL_Renderer
+{
+public:
+	OpenGL1Render(Result& result, SDL_Window* window);
+	SDL_WindowFlags GetFlags();
+	const Vec2i& GetSize();
+	void Present();
+	void SetColor(const Color& color);
+	void Clear();
+	void FillRect(const Vec2f& pos, const Vec2f& size);
+	void Line(const Vec2f& first, const Vec2f& last);
+	void Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src);
+private:
+	Result& _result;
+	SDL_Window* _window;
+	Color       _color;
+	Mat4f       _projection;
+	Mat4f       _modelView;
+};
 
 #endif

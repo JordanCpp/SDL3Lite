@@ -24,19 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_BmpLoad_hpp
+#define SDL3Lite_BmpLoad_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <stdio.h>
+#include <SDL3/Types.h>
+#include <SDL3/Result.hpp>
+#include <SDL3/Vec2i.hpp>
+
+class BmpLoader
+{
+public:
+	BmpLoader(Result& result);
+	~BmpLoader();
+	bool Reset(const String& path);
+	const Vec2i& GetSize();
+	int GetBpp();
+	Uint8* GetPixels();
+private:
+	void Clear();
+	Result& _result;
+	Uint8*  _pixels;
+	Vec2i   _size;
+	int     _bpp;
+};
 
 #endif

@@ -24,19 +24,60 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/Vec2i.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+Vec2i::Vec2i()
+{
+	x = 0;
+	y = 0;
+}
 
-#endif
+Vec2i::Vec2i(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+const Vec2i& Vec2i::operator=(Vec2i& v)
+{
+	x = v.x;
+	y = v.y;
+
+	return *this;
+}
+
+const Vec2i& Vec2i::operator=(const Vec2i& v)
+{
+	x = v.x;
+	y = v.y;
+
+	return *this;
+}
+
+Vec2f::Vec2f()
+{
+	x = 0;
+	y = 0;
+}
+
+Vec2f::Vec2f(float x, float y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+const Vec2f& Vec2f::operator=(Vec2f& v)
+{
+	x = v.x;
+	y = v.y;
+
+	return *this;
+}
+
+const Vec2f& Vec2f::operator=(const Vec2f& v)
+{
+	x = v.x;
+	y = v.y;
+
+	return *this;
+}

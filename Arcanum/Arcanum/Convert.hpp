@@ -35,7 +35,7 @@ namespace Arcanum
 	{
 	public:
 		Convert();
-		const char* ToChars(intmax_t num, uint8_t base = 10);
+		const char* ToChars(int num, Uint8 base = 10);
 	private:
 		enum
 		{

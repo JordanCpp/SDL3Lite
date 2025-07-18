@@ -25,13 +25,11 @@ DEALINGS IN THE SOFTWARE.
 */
 #include <stdio.h>
 #include <SDL3/SDL.h>
-#include <SDL3Lite/BmpLoader.hpp>
-#include <SDL3Lite/Platforms/MainWindow.hpp>
-#include <SDL3Lite/Platforms/OpenGLWindow.hpp>
-#include <SDL3Lite/Platforms/SoftwareWindow.hpp>
-#include <SDL3/SDL_iostream.h>
-
-using namespace SDL;
+#include <SDL3/BmpLoad.hpp>
+#include <SDL3/MainWin.hpp>
+#include <SDL3/GLWin.hpp>
+#include <SDL3/SoftWin.hpp>
+#include <SDL3/IOStream.h>
 
 void SDL3LiteTest(bool expression, const char* file, int line, const char* detail)
 {

@@ -24,19 +24,68 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/Rect2f.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+Rect2f::Rect2f()
+{
+	x = 0.0f;
+	y = 0.0f;
+	w = 0.0f;
+	h = 0.0f;
+}
 
-#endif
+Rect2f::Rect2f(float x, float y, float w, float h)
+{
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
+}
+
+Rect2f::Rect2f(const SDL_FRect& rect)
+{
+	x = rect.x;
+	y = rect.y;
+	w = rect.w;
+	h = rect.h;
+}
+
+const Rect2f& Rect2f::operator=(Rect2f& v)
+{
+	x = v.x;
+	y = v.y;
+	w = v.w;
+	h = v.h;
+
+	return *this;
+}
+
+const Rect2f& Rect2f::operator=(const Rect2f& v)
+{
+	x = v.x;
+	y = v.y;
+	w = v.w;
+	h = v.h;
+
+	return *this;
+}
+
+const Rect2f& Rect2f::operator=(SDL_FRect* v)
+{
+	x = v->x;
+	y = v->y;
+	w = v->w;
+	h = v->h;
+
+	return *this;
+}
+
+const Rect2f& Rect2f::operator=(const SDL_FRect* v)
+{
+	x = v->x;
+	y = v->y;
+	w = v->w;
+	h = v->h;
+
+	return *this;
+}

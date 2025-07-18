@@ -24,19 +24,19 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_PixPaint_hpp
+#define SDL3Lite_PixPaint_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/Surface.hpp>
+#include <SDL3/Color.hpp>
+
+class PixelPainter
+{
+public:
+	void Clear(Surface* dest, const Color& color);
+	void FillRect(Surface* dest, const Vec2f& pos, const Vec2f& size, const Color& color);
+	void Line(Surface* dest, const Vec2f& first, const Vec2f& last, const Color& color);
+private:
+};
 
 #endif

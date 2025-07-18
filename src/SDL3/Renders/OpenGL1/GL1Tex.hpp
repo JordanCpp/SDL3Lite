@@ -24,19 +24,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_Renders_OpenGL1_GL1Tex_hpp
+#define SDL3Lite_Renders_OpenGL1_GL1Tex_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <OpenGL.h>
+#include <SDL3/Types.h>
+#include <SDL3/Vec2i.hpp>
+#include <SDL3/Texture.hpp>
+#include <SDL3/Renderer.hpp>
+
+class OpenGL1Render;
+
+class OpenGL1Texture : public SDL_Texture
+{
+public:
+	~OpenGL1Texture();
+	OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp);
+	OpenGL1Texture(SDL_Renderer* render, const Vec2i& size, int bpp, Uint8* pixels);
+	const Vec2i& GetSize();
+	const Vec2i& GetQuad();
+	bool Update(const Vec2i& pos, const Vec2i& size, Uint8* pixels, int bpp);
+public:
+	GLuint GetTexture();
+private:
+	SDL_Renderer* _render;
+	GLuint        _texture;
+	Vec2i         _size;
+	Vec2i         _quad;
+};
 
 #endif

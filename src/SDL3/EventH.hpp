@@ -24,19 +24,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#ifndef SDL3Lite_EventH_hpp
+#define SDL3Lite_EventH_hpp
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+#include <SDL3/SDL.h>
+#include <SDL3/RingBuf.hpp>
+
+class EventHandler
+{
+public:
+	enum
+	{
+		Max = 256
+	};
+
+	EventHandler();
+	void Push(SDL_Event& event);
+	bool Pop(SDL_Event& event);
+	bool Running();
+	void Stop();
+	bool Empty();
+private:
+	bool                       _running;
+	RingBuffer<SDL_Event, Max> _queue;
+};
 
 #endif

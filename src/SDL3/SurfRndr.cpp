@@ -24,19 +24,47 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_SDL_h
-#define SDL3Lite_SDL_h
+#include <SDL3/SurfRndr.hpp>
 
-#include <SDL3/StdInc.h>
-#include <SDL3/Init.h>
-#include <SDL3/Rect.h>
-#include <SDL3/Loadso.h>
-#include <SDL3/Video.h>
-#include <SDL3/Events.h>
-#include <SDL3/Error.h>
-#include <SDL3/Surface.h>
-#include <SDL3/Render.h>
-#include <SDL3/Log.h>
-#include <SDL3/Timer.h>
+SurfaceRender::SurfaceRender(Surface* surface) :
+	_surface(surface)
+{
+}
 
-#endif
+SDL_WindowFlags SurfaceRender::GetFlags()
+{
+	return 0;
+}
+
+const Vec2i& SurfaceRender::GetSize()
+{
+	return _surface->GetSize();
+}
+
+void SurfaceRender::Present()
+{
+}
+
+void SurfaceRender::SetColor(const Color& color)
+{
+	_color = color;
+}
+
+void SurfaceRender::Clear()
+{
+	_pixelPainter.Clear(_surface, _color);
+}
+
+void SurfaceRender::FillRect(const Vec2f& pos, const Vec2f& size)
+{
+	_pixelPainter.FillRect(_surface, pos, size, _color);
+}
+
+void SurfaceRender::Line(const Vec2f& first, const Vec2f& last)
+{
+	_pixelPainter.Line(_surface, first, last, _color);
+}
+
+void SurfaceRender::Draw(SDL_Texture* texture, const Rect2f& dst, const Rect2f& src)
+{
+}
