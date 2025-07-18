@@ -27,14 +27,12 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_MainWin_hpp
 #define SDL3Lite_Unix_MainWin_hpp
 
-#include <SDL3/SDL_video.h>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/BaseWindow.hpp>
-#include <SDL3Lite/EventHandler.hpp>
-#include <SDL3Lite/Platforms/Unix/GLX.hpp>
+#include <SDL3/Video.h>
+#include <SDL3/Result.hpp>
+#include <SDL3/BaseWin.hpp>
+#include <SDL3/EventH.hpp>
+#include <SDL3/Unix/GLX.hpp>
 
-namespace SDL
-{
 	class MainWindow
 	{
 	public:
@@ -66,6 +64,5 @@ namespace SDL
 		void SetWindow(Window window);
 		size_t GetEventMask();
 	};
-}
 
 #endif

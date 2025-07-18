@@ -24,10 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
-#include <SDL3Lite/Platforms/Unix/SoftwareWindow.hpp>
-
-using namespace SDL;
+#include <SDL3/Unix/MainWin.hpp>
+#include <SDL3/Unix/SoftWin.hpp>
 
 SoftwareWindow::SoftwareWindow(Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
 	_mainWindow(result, eventHandler, pos, size, title, mode),

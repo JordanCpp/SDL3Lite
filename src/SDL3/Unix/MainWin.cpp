@@ -24,9 +24,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
-
-using namespace SDL;
+#include <SDL3/Unix/MainWin.hpp>
 
 const size_t eventMask = 
     PointerMotionMask
@@ -72,7 +70,7 @@ const Vec2i& MainWindow::GetSize()
 	return _baseWindow.GetSize();
 }
 
-void SDL::MainWindow::SetSize(const Vec2i& size)
+void MainWindow::SetSize(const Vec2i& size)
 {
 	_baseWindow.SetSize(size);
 }

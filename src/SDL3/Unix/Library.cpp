@@ -24,9 +24,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Unix/Library.hpp>
-
-using namespace SDL;
+#include <SDL3/Unix/Library.hpp>
 
 Library::Library(Result& result) :
     _result(result),

@@ -27,8 +27,6 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_Accel_hpp
 #define SDL3Lite_Unix_Accel_hpp
 
-namespace SDL
-{
 	class SupportedAccelerator
 	{
 	public:
@@ -36,6 +34,5 @@ namespace SDL
 		bool IsOpenGL1_2();
 	private:
 	};
-}
 
 #endif

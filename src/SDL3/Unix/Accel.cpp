@@ -24,9 +24,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Unix/SupportedAccelerator.hpp>
-
-using namespace SDL;
+#include <SDL3/Unix/Accel.hpp>
 
 SupportedAccelerator::SupportedAccelerator()
 {

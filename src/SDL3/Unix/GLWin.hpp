@@ -27,12 +27,10 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_GL1Win_hpp
 #define SDL3Lite_Unix_GL1Win_hpp
 
-#include <SDL3Lite/Window.hpp>
-#include <SDL3Lite/OpenGLAttributes.hpp>
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
+#include <SDL3/Window.hpp>
+#include <SDL3/GLAttr.hpp>
+#include <SDL3/Unix/MainWin.hpp>
 
-namespace SDL
-{
 	class OpenGLWindow : public SDL_Window
 	{
 	public:
@@ -55,6 +53,5 @@ namespace SDL
 		XVisualInfo*      _Visual;
 		GLXContext        _Context;
 	};
-}
 
 #endif

@@ -27,12 +27,10 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_Unix_SoftWin_hpp
 #define SDL3Lite_Unix_SoftWin_hpp
 
-#include <SDL3Lite/Window.hpp>
-#include <SDL3Lite/Surface.hpp>
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
+#include <SDL3/Window.hpp>
+#include <SDL3/Surface.hpp>
+#include <SDL3/Unix/MainWin.hpp>
 
-namespace SDL
-{
 	class SoftwareWindow : public SDL_Window
 	{
 	public:
@@ -51,6 +49,5 @@ namespace SDL
 		MainWindow _mainWindow;
 		Surface    _surface;
 	};
-}
 
 #endif

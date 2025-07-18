@@ -28,23 +28,20 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Unix_Library_hpp
 
 #include <dlfcn.h>
-#include <SDL3Lite/Result.hpp>
-#include <SDL3Lite/SharedObject.hpp>
+#include <SDL3/Result.hpp>
+#include <SDL3/SObject.hpp>
 
-namespace SDL
-{
 	class Library : public SDL_SharedObject
 	{
 	public:
-		Library(SDL::Result& result);
+		Library(Result& result);
 		~Library();
 		bool Open(const String& path);
 		void Close();
 		SDL_FunctionPointer Load(const String& name);
 	private:
-	    SDL::Result& _result;
-	    void*        _library;
+	    Result& _result;
+	    void*   _library;
 	};
-}
 
 #endif

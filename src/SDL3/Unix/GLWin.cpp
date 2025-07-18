@@ -24,10 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3Lite/Platforms/Unix/MainWindow.hpp>
-#include <SDL3Lite/Platforms/Unix/OpenGLWindow.hpp>
-
-using namespace SDL;
+#include <SDL3/Unix/MainWin.hpp>
+#include <SDL3/Unix/GLWin.hpp>
 
 OpenGLWindow::OpenGLWindow(OpenGLAttributes& openGLAttributes, Result& result, EventHandler& eventHandler, const Vec2i& pos, const Vec2i& size, const String& title, SDL_WindowFlags mode) :
 	_openGLAttributes(&openGLAttributes),
