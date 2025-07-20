@@ -25,72 +25,442 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <SDL3/BmpLoad.hpp>
+#include <SDL3/StdInc.h>
 
-#if (_MSC_VER <= 1600)
-    #define STBI_NO_THREAD_LOCALS
-    #define STBI_NO_SIMD
-#endif
+// BMP file structures (packed for cross-platform compatibility)
+#pragma pack(push, 1)
 
-#define STBI_ONLY_BMP
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+struct BmpFileHeader {
+    Uint16 signature;      // 'BM' = 0x4D42
+    Uint32 fileSize;       // Total file size in bytes
+    Uint16 reserved1;      // Reserved, must be 0
+    Uint16 reserved2;      // Reserved, must be 0
+    Uint32 dataOffset;     // Offset to pixel data
+};
+
+struct BmpInfoHeader {
+    Uint32 headerSize;     // Size of this header (40 bytes for BITMAPINFOHEADER)
+    Sint32 width;          // Image width in pixels
+    Sint32 height;         // Image height in pixels (positive = bottom-up)
+    Uint16 planes;         // Number of color planes (must be 1)
+    Uint16 bitsPerPixel;   // Bits per pixel (1, 4, 8, 24, 32)
+    Uint32 compression;    // Compression type (0 = none, 1 = RLE8, 2 = RLE4)
+    Uint32 imageSize;      // Size of pixel data (0 = uncompressed)
+    Sint32 xPixelsPerMeter; // Horizontal resolution
+    Sint32 yPixelsPerMeter; // Vertical resolution
+    Uint32 colorsUsed;     // Number of colors in palette (0 = all)
+    Uint32 colorsImportant; // Important colors (0 = all)
+};
+
+struct BmpColorEntry {
+    Uint8 blue;
+    Uint8 green;
+    Uint8 red;
+    Uint8 reserved;
+};
+
+#pragma pack(pop)
+
+// BMP constants
+static const Uint16 BMP_SIGNATURE = 0x4D42;  // "BM"
+static const Uint32 BMP_INFO_HEADER_SIZE = 40;
 
 BmpLoader::BmpLoader(Result& result) :
-	_result(result),
-	_pixels(NULL),
-	_bpp(0)
+    _result(result),
+    _pixels(NULL),
+    _bpp(0),
+    _size(0, 0)
 {
 }
 
 BmpLoader::~BmpLoader()
 {
-	Clear();
+    Clear();
 }
 
 bool BmpLoader::Reset(const String& path)
 {
-	Clear();
+    Clear();
 
-	int width       = 0;
-	int height      = 0;
-	int channels    = 0;
-	Uint8* pixels   = NULL;
+    if(path.empty()) {
+        _result.Message("Empty file path provided");
+        return false;
+    }
 
-	pixels = stbi_load(path.c_str(), &width, &height, &channels, STBI_default);
+    FILE* file = fopen(path.c_str(), "rb");
+    if(!file) {
+        _result.Message("Cannot open file: ", path);
+        return false;
+    }
 
-	if (pixels == NULL)
-	{
-		_result.Message("Can't load file: ", path);
-	}
-	else
-	{
-		_size   = Vec2i(width, height);
-		_bpp    = channels;
-		_pixels = pixels;
-	}
+    bool success = LoadFromFile(file);
+    fclose(file);
 
-	return _result.Ok();
+    if(!success) {
+        Clear();
+    }
+
+    return success;
 }
 
-const Vec2i& BmpLoader::GetSize()
+bool BmpLoader::LoadFromFile(FILE* file)
 {
-	return _size;
+    // Read BMP file header
+    BmpFileHeader fileHeader;
+    if(fread(&fileHeader, sizeof(fileHeader), 1, file) != 1) {
+        _result.Message("Cannot read BMP file header");
+        return false;
+    }
+
+    // Verify BMP signature
+    if(fileHeader.signature != BMP_SIGNATURE) {
+        _result.Message("Invalid BMP signature");
+        return false;
+    }
+
+    // Read BMP info header
+    BmpInfoHeader infoHeader;
+    if(fread(&infoHeader, sizeof(infoHeader), 1, file) != 1) {
+        _result.Message("Cannot read BMP info header");
+        return false;
+    }
+
+    // Validate header
+    if(!ValidateHeader(infoHeader)) {
+        return false;
+    }
+
+    // Calculate image properties
+    int width = infoHeader.width;
+    int height = abs(infoHeader.height);
+    bool topDown = infoHeader.height < 0;
+    int bitsPerPixel = infoHeader.bitsPerPixel;
+    int bytesPerPixel = (bitsPerPixel + 7) / 8;
+
+    // Calculate row stride (must be multiple of 4 bytes)
+    int rowStride = ((width * bitsPerPixel + 31) / 32) * 4;
+
+    // Load color palette if needed
+    BmpColorEntry* palette = NULL;
+    int paletteSize = 0;
+    
+    if(bitsPerPixel <= 8) {
+        paletteSize = infoHeader.colorsUsed;
+        if(paletteSize == 0) {
+            paletteSize = 1 << bitsPerPixel;
+        }
+        
+        palette = new BmpColorEntry[paletteSize];
+        if(fread(palette, sizeof(BmpColorEntry), paletteSize, file) != paletteSize) {
+            delete[] palette;
+            _result.Message("Cannot read BMP color palette");
+            return false;
+        }
+    }
+
+    // Seek to pixel data
+    if(fseek(file, fileHeader.dataOffset, SEEK_SET) != 0) {
+        delete[] palette;
+        _result.Message("Cannot seek to pixel data");
+        return false;
+    }
+
+    // Allocate pixel buffer (always convert to RGB/RGBA)
+    int outputBpp = (bitsPerPixel == 32) ? 4 : 3;  // RGBA or RGB
+    int outputSize = width * height * outputBpp;
+    
+    _pixels = (Uint8*)malloc(outputSize);
+    if(!_pixels) {
+        delete[] palette;
+        _result.Message("Cannot allocate pixel buffer");
+        return false;
+    }
+
+    // Load and convert pixel data
+    bool loadSuccess = false;
+    switch(bitsPerPixel) {
+        case 1:  loadSuccess = LoadMonochrome(file, palette, width, height, rowStride, topDown); break;
+        case 4:  loadSuccess = Load4Bit(file, palette, width, height, rowStride, topDown); break;
+        case 8:  loadSuccess = Load8Bit(file, palette, width, height, rowStride, topDown); break;
+        case 24: loadSuccess = Load24Bit(file, width, height, rowStride, topDown); break;
+        case 32: loadSuccess = Load32Bit(file, width, height, rowStride, topDown); break;
+        default:
+            _result.Message("Unsupported bits per pixel: ", bitsPerPixel);
+            break;
+    }
+
+    delete[] palette;
+
+    if(loadSuccess) {
+        _size = Vec2i(width, height);
+        _bpp = outputBpp;
+        return _result.Ok();
+    }
+
+    return false;
 }
 
-int BmpLoader::GetBpp()
+bool BmpLoader::ValidateHeader(const BmpInfoHeader& header)
 {
-	return _bpp;
+    if(header.headerSize != BMP_INFO_HEADER_SIZE) {
+        _result.Message("Unsupported BMP header size: ", header.headerSize);
+        return false;
+    }
+
+    if(header.planes != 1) {
+        _result.Message("Invalid number of color planes: ", header.planes);
+        return false;
+    }
+
+    if(header.compression != 0) {
+        _result.Message("Compressed BMP files are not supported");
+        return false;
+    }
+
+    if(header.width <= 0 || abs(header.height) <= 0) {
+        _result.Message("Invalid image dimensions: ", header.width, "x", abs(header.height));
+        return false;
+    }
+
+    if(header.width > 32768 || abs(header.height) > 32768) {
+        _result.Message("Image too large: ", header.width, "x", abs(header.height));
+        return false;
+    }
+
+    if(header.bitsPerPixel != 1 && header.bitsPerPixel != 4 && 
+       header.bitsPerPixel != 8 && header.bitsPerPixel != 24 && 
+       header.bitsPerPixel != 32) {
+        _result.Message("Unsupported bits per pixel: ", header.bitsPerPixel);
+        return false;
+    }
+
+    return true;
+}
+
+bool BmpLoader::LoadMonochrome(FILE* file, const BmpColorEntry* palette, 
+                              int width, int height, int rowStride, bool topDown)
+{
+    Uint8* rowBuffer = (Uint8*)malloc(rowStride);
+    if(!rowBuffer) {
+        _result.Message("Cannot allocate row buffer");
+        return false;
+    }
+
+    for(int y = 0; y < height; y++) {
+        if(fread(rowBuffer, 1, rowStride, file) != rowStride) {
+            free(rowBuffer);
+            _result.Message("Cannot read pixel row");
+            return false;
+        }
+
+        int outputY = topDown ? y : (height - 1 - y);
+        Uint8* outputRow = _pixels + outputY * width * 3;
+
+        for(int x = 0; x < width; x++) {
+            int byteIndex = x / 8;
+            int bitIndex = 7 - (x % 8);
+            int colorIndex = (rowBuffer[byteIndex] >> bitIndex) & 1;
+
+            if(palette) {
+                outputRow[x * 3 + 0] = palette[colorIndex].red;
+                outputRow[x * 3 + 1] = palette[colorIndex].green;
+                outputRow[x * 3 + 2] = palette[colorIndex].blue;
+            } else {
+                Uint8 gray = colorIndex ? 255 : 0;
+                outputRow[x * 3 + 0] = gray;
+                outputRow[x * 3 + 1] = gray;
+                outputRow[x * 3 + 2] = gray;
+            }
+        }
+    }
+
+    free(rowBuffer);
+    return true;
+}
+
+bool BmpLoader::Load4Bit(FILE* file, const BmpColorEntry* palette,
+                         int width, int height, int rowStride, bool topDown)
+{
+    Uint8* rowBuffer = (Uint8*)malloc(rowStride);
+    if(!rowBuffer) {
+        _result.Message("Cannot allocate row buffer");
+        return false;
+    }
+
+    for(int y = 0; y < height; y++) {
+        if(fread(rowBuffer, 1, rowStride, file) != rowStride) {
+            free(rowBuffer);
+            _result.Message("Cannot read pixel row");
+            return false;
+        }
+
+        int outputY = topDown ? y : (height - 1 - y);
+        Uint8* outputRow = _pixels + outputY * width * 3;
+
+        for(int x = 0; x < width; x++) {
+            int byteIndex = x / 2;
+            int colorIndex;
+            
+            if(x % 2 == 0) {
+                colorIndex = (rowBuffer[byteIndex] >> 4) & 0xF;
+            } else {
+                colorIndex = rowBuffer[byteIndex] & 0xF;
+            }
+
+            if(palette && colorIndex < 16) {
+                outputRow[x * 3 + 0] = palette[colorIndex].red;
+                outputRow[x * 3 + 1] = palette[colorIndex].green;
+                outputRow[x * 3 + 2] = palette[colorIndex].blue;
+            } else {
+                outputRow[x * 3 + 0] = 0;
+                outputRow[x * 3 + 1] = 0;
+                outputRow[x * 3 + 2] = 0;
+            }
+        }
+    }
+
+    free(rowBuffer);
+    return true;
+}
+
+bool BmpLoader::Load8Bit(FILE* file, const BmpColorEntry* palette,
+                         int width, int height, int rowStride, bool topDown)
+{
+    Uint8* rowBuffer = (Uint8*)malloc(rowStride);
+    if(!rowBuffer) {
+        _result.Message("Cannot allocate row buffer");
+        return false;
+    }
+
+    for(int y = 0; y < height; y++) {
+        if(fread(rowBuffer, 1, rowStride, file) != rowStride) {
+            free(rowBuffer);
+            _result.Message("Cannot read pixel row");
+            return false;
+        }
+
+        int outputY = topDown ? y : (height - 1 - y);
+        Uint8* outputRow = _pixels + outputY * width * 3;
+
+        for(int x = 0; x < width; x++) {
+            int colorIndex = rowBuffer[x];
+
+            if(palette && colorIndex < 256) {
+                outputRow[x * 3 + 0] = palette[colorIndex].red;
+                outputRow[x * 3 + 1] = palette[colorIndex].green;
+                outputRow[x * 3 + 2] = palette[colorIndex].blue;
+            } else {
+                // Grayscale fallback
+                outputRow[x * 3 + 0] = colorIndex;
+                outputRow[x * 3 + 1] = colorIndex;
+                outputRow[x * 3 + 2] = colorIndex;
+            }
+        }
+    }
+
+    free(rowBuffer);
+    return true;
+}
+
+bool BmpLoader::Load24Bit(FILE* file, int width, int height, int rowStride, bool topDown)
+{
+    Uint8* rowBuffer = (Uint8*)malloc(rowStride);
+    if(!rowBuffer) {
+        _result.Message("Cannot allocate row buffer");
+        return false;
+    }
+
+    for(int y = 0; y < height; y++) {
+        if(fread(rowBuffer, 1, rowStride, file) != rowStride) {
+            free(rowBuffer);
+            _result.Message("Cannot read pixel row");
+            return false;
+        }
+
+        int outputY = topDown ? y : (height - 1 - y);
+        Uint8* outputRow = _pixels + outputY * width * 3;
+
+        for(int x = 0; x < width; x++) {
+            // BMP stores as BGR, convert to RGB
+            outputRow[x * 3 + 0] = rowBuffer[x * 3 + 2];  // Red
+            outputRow[x * 3 + 1] = rowBuffer[x * 3 + 1];  // Green
+            outputRow[x * 3 + 2] = rowBuffer[x * 3 + 0];  // Blue
+        }
+    }
+
+    free(rowBuffer);
+    return true;
+}
+
+bool BmpLoader::Load32Bit(FILE* file, int width, int height, int rowStride, bool topDown)
+{
+    Uint8* rowBuffer = (Uint8*)malloc(rowStride);
+    if(!rowBuffer) {
+        _result.Message("Cannot allocate row buffer");
+        return false;
+    }
+
+    for(int y = 0; y < height; y++) {
+        if(fread(rowBuffer, 1, rowStride, file) != rowStride) {
+            free(rowBuffer);
+            _result.Message("Cannot read pixel row");
+            return false;
+        }
+
+        int outputY = topDown ? y : (height - 1 - y);
+        Uint8* outputRow = _pixels + outputY * width * 4;
+
+        for(int x = 0; x < width; x++) {
+            // BMP stores as BGRA, convert to RGBA
+            outputRow[x * 4 + 0] = rowBuffer[x * 4 + 2];  // Red
+            outputRow[x * 4 + 1] = rowBuffer[x * 4 + 1];  // Green
+            outputRow[x * 4 + 2] = rowBuffer[x * 4 + 0];  // Blue
+            outputRow[x * 4 + 3] = rowBuffer[x * 4 + 3];  // Alpha
+        }
+    }
+
+    free(rowBuffer);
+    return true;
+}
+
+const Vec2i& BmpLoader::GetSize() const
+{
+    static const Vec2i invalidSize(0, 0);
+    return IsValid() ? _size : invalidSize;
+}
+
+int BmpLoader::GetBpp() const
+{
+    return IsValid() ? _bpp : 0;
 }
 
 Uint8* BmpLoader::GetPixels()
 {
-	return _pixels;
+    return _pixels;
+}
+
+const Uint8* BmpLoader::GetPixels() const
+{
+    return _pixels;
+}
+
+bool BmpLoader::IsValid() const
+{
+    return _pixels != NULL && _size.x > 0 && _size.y > 0 && _bpp > 0;
+}
+
+int BmpLoader::GetDataSize() const
+{
+    return IsValid() ? (_size.x * _size.y * _bpp) : 0;
 }
 
 void BmpLoader::Clear()
 {
-	if (_pixels != NULL)
-	{
-		stbi_image_free(_pixels);
-	}
+    if (_pixels != NULL)
+    {
+        free(_pixels);
+        _pixels = NULL;
+    }
+    _size = Vec2i(0, 0);
+    _bpp = 0;
 }

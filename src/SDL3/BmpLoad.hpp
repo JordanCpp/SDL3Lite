@@ -31,22 +31,56 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/Types.h>
 #include <SDL3/Result.hpp>
 #include <SDL3/Vec2i.hpp>
+#include <SDL3/String.hpp>
+
+// Forward declarations for BMP structures
+struct BmpInfoHeader;
+struct BmpColorEntry;
 
 class BmpLoader
 {
 public:
-	BmpLoader(Result& result);
-	~BmpLoader();
-	bool Reset(const String& path);
-	const Vec2i& GetSize();
-	int GetBpp();
-	Uint8* GetPixels();
+    BmpLoader(Result& result);
+    ~BmpLoader();
+    
+    // Main interface
+    bool Reset(const String& path);
+    void Clear();
+    
+    // Getters
+    const Vec2i& GetSize() const;
+    int GetBpp() const;
+    Uint8* GetPixels();
+    const Uint8* GetPixels() const;
+    
+    // Status and utility methods
+    bool IsValid() const;
+    int GetDataSize() const;
+
 private:
-	void Clear();
-	Result& _result;
-	Uint8*  _pixels;
-	Vec2i   _size;
-	int     _bpp;
+    // Copy prevention (Rule of Three)
+    BmpLoader(const BmpLoader&);
+    BmpLoader& operator=(const BmpLoader&);
+    
+    // Internal loading methods
+    bool LoadFromFile(FILE* file);
+    bool ValidateHeader(const BmpInfoHeader& header);
+    
+    // Format-specific loaders
+    bool LoadMonochrome(FILE* file, const BmpColorEntry* palette, 
+                       int width, int height, int rowStride, bool topDown);
+    bool Load4Bit(FILE* file, const BmpColorEntry* palette,
+                 int width, int height, int rowStride, bool topDown);
+    bool Load8Bit(FILE* file, const BmpColorEntry* palette,
+                 int width, int height, int rowStride, bool topDown);
+    bool Load24Bit(FILE* file, int width, int height, int rowStride, bool topDown);
+    bool Load32Bit(FILE* file, int width, int height, int rowStride, bool topDown);
+    
+    // Member variables
+    Result& _result;
+    Uint8*  _pixels;
+    Vec2i   _size;
+    int     _bpp;
 };
 
 #endif
