@@ -33,12 +33,44 @@ DEALINGS IN THE SOFTWARE.
 template <typename T>
 class Vector
 {
+public:
+	// Type definitions for C++98 compatibility
+	typedef T value_type;
+	typedef size_t size_type;
+	typedef T* iterator;
+	typedef const T* const_iterator;
+
 private:
 	size_t _capacity;
 	size_t _position;
 	T*     _content;
 
+	T* allocate(size_t count)
+	{
+		if (count == 0)
+			return NULL;
+		return new T[count];
+	}
+
+	void deallocate(T* ptr)
+	{
+		if (ptr != NULL)
+		{
+			delete[] ptr;  // ✅ ИСПРАВЛЕНО: используем переданный указатель
+		}
+	}
+
+	void destroy_elements()
+	{
+		// Вызываем деструкторы для элементов (важно для non-POD типов)
+		for (size_t i = 0; i < _position; i++)
+		{
+			_content[i].~T();
+		}
+	}
+
 public:
+	// Default constructor
 	Vector() :
 		_capacity(0),
 		_position(0),
@@ -46,21 +78,62 @@ public:
 	{
 	}
 
-	T* allocate(size_t count)
+	// Copy constructor (Rule of Three)
+	Vector(const Vector& other) :
+		_capacity(0),
+		_position(0),
+		_content(NULL)
 	{
-		return new T[count];
+		if (other._position > 0)
+		{
+			reserve(other._capacity);
+			_position = other._position;
+			for (size_t i = 0; i < _position; i++)
+			{
+				_content[i] = other._content[i];
+			}
+		}
 	}
 
-	void deallocate(T* ptr)
+	// Assignment operator (Rule of Three)
+	Vector& operator=(const Vector& other)
 	{
-		delete[] _content;
+		if (this != &other)
+		{
+			// Очищаем текущее содержимое
+			clear();
+			if (_content != NULL)
+			{
+				deallocate(_content);
+				_content = NULL;
+				_capacity = 0;
+			}
+			
+			// Копируем данные
+			if (other._position > 0)
+			{
+				reserve(other._capacity);
+				_position = other._position;
+				for (size_t i = 0; i < _position; i++)
+				{
+					_content[i] = other._content[i];
+				}
+			}
+		}
+		return *this;
 	}
 
+	// Destructor (Rule of Three)
 	~Vector()
 	{
-		deallocate(_content);
+		if (_content != NULL)
+		{
+			destroy_elements();
+			deallocate(_content);
+		}
 	}
 
+	// Capacity methods
 	size_t capacity() const
 	{
 		return _capacity;
@@ -71,6 +144,12 @@ public:
 		return _position;
 	}
 
+	bool empty() const
+	{
+		return _position == 0;
+	}
+
+	// Data access
 	const T* data() const
 	{
 		return _content;
@@ -81,32 +160,55 @@ public:
 		return _content;
 	}
 
+	// Memory management
 	void reserve(size_t count)
 	{
-		if (count > _capacity)
+		if (count == 0 || count <= _capacity)
+			return;
+
+		T* p = allocate(count);
+		if (p == NULL)  // Проверка на неудачное выделение памяти
+			return;
+
+		// Копируем существующие элементы
+		for (size_t i = 0; i < _position; i++)
 		{
-			T* p = allocate(count);
-
-			for (size_t i = 0; i < _position; i++)
-			{
-				p[i] = _content[i];
-			}
-
-			if (_content != NULL)
-			{
-				deallocate(_content);
-			}
-
-			_content = p;
-			_capacity = count;
+			p[i] = _content[i];
 		}
+
+		// Освобождаем старую память
+		if (_content != NULL)
+		{
+			destroy_elements();
+			deallocate(_content);
+		}
+
+		_content = p;
+		_capacity = count;
 	}
 
 	void resize(size_t count)
 	{
-		if (_capacity < count)
+		if (count > _capacity)
 		{
 			reserve(count);
+		}
+
+		// Если уменьшаем размер, вызываем деструкторы
+		if (count < _position)
+		{
+			for (size_t i = count; i < _position; i++)
+			{
+				_content[i].~T();
+			}
+		}
+		// Если увеличиваем, инициализируем новые элементы
+		else if (count > _position && _content != NULL)
+		{
+			for (size_t i = _position; i < count; i++)
+			{
+				new (&_content[i]) T();  // Placement new для инициализации
+			}
 		}
 
 		_position = count;
@@ -114,51 +216,125 @@ public:
 
 	void clear()
 	{
+		destroy_elements();
 		_position = 0;
 	}
 
+	// Element access
 	void push_back(const T& element)
 	{
 		if (_capacity == 0)
 		{
 			reserve(2);
 		}
-		else if (_position + 1 >= _capacity)
+		else if (_position >= _capacity)  // ✅ ИСПРАВЛЕНО: убрана лишняя проверка
 		{
 			reserve(_capacity * 2);
 		}
 
-		_content[_position] = element;
-
-		_position++;
+		if (_content != NULL)  // Проверка на успешное выделение памяти
+		{
+			_content[_position] = element;
+			_position++;
+		}
 	}
 
+	void pop_back()
+	{
+		if (_position > 0)
+		{
+			_position--;
+			_content[_position].~T();  // Вызов деструктора
+		}
+	}
+
+	// Bounds-checked access
 	const T& at(size_t index) const
 	{
-		assert(index <= _position);
-
+		assert(index < _position);  // ✅ ИСПРАВЛЕНО: правильная проверка границ
 		return _content[index];
 	}
 
 	T& at(size_t index)
 	{
-		assert(index <= _position);
-
+		assert(index < _position);  // ✅ ИСПРАВЛЕНО: правильная проверка границ
 		return _content[index];
 	}
 
+	// Unchecked access (faster)
 	const T& operator[] (size_t index) const
 	{
-		assert(index <= _position);
-
+		assert(index < _position);  // ✅ ИСПРАВЛЕНО: правильная проверка границ
 		return _content[index];
 	}
 
 	T& operator[] (size_t index)
 	{
-		assert(index <= _position);
-
+		assert(index < _position);  // ✅ ИСПРАВЛЕНО: правильная проверка границ
 		return _content[index];
+	}
+
+	// Back element access
+	const T& back() const
+	{
+		assert(_position > 0);
+		return _content[_position - 1];
+	}
+
+	T& back()
+	{
+		assert(_position > 0);
+		return _content[_position - 1];
+	}
+
+	const T& front() const
+	{
+		assert(_position > 0);
+		return _content[0];
+	}
+
+	T& front()
+	{
+		assert(_position > 0);
+		return _content[0];
+	}
+
+	// Iterator support (basic)
+	iterator begin()
+	{
+		return _content;
+	}
+
+	const_iterator begin() const
+	{
+		return _content;
+	}
+
+	iterator end()
+	{
+		return _content + _position;
+	}
+
+	const_iterator end() const
+	{
+		return _content + _position;
+	}
+
+	// Utility methods
+	void swap(Vector& other)
+	{
+		// Простой swap без использования std::swap
+		T* temp_content = _content;
+		size_t temp_capacity = _capacity;
+		size_t temp_position = _position;
+
+		_content = other._content;
+		_capacity = other._capacity;
+		_position = other._position;
+
+		other._content = temp_content;
+		other._capacity = temp_capacity;
+		other._position = temp_position;
 	}
 };
 
