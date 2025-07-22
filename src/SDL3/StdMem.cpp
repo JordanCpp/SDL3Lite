@@ -1,5 +1,6 @@
 
 #include <stdlib.h>
+#include <string.h>
 #include <SDL3/StdMem.h>
 
 void SDL_FAR* SDL_malloc(size_t bytes)
@@ -22,4 +23,9 @@ void SDL_free(void SDL_FAR* ptr)
 	free(ptr);
 #endif
 
+}
+
+void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len)
+{
+	return memset(dst, c, len);
 }

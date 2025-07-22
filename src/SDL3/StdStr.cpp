@@ -9,16 +9,16 @@ size_t SDL_strlen(const char* source)
 
 size_t SDL_strlcpy(char* dst, const char* src, size_t size)
 {
-    size_t src_len = 0;
+    size_t srcLen = 0;
 
-    while (src[src_len] != '\0')
+    while (src[srcLen] != '\0')
     {
-        src_len++;
+        srcLen++;
     }
 
     if (size == 0) 
     {
-        return src_len;
+        return srcLen;
     }
 
     size_t i;
@@ -29,37 +29,37 @@ size_t SDL_strlcpy(char* dst, const char* src, size_t size)
 
     dst[i] = '\0';
 
-    return src_len;
+    return srcLen;
 }
 
 size_t SDL_strlcat(char* dst, const char* src, size_t size) 
 {
-    size_t dst_len = 0;
-    size_t src_len = 0;
+    size_t dstLen = 0;
+    size_t srcLen = 0;
 
-    while (dst_len < size && dst[dst_len] != '\0') 
+    while (dstLen < size && dst[dstLen] != '\0') 
     {
-        dst_len++;
+        dstLen++;
     }
 
-    while (src[src_len] != '\0') 
+    while (src[srcLen] != '\0') 
     {
-        src_len++;
+        srcLen++;
     }
 
-    if (dst_len == size) 
+    if (dstLen == size) 
     {
-        return size + src_len;
+        return size + srcLen;
     }
 
     size_t i;
 
-    for (i = 0; i < size - dst_len - 1 && src[i] != '\0'; i++) 
+    for (i = 0; i < size - dstLen - 1 && src[i] != '\0'; i++) 
     {
-        dst[dst_len + i] = src[i];
+        dst[dstLen + i] = src[i];
     }
 
-    dst[dst_len + i] = '\0';
+    dst[dstLen + i] = '\0';
 
-    return dst_len + src_len;
+    return dstLen + srcLen;
 }

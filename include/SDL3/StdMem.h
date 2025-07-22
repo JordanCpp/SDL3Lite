@@ -6,5 +6,6 @@
 
 void SDL_FAR* SDL_malloc(size_t bytes);
 void SDL_free(void SDL_FAR* ptr);
+void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len);
 
 #endif
