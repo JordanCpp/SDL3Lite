@@ -6,24 +6,23 @@
  * (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef SDL3Lite_ShortStr_hpp
-#define SDL3Lite_ShortStr_hpp
+#ifndef SDL3Lite_EventH_hpp
+#define SDL3Lite_EventH_hpp
 
-class ShortString
+#include <SDL3/EventQ.hpp>
+
+class EventHandler
 {
 public:
-	enum
-	{
-		Max = 64
-	};
-
-	ShortString();
-	void Assign(const char* source);
-	void Clear();
-	void Append(const char* source);
-	const char* GetStr();
+	EventHandler();
+	void Push(SDL_Event& event);
+	bool Pop(SDL_Event& event);
+	bool Running();
+	void Stop();
+	bool Empty();
 private:
-	char _message[Max];
+	bool       _running;
+	EventQueue _queue;
 };
 
 #endif

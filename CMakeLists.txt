@@ -19,7 +19,7 @@ endif()
 
 FILE(GLOB SDL3LITE_SOURCES "src/SDL3/*.cpp")
 
-add_library(SDL3 ${SDL3LITE_SOURCES})
+add_library(SDL3 SHARED ${SDL3LITE_SOURCES})
 target_link_libraries(SDL3 ${DEPS_LIBRARIES})
 
 add_executable(main "main.c")

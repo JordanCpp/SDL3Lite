@@ -11,6 +11,10 @@
 
 #include <SDL3/Types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum SDL_PixelFormat
 {
     SDL_PIXELFORMAT_UNKNOWN,
@@ -33,5 +37,9 @@ typedef struct SDL_Palette
     Uint32     version;   /**< internal use only, do not touch. */
     int        refcount;  /**< internal use only, do not touch. */
 } SDL_Palette;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

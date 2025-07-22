@@ -11,8 +11,16 @@
 
 #include <SDL3/Types.h>
 
-size_t SDL_strlen(const char* source);
-size_t SDL_strlcpy(char* dst, const char* src, size_t size);
-size_t SDL_strlcat(char* dst, const char* src, size_t size);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern SDL_DECLSPEC size_t SDLCALL SDL_strlen(const char* source);
+extern SDL_DECLSPEC size_t SDLCALL SDL_strlcpy(char* dst, const char* src, size_t size);
+extern SDL_DECLSPEC size_t SDLCALL SDL_strlcat(char* dst, const char* src, size_t size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

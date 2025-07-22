@@ -12,7 +12,7 @@ BaseWindow::BaseWindow(const SDL_Point& pos, const SDL_Point& size, const char* 
 	_pos(pos),
 	_size(size)
 {
-	_title.Append(title);
+	_title.Assign(title);
 }
 
 const SDL_Point& BaseWindow::GetPos()
@@ -37,11 +37,10 @@ void BaseWindow::SetSize(const SDL_Point& size)
 
 const char* BaseWindow::GetTitle()
 {
-	return _title.Str();
+	return _title.GetStr();
 }
 
 void BaseWindow::SetTitle(const char* title)
 {
-	_title.Clear();
-	_title.Append(title);
+	_title.Assign(title);
 }

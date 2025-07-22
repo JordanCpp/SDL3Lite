@@ -15,7 +15,7 @@ BaseRender::BaseRender(const char* name)
 	_color.b = 0;
 	_color.a = 255;
 
-	_name.Append(name);
+	_name.Assign(name);
 }
 
 const SDL_Color& BaseRender::GetColor()
@@ -30,10 +30,10 @@ void BaseRender::SetColor(const SDL_Color& color)
 
 const char* BaseRender::GetName()
 {
-	return _name.Str();
+	return _name.GetStr();
 }
 
 void BaseRender::SetName(const char* title)
 {
-	_name.Append(title);
+	_name.Assign(title);
 }

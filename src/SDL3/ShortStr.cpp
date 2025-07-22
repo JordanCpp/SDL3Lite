@@ -15,6 +15,12 @@ ShortString::ShortString()
 	Clear();
 }
 
+void ShortString::Assign(const char* source)
+{
+	Clear();
+	Append(source);
+}
+
 void ShortString::Clear()
 {
 	SDL_memset(_message, 0, Max);
@@ -25,7 +31,7 @@ void ShortString::Append(const char* source)
 	SDL_strlcat(_message, source, Max);
 }
 
-const char* ShortString::Str()
+const char* ShortString::GetStr()
 {
 	return _message;
 }

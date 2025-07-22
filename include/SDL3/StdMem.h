@@ -11,8 +11,16 @@
 
 #include <SDL3/Types.h>
 
-void SDL_FAR* SDL_malloc(size_t bytes);
-void SDL_free(void SDL_FAR* ptr);
-void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern SDL_DECLSPEC void SDL_FAR* SDLCALL SDL_malloc(size_t bytes);
+extern SDL_DECLSPEC void          SDLCALL SDL_free(void SDL_FAR* ptr);
+extern SDL_DECLSPEC void SDL_FAR* SDLCALL SDL_memset(void SDL_FAR* dst, int c, size_t len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

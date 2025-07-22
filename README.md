@@ -1,5 +1,7 @@
 # SDL3Lite - Simple Directmedia Layer Version 3 Lite
 
+SDL3Lite is a lightweight, portable implementation of the SDL3 library, created with a single goal:
+To write fast, clear, and modern code that works everywhere — from old retro computers to the latest systems.
 This is a lightweight implementation of the SDL3 library. 
 
 I really like the SDL3 library, but it saddens me that with each release of a new version, support for older systems is removed. 
@@ -7,6 +9,26 @@ Therefore, I decided to write a simpler version compatible at the API level.
 To support old and new systems, architectures, and operating systems.
 The project is being developed in C++98. 
 This makes the code very portable.
+
+## SDL3Lite Manifest
+We believe that good code is code that:
+Is clear and easy to read and maintain.
+Is fast and efficient on any hardware — from retro computers to modern PCs.
+Stands the test of time and platforms: it compiles and runs on both old and new systems.
+Does not require heavy dependencies or complex tools.
+Enables learning, experimentation, and creativity, without limiting the developer’s imagination.
+SDL3Lite is our contribution to the continuity of generations of programmers.
+We prove that a modern API and clean style can coexist with support for old hardware, and that minimalism and portability are not a compromise, but a path to true craftsmanship.
+
+## SDL3Lite:
+Is compatible with the SDL3 API (as much as possible).
+Does not require heavy dependencies.
+Easily builds for DOS, Windows, Linux, and other platforms.
+Is written in pure C++98 for maximum portability.
+Is suitable for learning, experimentation, porting classic games, and creating new projects from scratch.
+Why does this matter?
+Old hardware never loses its charm. It teaches us to value efficiency, minimalism, and control over our code.
+SDL3Lite is a bridge between eras, a tool for those who want to create without limits of time or platform.
 
 ## Library Features
 

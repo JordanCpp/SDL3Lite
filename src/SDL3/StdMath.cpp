@@ -6,11 +6,25 @@
  * (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef SDL3_StdInc_h
-#define SDL3_StdInc_h
-
-#include <SDL3/StdMem.h>
-#include <SDL3/StdStr.h>
+#include <math.h>
 #include <SDL3/StdMath.h>
 
-#endif
+double SDL_sqrt(double x)
+{
+	return sqrt(x);
+}
+
+float SDL_sqrtf(float x)
+{
+	return (float)sqrt(x);
+}
+
+double SDL_pow(double x, double y)
+{
+	return pow(x, y);
+}
+
+float SDL_powf(float x, float y)
+{
+	return (float)pow((float)x, (float)y);
+}

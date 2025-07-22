@@ -20,7 +20,7 @@ bool Result::Ok()
 
 const char* Result::Message()
 {
-	return _message.Str();
+	return _message.GetStr();
 }
 
 void Result::Message(const char* message)
