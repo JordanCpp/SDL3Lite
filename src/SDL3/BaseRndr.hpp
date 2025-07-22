@@ -6,24 +6,23 @@
  * (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef SDL3Lite_Result_hpp
-#define SDL3Lite_Result_hpp
+#ifndef SDL3Lite_BaseRndr_hpp
+#define SDL3Lite_BaseRndr_hpp
 
-#include <SDL3/Types.h>
+#include <SDL3/Pixels.h>
 #include <SDL3/ShortStr.hpp>
 
-class Result
+class BaseRender
 {
 public:
-	Result();
-	bool Ok();
-	const char* Message();
-	void Message(const char* message);
-	void Message(const char* message, const char* detail);
+	BaseRender(const char* name);
+	const SDL_Color& GetColor();
+	void SetColor(const SDL_Color& pos);
+	const char* GetName();
+	void SetName(const char* title);
 private:
-	void Clear();
-	bool        _ok;
-	ShortString _message;
+	SDL_Color    _color;
+	ShortString  _name;
 };
 
 #endif

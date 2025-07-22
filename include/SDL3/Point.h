@@ -6,9 +6,27 @@
  * (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef SDL3_SDL_h
-#define SDL3_SDL_h
+#ifndef SDL3_Point_h
+#define SDL3_Point_h
 
-#include <SDL3/StdInc.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct SDL_Point
+{
+    int x;
+    int y;
+} SDL_Point;
+
+typedef struct SDL_FPoint
+{
+    float x;
+    float y;
+} SDL_FPoint;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
