@@ -38,7 +38,7 @@ bool EventQueue::Dequeue(SDL_Event& element)
 	if (!IsEmpty())
 	{
 		element = _content[_tail];
-		_tail = NextPosition(_tail);
+		_tail   = NextPosition(_tail);
 		_length--;
 
 		return true;

@@ -23,6 +23,9 @@ int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat)
     case SDL_PIXELFORMAT_RGB24:
         result = 3;
         break;
+    case SDL_PIXELFORMAT_BGR24:
+        result = 3;
+        break;
     }
 
 	return result;
@@ -30,7 +33,6 @@ int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat)
 
 SDL_PixelFormat GetDefaultPixelFormat()
 {
-
 #if defined(_WIN32)
     return SDL_PIXELFORMAT_RGB24;
 #elif defined(__unix__)
@@ -40,7 +42,6 @@ SDL_PixelFormat GetDefaultPixelFormat()
 #elif defined(__BORLANDC__)
     return SDL_PIXELFORMAT_INDEX8;
 #endif
-
 }
 
 double ColorDistance(const SDL_Color& c1, const SDL_Color& c2) 

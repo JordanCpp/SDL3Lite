@@ -70,3 +70,8 @@ size_t SDL_strlcat(char* dst, const char* src, size_t size)
 
     return dstLen + srcLen;
 }
+
+int SDL_strcmp(const char* str1, const char* str2)
+{
+    return strcmp(str1, str2);
+}

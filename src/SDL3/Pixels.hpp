@@ -13,6 +13,9 @@
 
 int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat);
 SDL_PixelFormat GetDefaultPixelFormat();
+double ColorDistance(const SDL_Color& c1, const SDL_Color& c2);
+Uint8 FindClosest(SDL_Color target, SDL_Color* palette, size_t size);
+SDL_Color FindClosestColor(SDL_Color target, SDL_Color* palette, size_t size);
 Uint8 FindClosestIndex(SDL_Color target, SDL_Color* palette, size_t size);
 
 #endif

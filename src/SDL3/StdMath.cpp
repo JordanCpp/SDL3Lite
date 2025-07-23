@@ -9,6 +9,11 @@
 #include <math.h>
 #include <SDL3/StdMath.h>
 
+int SDL_abs(int x)
+{
+	return abs(x);
+}
+
 double SDL_sqrt(double x)
 {
 	return sqrt(x);
@@ -27,4 +32,14 @@ double SDL_pow(double x, double y)
 float SDL_powf(float x, float y)
 {
 	return (float)pow((float)x, (float)y);
+}
+
+double SDL_fabs(double x)
+{
+	return fabs(x);
+}
+
+float SDL_fabsf(float x)
+{
+	return (float)fabs((float)x);
 }

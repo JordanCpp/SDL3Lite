@@ -19,7 +19,8 @@ typedef enum SDL_PixelFormat
 {
     SDL_PIXELFORMAT_UNKNOWN,
     SDL_PIXELFORMAT_INDEX8,
-    SDL_PIXELFORMAT_RGB24
+    SDL_PIXELFORMAT_RGB24,
+    SDL_PIXELFORMAT_BGR24
 } SDL_PixelFormat;
 
 typedef struct SDL_Color

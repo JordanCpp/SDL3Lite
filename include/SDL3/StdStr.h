@@ -18,6 +18,7 @@ extern "C" {
 extern SDL_DECLSPEC size_t SDLCALL SDL_strlen(const char* source);
 extern SDL_DECLSPEC size_t SDLCALL SDL_strlcpy(char* dst, const char* src, size_t size);
 extern SDL_DECLSPEC size_t SDLCALL SDL_strlcat(char* dst, const char* src, size_t size);
+extern SDL_DECLSPEC int    SDLCALL SDL_strcmp(const char* str1, const char* str2);
 
 #ifdef __cplusplus
 }

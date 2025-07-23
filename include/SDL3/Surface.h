@@ -36,6 +36,9 @@ struct SDL_Surface
     void* reserved;             /**< Reserved for internal use */
 };
 
+extern SDL_DECLSPEC SDL_Surface* SDLCALL SDL_CreateSurface(int width, int height, SDL_PixelFormat format);
+extern SDL_DECLSPEC void         SDLCALL SDL_DestroySurface(SDL_Surface* surface);
+
 #ifdef __cplusplus
 }
 #endif

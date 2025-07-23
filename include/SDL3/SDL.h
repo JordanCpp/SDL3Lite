@@ -10,6 +10,7 @@
 #define SDL3_SDL_h
 
 #include <SDL3/StdInc.h>
+#include <SDL3/Surface.h>
 #include <SDL3/Window.h>
 
 #endif

@@ -34,6 +34,8 @@ void Result::Message(const char* message, const char* detail)
 
 	_message.Append(message);
 	_message.Append(detail);
+
+	_ok = false;
 }
 
 void Result::Clear()

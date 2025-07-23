@@ -15,10 +15,13 @@
 extern "C" {
 #endif
 
+extern SDL_DECLSPEC int    SDLCALL SDL_abs(int x);
 extern SDL_DECLSPEC double SDLCALL SDL_sqrt(double x);
 extern SDL_DECLSPEC float  SDLCALL SDL_sqrtf(float x);
 extern SDL_DECLSPEC double SDLCALL SDL_pow(double x, double y);
 extern SDL_DECLSPEC float  SDLCALL SDL_powf(float x, float y);
+extern SDL_DECLSPEC double SDLCALL SDL_fabs(double x);
+extern SDL_DECLSPEC float  SDLCALL SDL_fabsf(float x);
 
 #ifdef __cplusplus
 }

@@ -12,13 +12,21 @@
 
 void SDL_FAR* SDL_malloc(size_t bytes)
 {
+	void SDL_FAR* result = NULL;
 
+	if (bytes == 0)
+	{
+		return result;
+	}
+	else
+	{
 #if defined(__TURBOC__)
-	return farmalloc(bytes);
+		result = farmalloc(bytes);
 #else
-	return malloc(bytes);
+		result = malloc(bytes);
 #endif
-
+		return result;
+	}
 }
 
 void SDL_free(void SDL_FAR* ptr)
@@ -35,4 +43,9 @@ void SDL_free(void SDL_FAR* ptr)
 void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len)
 {
 	return memset(dst, c, len);
+}
+
+void* SDL_memcpy(void* dst, const void* src, size_t len)
+{
+	return memcpy(dst, src, len);
 }

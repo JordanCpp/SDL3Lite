@@ -20,8 +20,8 @@ public:
 	const char* Message();
 	void Message(const char* message);
 	void Message(const char* message, const char* detail);
-private:
 	void Clear();
+private:
 	bool        _ok;
 	ShortString _message;
 };
