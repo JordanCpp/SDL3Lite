@@ -42,7 +42,20 @@ void SDL_free(void SDL_FAR* ptr)
 
 void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len)
 {
+
+#if defined(__TURBOC__)
+	Uint8 SDL_FAR* p = (Uint8 SDL_FAR*)dst;
+
+	while (len--)
+	{
+		*p++ = (Uint8)c;
+	}
+
+	return dst;
+#else
 	return memset(dst, c, len);
+#endif
+
 }
 
 void* SDL_memcpy(void* dst, const void* src, size_t len)
