@@ -26,6 +26,12 @@ int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat)
     case SDL_PIXELFORMAT_BGR24:
         result = 3;
         break;
+    case SDL_PIXELFORMAT_RGBA32:
+    case SDL_PIXELFORMAT_BGRA32:
+    case SDL_PIXELFORMAT_ARGB32:
+    case SDL_PIXELFORMAT_ABGR32:
+        result = 4;
+        break;
     }
 
 	return result;
@@ -41,6 +47,21 @@ SDL_PixelFormat GetDefaultPixelFormat()
     return SDL_PIXELFORMAT_INDEX8;
 #elif defined(__BORLANDC__)
     return SDL_PIXELFORMAT_INDEX8;
+#endif
+}
+
+SDL_PixelFormat GetDefaultRGBAPixelFormat()
+{
+#if defined(_WIN32)
+    return SDL_PIXELFORMAT_BGRA32;
+#elif defined(__unix__)
+    return SDL_PIXELFORMAT_RGBA32;
+#elif defined(__MSDOS__)
+    return SDL_PIXELFORMAT_INDEX8;  // Fallback to indexed on old systems
+#elif defined(__BORLANDC__)
+    return SDL_PIXELFORMAT_INDEX8;  // Fallback to indexed on old systems
+#else
+    return SDL_PIXELFORMAT_RGBA32;
 #endif
 }
 
