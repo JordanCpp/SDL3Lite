@@ -1,5 +1,0 @@
-/workspace/build/CMakeFiles/SDL3.dir
-/workspace/build/CMakeFiles/tests.dir
-/workspace/build/CMakeFiles/main.dir
-/workspace/build/CMakeFiles/edit_cache.dir
-/workspace/build/CMakeFiles/rebuild_cache.dir
