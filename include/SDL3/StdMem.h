@@ -16,9 +16,9 @@ extern "C" {
 #endif
 
 extern SDL_DECLSPEC void SDL_FAR* SDLCALL SDL_malloc(size_t bytes);
-extern SDL_DECLSPEC void          SDLCALL SDL_free(void SDL_FAR* ptr);
+extern SDL_DECLSPEC void          SDLCALL SDL_free  (void SDL_FAR* ptr);
 extern SDL_DECLSPEC void SDL_FAR* SDLCALL SDL_memset(void SDL_FAR* dst, int c, size_t len);
-extern SDL_DECLSPEC void*         SDLCALL SDL_memcpy(void* dst, const void* src, size_t len);
+extern SDL_DECLSPEC void SDL_FAR* SDLCALL SDL_memcpy(void SDL_FAR* dst, const void SDL_FAR* src, size_t len);
 
 #ifdef __cplusplus
 }

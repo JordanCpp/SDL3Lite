@@ -58,7 +58,20 @@ void SDL_MemoryTest()
         SDL_TEST(memory[i] == 42);
     }
 
+    Uint8 SDL_FAR* memory2 = (Uint8 SDL_FAR*)SDL_malloc(1024);
+    SDL_TEST(memory2 != NULL);
+
+    SDL_memset(memory2, 77, 1024);
+
+    SDL_memcpy(memory, memory2, 1024);
+
+    for (size_t j = 0; j < 1024; j++)
+    {
+        SDL_TEST(memory[j] == 77);
+    }
+
     SDL_free(memory);
+    SDL_free(memory2);
 }
 
 void SDL_ShortStringTest()

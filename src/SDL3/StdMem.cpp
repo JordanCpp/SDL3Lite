@@ -58,7 +58,16 @@ void SDL_FAR* SDL_memset(void SDL_FAR* dst, int c, size_t len)
 
 }
 
-void* SDL_memcpy(void* dst, const void* src, size_t len)
+void SDL_FAR* SDL_memcpy(void SDL_FAR* dst, const void SDL_FAR* src, size_t len)
 {
-	return memcpy(dst, src, len);
+#if defined(__TURBOC__)
+    Uint8 SDL_FAR* d = (Uint8 SDL_FAR*)dst;
+    const Uint8 SDL_FAR* s = (const Uint8 SDL_FAR*)src;
+    while (len--) {
+        *d++ = *s++;
+    }
+    return dst;
+#else
+    return memcpy(dst, src, len);
+#endif
 }
