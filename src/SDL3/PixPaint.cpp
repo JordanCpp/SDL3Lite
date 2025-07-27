@@ -85,48 +85,48 @@ void PixelPainter::Clear(Surface* dest, const SDL_Color& color, Uint8 index, SDL
 
 	case SDL_PIXELFORMAT_RGBA32:
 	{
-		Uint32 pixelValue = (srcR << 0) | (srcG << 8) | (srcB << 16) | (srcA << 24);
-		Uint32 SDL_FAR* pixels32 = (Uint32 SDL_FAR*)pixels;
-
-		for (size_t i3 = 0; i3 < w * h; i3++)
+		for (size_t i = 0; i < w * h * 4; i += 4)
 		{
-			pixels32[i3] = pixelValue;
+			pixels[i + 0] = srcR;
+			pixels[i + 1] = srcG;
+			pixels[i + 2] = srcB;
+			pixels[i + 3] = srcA;
 		}
 	}
 	break;
 
 	case SDL_PIXELFORMAT_BGRA32:
 	{
-		Uint32 pixelValue = (srcB << 0) | (srcG << 8) | (srcR << 16) | (srcA << 24);
-		Uint32 SDL_FAR* pixels32 = (Uint32 SDL_FAR*)pixels;
-
-		for (size_t i4 = 0; i4 < w * h; i4++)
+		for (size_t i = 0; i < w * h * 4; i += 4)
 		{
-			pixels32[i4] = pixelValue;
+			pixels[i + 0] = srcB;
+			pixels[i + 1] = srcG;
+			pixels[i + 2] = srcR;
+			pixels[i + 3] = srcA;
 		}
 	}
 	break;
 
 	case SDL_PIXELFORMAT_ARGB32:
 	{
-		Uint32 pixelValue = (srcA << 0) | (srcR << 8) | (srcG << 16) | (srcB << 24);
-		Uint32 SDL_FAR* pixels32 = (Uint32 SDL_FAR*)pixels;
-
-		for (size_t i5 = 0; i5 < w * h; i5++)
+		for (size_t i = 0; i < w * h * 4; i += 4)
 		{
-			pixels32[i5] = pixelValue;
+			pixels[i + 0] = srcA;
+			pixels[i + 1] = srcR;
+			pixels[i + 2] = srcG;
+			pixels[i + 3] = srcB;
 		}
 	}
 	break;
 
 	case SDL_PIXELFORMAT_ABGR32:
 	{
-		Uint32 pixelValue = (srcA << 0) | (srcB << 8) | (srcG << 16) | (srcR << 24);
-		Uint32 SDL_FAR* pixels32 = (Uint32 SDL_FAR*)pixels;
-
-		for (size_t i = 0; i < w * h; i++)
+		for (size_t i = 0; i < w * h * 4; i += 4)
 		{
-			pixels32[i] = pixelValue;
+			pixels[i + 0] = srcA;
+			pixels[i + 1] = srcB;
+			pixels[i + 2] = srcG;
+			pixels[i + 3] = srcR;
 		}
 	}
 	break;
@@ -290,10 +290,10 @@ void PixelPainter::FillRect(Surface* dst, const SDL_FRect* rect, const SDL_Color
 		srcR = color.b; srcG = color.g; srcB = color.r; srcA = color.a;
 		break;
 	case SDL_PIXELFORMAT_ARGB32:
-		srcR = color.g; srcG = color.b; srcB = color.a; srcA = color.r;
+		srcR = color.r; srcG = color.g; srcB = color.b; srcA = color.a;
 		break;
 	case SDL_PIXELFORMAT_ABGR32:
-		srcR = color.a; srcG = color.b; srcB = color.g; srcA = color.r;
+		srcR = color.r; srcG = color.g; srcB = color.b; srcA = color.a;
 		break;
 	default:
 		srcR = color.r; srcG = color.g; srcB = color.b; srcA = color.a;
