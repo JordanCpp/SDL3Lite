@@ -43,3 +43,13 @@ float SDL_fabsf(float x)
 {
 	return (float)fabs((float)x);
 }
+
+int SDL_max(int x, int y)
+{
+	return x > y ? x : y;
+}
+
+int SDL_min(int x, int y)
+{
+	return x < y ? x : y;
+}

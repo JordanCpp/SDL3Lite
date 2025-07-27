@@ -26,6 +26,18 @@ int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat)
     case SDL_PIXELFORMAT_BGR24:
         result = 3;
         break;
+    case SDL_PIXELFORMAT_BGRA32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_ABGR32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_RGBA32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_ARGB32:
+        result = 4;
+        break;
     }
 
 	return result;

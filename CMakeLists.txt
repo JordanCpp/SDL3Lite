@@ -17,7 +17,7 @@ elseif (UNIX AND NOT APPLE)
     set(DEPS_LIBRARIES X11 GL dl)
 endif()
 
-FILE(GLOB SDL3LITE_SOURCES "src/SDL3/*.cpp")
+FILE(GLOB SDL3LITE_SOURCES "src/SDL3/*.cpp" "src/SDL3/${PLATFORM_FOLDER}/*.cpp")
 
 add_library(SDL3 SHARED ${SDL3LITE_SOURCES})
 target_link_libraries(SDL3 ${DEPS_LIBRARIES})

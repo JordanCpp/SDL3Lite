@@ -23,6 +23,9 @@ extern SDL_DECLSPEC float  SDLCALL SDL_powf(float x, float y);
 extern SDL_DECLSPEC double SDLCALL SDL_fabs(double x);
 extern SDL_DECLSPEC float  SDLCALL SDL_fabsf(float x);
 
+extern SDL_DECLSPEC int SDLCALL SDL_max(int x, int y);
+extern SDL_DECLSPEC int SDLCALL SDL_min(int x, int y);
+
 #ifdef __cplusplus
 }
 #endif

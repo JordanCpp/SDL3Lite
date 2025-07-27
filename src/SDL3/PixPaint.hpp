@@ -17,13 +17,11 @@
 class PixelPainter
 {
 public:
-	void Clear(Surface* dest, const SDL_Color& color, Uint8 index);
-	void Point(Surface* dest, float x, float y, const SDL_Color& color, Uint8 index);
-	void Points(Surface* dest, const SDL_FPoint* points, int count, const SDL_Color& color, Uint8 index);
-	void FillRect(Surface* dest, const SDL_FRect* rect, const SDL_Color& color, Uint8 index);
-	void FillRects(Surface* dest, const SDL_FRect* rects, int count, const SDL_Color& color, Uint8 index);
-	void Rect(Surface* dest, const SDL_FRect* rect, const SDL_Color& color, Uint8 index);
-	void Line(Surface* dest, float px1, float py1, float px2, float py2, const SDL_Color& color, Uint8 index);
+	void Clear(Surface* dest, const SDL_Color& color, Uint8 index, SDL_PixelFormat sourceFormat);
+	void Point(Surface* dest, float x, float y, const SDL_Color& color, Uint8 index, SDL_PixelFormat sourceFormat);
+	void FillRect(Surface* dest, const SDL_FRect* rect, const SDL_Color& color, Uint8 index, SDL_PixelFormat sourceFormat);
+	void Rect(Surface* dest, const SDL_FRect* rect, const SDL_Color& color, Uint8 index, SDL_PixelFormat sourceFormat);
+	void Line(Surface* dest, float px1, float py1, float px2, float py2, const SDL_Color& color, Uint8 index, SDL_PixelFormat sourceFormat);
 private:
 };
 

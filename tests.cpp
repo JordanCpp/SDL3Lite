@@ -14,6 +14,7 @@
 #include <SDL3/EventH.hpp>
 #include <SDL3/Pixels.hpp>
 #include <SDL3/Surface.hpp>
+#include <SDL3/PixPaint.hpp>
 
 void SDL3LiteTest(bool expression, const char* file, int line, const char* detail)
 {
@@ -400,6 +401,68 @@ void SDL_SurfaceTest()
     SDL_DestroySurface(surface2);
 }
 
+void SDL_PixelPainterIndex8Test()
+{
+    PixelPainter pixelPainter;
+
+    SDL_Point size = { 16, 32 };
+    Surface surface(size, SDL_PIXELFORMAT_INDEX8);
+
+    SDL_Color color = { 1, 2, 3, 4 };
+    Uint8 index     = 42;
+    pixelPainter.Clear(&surface, color, index, SDL_PIXELFORMAT_INDEX8);
+
+    size_t count = surface.GetSize().x * surface.GetSize().y * surface.GetBpp();
+
+    for (size_t i = 0; i < count; i++)
+    {
+        SDL_TEST(surface.GetPixels()[i] == 42);
+    }
+}
+
+void SDL_PixelPainterRgb24Test()
+{
+    PixelPainter pixelPainter;
+
+    SDL_Point size = { 16, 32 };
+    Surface surface(size, SDL_PIXELFORMAT_RGB24);
+
+    SDL_Color color = { 1, 2, 3, 4 };
+    Uint8 index = 42;
+    pixelPainter.Clear(&surface, color, index, SDL_PIXELFORMAT_RGB24);
+
+    size_t count = surface.GetSize().x * surface.GetSize().y * surface.GetBpp();
+
+    for (size_t i = 0; i < count; i+=3)
+    {
+        SDL_TEST(surface.GetPixels()[i + 0] == color.r);
+        SDL_TEST(surface.GetPixels()[i + 1] == color.g);
+        SDL_TEST(surface.GetPixels()[i + 2] == color.b);
+    }
+}
+
+void SDL_PixelPainterRgba32Test()
+{
+    PixelPainter pixelPainter;
+
+    SDL_Point size = { 16, 32 };
+    Surface surface(size, SDL_PIXELFORMAT_RGBA32);
+
+    SDL_Color color = { 1, 2, 3, 4 };
+    Uint8 index = 42;
+    pixelPainter.Clear(&surface, color, index, SDL_PIXELFORMAT_RGBA32);
+
+    size_t count = surface.GetSize().x * surface.GetSize().y * surface.GetBpp();
+
+    for (size_t i = 0; i < count; i += 4)
+    {
+        SDL_TEST(surface.GetPixels()[i + 0] == color.r);
+        SDL_TEST(surface.GetPixels()[i + 1] == color.g);
+        SDL_TEST(surface.GetPixels()[i + 2] == color.b);
+        SDL_TEST(surface.GetPixels()[i + 3] == color.a);
+    }
+}
+
 int main()
 {
     SDL_MemoryTest();
@@ -416,6 +479,9 @@ int main()
     SDL_FindClosestIndexTest();
     SDL_StdMathTest();
     SDL_SurfaceTest();
+    SDL_PixelPainterIndex8Test();
+    SDL_PixelPainterRgb24Test();
+    SDL_PixelPainterRgba32Test();
 
 	return 0;
 }
