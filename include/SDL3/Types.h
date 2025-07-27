@@ -52,8 +52,8 @@ typedef signed char    Sint8;
 typedef unsigned short Uint16;
 typedef signed short   Sint16;
 
-typedef unsigned int   Uint32;
-typedef signed int     Sint32;
+typedef unsigned long  Uint32;
+typedef signed long    Sint32;
 
 #if defined(__TURBOC__)
     typedef Uint32  Uint64;
