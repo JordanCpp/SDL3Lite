@@ -419,8 +419,8 @@ void PixelPainter::Rect(Surface* dest, const SDL_FRect* rect, const SDL_Color& c
 
 	if (x1 < 0) x1 = 0;
 	if (y1 < 0) y1 = 0;
-	if (x2 >= (int)destWidth) x2 = destWidth - 1;
-	if (y2 >= (int)destHeight) y2 = destHeight - 1;
+	if (x2 >= (int)destWidth) x2  = (int)destWidth  - 1;
+	if (y2 >= (int)destHeight) y2 = (int)destHeight - 1;
 
 	if (x1 > x2 || y1 > y2) return;
 

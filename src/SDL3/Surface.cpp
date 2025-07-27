@@ -13,12 +13,14 @@
 Surface::Surface(const SDL_Point& size, const SDL_PixelFormat pixelFormat) :
 	_size(size)
 {
+	int bpp  = PixelFormatToBytesPerPixels(pixelFormat);
+
 	flags    = 0;
 	format   = pixelFormat;
 	w        = _size.x;
 	h        = _size.y;
-	pitch    = w * PixelFormatToBytesPerPixels(format);
-	pixels   = SDL_malloc(w * h * pitch);
+	pitch    = w * bpp;
+	pixels   = SDL_malloc(w * h * bpp);
 	refcount = 0;
 	reserved = NULL;
 }
