@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef SDL3Lite_String_hpp
 #define SDL3Lite_String_hpp
 
-#include <string.h>
+#include <SDL3/StdStr.h>
 #include <SDL3/New.hpp>
 
 template<class T>
@@ -244,12 +244,12 @@ public:
 
 	bool operator==(const base_string<T>& rhs) const
 	{
-		return (strcmp(_content, rhs.c_str()) == 0);
+		return (SDL_strcmp(_content, rhs.c_str()) == 0);
 	}
 
 	bool operator==(const T* rhs) const
 	{
-		size_t length = strlen(rhs);
+		size_t length = SDL_strlen(rhs);
 
 		if (_position != length)
 		{
@@ -261,7 +261,7 @@ public:
 private:
 	size_t _capacity;
 	size_t _position;
-	T* _content;
+	T*     _content;
 };
 
 template<typename T>
