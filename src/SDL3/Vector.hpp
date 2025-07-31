@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 #include <SDL3/New.hpp>
 
-template <typename T>
+template <class T>
 class Vector
 {
 private:
