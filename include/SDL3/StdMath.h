@@ -24,19 +24,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_StdInc_h
-#define SDL3Lite_StdInc_h
+#ifndef SDL3Lite_StdMath_h
+#define SDL3Lite_StdMath_h
 
-#include <SDL3/StdMem.h>
-#include <SDL3/StdMath.h>
+#include <SDL3/Types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef Uint32 SDL_DisplayID;
+#define SDL_PI_D (3.141592653589793238462643383279502884)
 
-#define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
+extern SDL_DECLSPEC double SDLCALL SDL_sin(double x);
+extern SDL_DECLSPEC float  SDLCALL SDL_sinf(float x);
+extern SDL_DECLSPEC float  SDLCALL SDL_cosf(float x);
+extern SDL_DECLSPEC float  SDLCALL SDL_randf(void);
+extern SDL_DECLSPEC Sint32 SDLCALL SDL_rand(Sint32 n);
+extern SDL_DECLSPEC int    SDLCALL SDL_abs(int x);
 
 #ifdef __cplusplus
 }

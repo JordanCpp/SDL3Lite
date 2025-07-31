@@ -24,7 +24,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -49,34 +48,4 @@ void SDL_free(void* mem)
 void* SDL_memcpy(void* dst, const void* src, size_t len)
 {
 	return memcpy(dst, src, len);
-}
-
-double SDL_sin(double x)
-{
-	return sin(x);
-}
-
-float SDL_sinf(float x)
-{
-	return (float)sin((double)(x));
-}
-
-float SDL_cosf(float x)
-{
-	return (float)cos((double)(x));
-}
-
-float SDL_randf(void)
-{
-	return (float)(rand()) / (float)(RAND_MAX);
-}
-
-Sint32 SDL_rand(Sint32 n)
-{
-	return 0 + rand() % (n - 0);
-}
-
-int SDL_abs(int x)
-{
-	return abs(x);
 }

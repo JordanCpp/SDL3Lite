@@ -24,19 +24,18 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SDL3Lite_StdInc_h
-#define SDL3Lite_StdInc_h
+#ifndef SDL3Lite_StdMem_h
+#define SDL3Lite_StdMem_h
 
-#include <SDL3/StdMem.h>
-#include <SDL3/StdMath.h>
+#include <SDL3/Types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef Uint32 SDL_DisplayID;
-
-#define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
+extern SDL_DECLSPEC void*  SDLCALL SDL_malloc(size_t size);
+extern SDL_DECLSPEC void   SDLCALL SDL_free(void* mem);
+extern SDL_DECLSPEC void*  SDLCALL SDL_memcpy(void* dst, const void* src, size_t len);
 
 #ifdef __cplusplus
 }
