@@ -37,129 +37,161 @@ private:
 	size_t _capacity;
 	size_t _position;
 	T*     _content;
-
+	T*   allocate(size_t count);
+	void deallocate(T* ptr);
 public:
-	Vector() :
-		_capacity(0),
-		_position(0),
-		_content(NULL)
-	{
-	}
-
-	T* allocate(size_t count)
-	{
-		return new T[count];
-	}
-
-	void deallocate(T* ptr)
-	{
-		delete[] _content;
-	}
-
-	~Vector()
-	{
-		deallocate(_content);
-	}
-
-	size_t capacity() const
-	{
-		return _capacity;
-	}
-
-	size_t size() const
-	{
-		return _position;
-	}
-
-	const T* data() const
-	{
-		return _content;
-	}
-
-	T* data()
-	{
-		return _content;
-	}
-
-	void reserve(size_t count)
-	{
-		if (count > _capacity)
-		{
-			T* p = allocate(count);
-
-			for (size_t i = 0; i < _position; i++)
-			{
-				p[i] = _content[i];
-			}
-
-			if (_content != NULL)
-			{
-				deallocate(_content);
-			}
-
-			_content = p;
-			_capacity = count;
-		}
-	}
-
-	void resize(size_t count)
-	{
-		if (_capacity < count)
-		{
-			reserve(count);
-		}
-
-		_position = count;
-	}
-
-	void clear()
-	{
-		_position = 0;
-	}
-
-	void push_back(const T& element)
-	{
-		if (_capacity == 0)
-		{
-			reserve(2);
-		}
-		else if (_position + 1 >= _capacity)
-		{
-			reserve(_capacity * 2);
-		}
-
-		_content[_position] = element;
-
-		_position++;
-	}
-
-	const T& at(size_t index) const
-	{
-		assert(index <= _position);
-
-		return _content[index];
-	}
-
-	T& at(size_t index)
-	{
-		assert(index <= _position);
-
-		return _content[index];
-	}
-
-	const T& operator[] (size_t index) const
-	{
-		assert(index <= _position);
-
-		return _content[index];
-	}
-
-	T& operator[] (size_t index)
-	{
-		assert(index <= _position);
-
-		return _content[index];
-	}
+	Vector();
+	~Vector();
+	size_t capacity() const;
+	size_t size() const;
+	const T* data() const;
+	T* data();
+	void reserve(size_t count);
+	void resize(size_t count);
+	void clear();
+	void push_back(const T& element);
+	const T& at(size_t index) const;
+	T& at(size_t index);
+	const T& operator[] (size_t index) const;
+	T& operator[] (size_t index);
 };
+
+template <class T>
+T* Vector<T>::allocate(size_t count)
+{
+	return new T[count];
+}
+
+template <class T>
+void Vector<T>::deallocate(T* ptr)
+{
+	delete[] _content;
+}
+
+template <class T>
+Vector<T>::Vector() :
+	_capacity(0),
+	_position(0),
+	_content(NULL)
+{
+}
+
+template <class T>
+Vector<T>::~Vector()
+{
+	deallocate(_content);
+}
+
+template <class T>
+size_t Vector<T>::capacity() const
+{
+	return _capacity;
+}
+
+template <class T>
+size_t Vector<T>::size() const
+{
+	return _position;
+}
+
+template <class T>
+const T* Vector<T>::data() const
+{
+	return _content;
+}
+
+template <class T>
+T* Vector<T>::data()
+{
+	return _content;
+}
+
+template <class T>
+void Vector<T>::reserve(size_t count)
+{
+	if (count > _capacity)
+	{
+		T* p = allocate(count);
+
+		for (size_t i = 0; i < _position; i++)
+		{
+			p[i] = _content[i];
+		}
+
+		if (_content != NULL)
+		{
+			deallocate(_content);
+		}
+
+		_content = p;
+		_capacity = count;
+	}
+}
+
+template <class T>
+void Vector<T>::resize(size_t count)
+{
+	if (_capacity < count)
+	{
+		reserve(count);
+	}
+
+	_position = count;
+}
+
+template <class T>
+void Vector<T>::clear()
+{
+	_position = 0;
+}
+
+template <class T>
+void Vector<T>::push_back(const T& element)
+{
+	if (_capacity == 0)
+	{
+		reserve(2);
+	}
+	else if (_position + 1 >= _capacity)
+	{
+		reserve(_capacity * 2);
+	}
+
+	_content[_position] = element;
+
+	_position++;
+}
+
+template <class T>
+const T& Vector<T>::at(size_t index) const
+{
+	assert(index <= _position);
+
+	return _content[index];
+}
+
+template <class T>
+T& Vector<T>::at(size_t index)
+{
+	assert(index <= _position);
+
+	return _content[index];
+}
+
+template <class T>
+const T& Vector<T>::operator[] (size_t index) const
+{
+	assert(index <= _position);
+
+	return _content[index];
+}
+
+template <class T>
+T& Vector<T>::operator[] (size_t index)
+{
+	assert(index <= _position);
+
+	return _content[index];
+}
 
 #endif
