@@ -33,7 +33,14 @@ DEALINGS IN THE SOFTWARE.
 extern "C" {
 #endif
 
+typedef void* (SDLCALL* SDL_malloc_func) (size_t size);
+typedef void* (SDLCALL* SDL_calloc_func) (size_t nmemb, size_t size);
+typedef void* (SDLCALL* SDL_realloc_func)(void* mem, size_t size);
+typedef void  (SDLCALL* SDL_free_func)   (void* mem);
+
 extern SDL_DECLSPEC void*  SDLCALL SDL_malloc(size_t size);
+extern SDL_DECLSPEC void*  SDLCALL SDL_calloc(size_t nmemb, size_t size);
+extern SDL_DECLSPEC void*  SDLCALL SDL_realloc(void* mem, size_t size);
 extern SDL_DECLSPEC void   SDLCALL SDL_free(void* mem);
 extern SDL_DECLSPEC void*  SDLCALL SDL_memcpy(void* dst, const void* src, size_t len);
 

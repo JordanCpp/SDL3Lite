@@ -28,21 +28,58 @@ DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <assert.h>
 #include <SDL3/StdInc.h>
+#include <SDL3/App.hpp>
 
-void* SDL_malloc(size_t size)
+void* SDL_malloc_Implementation(MemoryManager& memoryManager, size_t size)
 {
-	void* result = malloc(size);
+	void* result = memoryManager.GetMalloc()(size);
 
 	assert(result != NULL);
 
 	return result;
 }
 
+void* SDL_calloc_Implementation(MemoryManager& memoryManager, size_t nmemb, size_t size)
+{
+	void* result = memoryManager.GetCalloc()(nmemb, size);
+
+	assert(result != NULL);
+
+	return result;
+}
+
+void* SDL_realloc_Implementation(MemoryManager& memoryManager, void* mem, size_t size)
+{
+	void* result = memoryManager.GetRealloc()(mem, size);
+
+	assert(result != NULL);
+
+	return result;
+}
+
+void SDL_free_Implementation(MemoryManager& memoryManager, void* mem)
+{
+	memoryManager.GetFree()(mem);
+}
+
+void* SDL_malloc(size_t size)
+{
+	return SDL_malloc_Implementation(GetApplication().GetMemoryManager(), size);
+}
+
+void* SDL_calloc(size_t nmemb, size_t size)
+{
+	return SDL_calloc_Implementation(GetApplication().GetMemoryManager(), nmemb, size);
+}
+
+void* SDL_realloc(void* mem, size_t size)
+{
+	return SDL_realloc_Implementation(GetApplication().GetMemoryManager(), mem, size);
+}
+
 void SDL_free(void* mem)
 {
-	//assert(mem != NULL);
-
-	free(mem);
+	SDL_free_Implementation(GetApplication().GetMemoryManager(), mem);
 }
 
 void* SDL_memcpy(void* dst, const void* src, size_t len)

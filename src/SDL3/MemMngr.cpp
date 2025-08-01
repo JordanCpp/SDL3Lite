@@ -24,70 +24,55 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/App.hpp>
-#include <SDL3/Window.hpp>
+#include <stdlib.h>
+#include <SDL3/MemMngr.hpp>
 
-static Application MainApplication;
-
-Application::Application()
+MemoryManager::MemoryManager() :
+	_mallocFunc(NULL),
+	_callocFunc(NULL),
+	_reallocFunc(NULL),
+	_freeFunc(NULL)
 {
+	_mallocFunc  = &malloc;
+	_callocFunc  = &calloc;
+	_reallocFunc = &realloc;
+	_freeFunc    = &free;
 }
 
-Application::~Application()
+MemoryManager::~MemoryManager()
 {
+	_mallocFunc  = NULL;
+	_callocFunc  = NULL;
+	_reallocFunc = NULL;
+	_freeFunc    = NULL;
 }
 
-MemoryManager& Application::GetMemoryManager()
+bool MemoryManager::SetMemoryFunctions(SDL_malloc_func malloc_func, SDL_calloc_func calloc_func, SDL_realloc_func realloc_func, SDL_free_func free_func)
 {
-	return _memoryManager;
+	_mallocFunc  = malloc_func;
+	_callocFunc  = calloc_func;
+	_reallocFunc = realloc_func;
+	_freeFunc    = free_func;
+
+	return true;
 }
 
-Vector<SDL_Window*>& Application::GetWindows()
+SDL_malloc_func MemoryManager::GetMalloc()
 {
-	return _windows;
+	return _mallocFunc;
 }
 
-AppMetaData& Application::GetAppMetaData()
+SDL_calloc_func MemoryManager::GetCalloc()
 {
-	return _appMetaData;
+	return _callocFunc;
 }
 
-EventHandler& Application::GetEventHandler()
+SDL_realloc_func MemoryManager::GetRealloc()
 {
-	return _eventHandler;
+	return _reallocFunc;
 }
 
-OpenGLAttributes& Application::GetOpenGLAttributes()
+SDL_free_func MemoryManager::GetFree()
 {
-	return _openGLAttributes;
-}
-
-Result& Application::GetResult()
-{
-	return _result;
-}
-
-void Application::PollEvents()
-{
-	for (size_t i = 0; i < _windows.size(); i++)
-	{
-		_windows[i]->PollEvents();
-	}
-}
-
-bool Application::PollEvent(SDL_Event& dest)
-{
-	if (!_eventHandler.Empty())
-	{
-		_eventHandler.Pop(dest);
-
-		return true;
-	}
-
-	return false;
-}
-
-Application& GetApplication()
-{
-	return MainApplication;
+	return _freeFunc;
 }

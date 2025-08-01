@@ -34,12 +34,14 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/EventH.hpp>
 #include <SDL3/GLAttr.hpp>
 #include <SDL3/AppMeta.hpp>
+#include <SDL3/MemMngr.hpp>
 
 class Application
 {
 public:
 	Application();
 	~Application();
+	MemoryManager& GetMemoryManager();
 	Vector<SDL_Window*>& GetWindows();
 	AppMetaData& GetAppMetaData();
 	EventHandler& GetEventHandler();
@@ -48,6 +50,7 @@ public:
 	void PollEvents();
 	bool PollEvent(SDL_Event& dest);
 private:
+	MemoryManager       _memoryManager;
 	Vector<SDL_Window*> _windows;
 	Result              _result;
 	OpenGLAttributes    _openGLAttributes;

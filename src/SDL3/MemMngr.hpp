@@ -24,70 +24,26 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include <SDL3/App.hpp>
-#include <SDL3/Window.hpp>
+#ifndef SDL3Lite_MemMngr_hpp
+#define SDL3Lite_MemMngr_hpp
 
-static Application MainApplication;
+#include <SDL3/StdMem.h>
 
-Application::Application()
+class MemoryManager
 {
-}
+public:
+	MemoryManager();
+	~MemoryManager();
+	bool SetMemoryFunctions(SDL_malloc_func malloc_func, SDL_calloc_func calloc_func, SDL_realloc_func realloc_func, SDL_free_func free_func);
+	SDL_malloc_func  GetMalloc();
+	SDL_calloc_func  GetCalloc();
+	SDL_realloc_func GetRealloc();
+	SDL_free_func    GetFree();
+private:
+	SDL_malloc_func  _mallocFunc;
+	SDL_calloc_func  _callocFunc;
+	SDL_realloc_func _reallocFunc;
+	SDL_free_func    _freeFunc;
+};
 
-Application::~Application()
-{
-}
-
-MemoryManager& Application::GetMemoryManager()
-{
-	return _memoryManager;
-}
-
-Vector<SDL_Window*>& Application::GetWindows()
-{
-	return _windows;
-}
-
-AppMetaData& Application::GetAppMetaData()
-{
-	return _appMetaData;
-}
-
-EventHandler& Application::GetEventHandler()
-{
-	return _eventHandler;
-}
-
-OpenGLAttributes& Application::GetOpenGLAttributes()
-{
-	return _openGLAttributes;
-}
-
-Result& Application::GetResult()
-{
-	return _result;
-}
-
-void Application::PollEvents()
-{
-	for (size_t i = 0; i < _windows.size(); i++)
-	{
-		_windows[i]->PollEvents();
-	}
-}
-
-bool Application::PollEvent(SDL_Event& dest)
-{
-	if (!_eventHandler.Empty())
-	{
-		_eventHandler.Pop(dest);
-
-		return true;
-	}
-
-	return false;
-}
-
-Application& GetApplication()
-{
-	return MainApplication;
-}
+#endif
