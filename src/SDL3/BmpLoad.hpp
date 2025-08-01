@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_BmpLoad_hpp
 
 #include <stdio.h>
-#include <SDL3/Types.h>
+#include <SDL3/Vector.hpp>
 #include <SDL3/Result.hpp>
 #include <SDL3/Vec2i.hpp>
 
@@ -43,10 +43,10 @@ public:
 	Uint8* GetPixels();
 private:
 	void Clear();
-	Result& _result;
-	Uint8*  _pixels;
-	Vec2i   _size;
-	int     _bpp;
+	int           _bpp;
+	Vec2i         _size;
+	Result&       _result;
+	Vector<Uint8> _pixels;
 };
 
 #endif

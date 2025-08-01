@@ -52,9 +52,8 @@ typedef struct {
 #pragma pack(pop)
 
 BmpLoader::BmpLoader(Result& result) :
-    _result(result),
-    _pixels(NULL),
-    _bpp(0)
+    _bpp(0),
+    _result(result)
 {
 }
 
@@ -112,28 +111,23 @@ bool BmpLoader::Reset(const String& path)
     }
 
     _size = Vec2i(info_header.width, info_header.height);
-    _bpp = info_header.bit_count / 8;
+    _bpp  = info_header.bit_count / 8;
     
-    if (_bpp == 0) _bpp = 1;
+    if (_bpp == 0)
+    {
+        _bpp = 1;
+    }
 
     const uint32_t row_stride      = (_size.x * info_header.bit_count + 31) / 32 * 4;
     const uint32_t pixel_data_size = row_stride * _size.y;
 
-    _pixels = new Uint8[pixel_data_size];
-
-    if (!_pixels) 
-    {
-        fclose(file);
-        _result.Message("Memory allocation failed: ", path);
-
-        return false;
-    }
+    _pixels.resize(pixel_data_size);
 
     fseek(file, file_header.offset_data, SEEK_SET);
 
     for (int y = _size.y - 1; y >= 0; --y) 
     {
-        if (fread(_pixels + y * row_stride, 1, row_stride, file) != row_stride) 
+        if (fread(_pixels.data() + y * row_stride, 1, row_stride, file) != row_stride)
         {
             fclose(file);
             Clear();
@@ -151,7 +145,7 @@ bool BmpLoader::Reset(const String& path)
 
         for (int y = 0; y < _size.y; ++y) 
         {
-            uint8_t* row = _pixels + y * row_stride;
+            uint8_t* row = _pixels.data() + y * row_stride;
 
             for (int x = 0; x < _size.x; ++x) 
             {
@@ -178,14 +172,10 @@ int BmpLoader::GetBpp()
 
 uint8_t* BmpLoader::GetPixels()
 {
-    return _pixels;
+    return _pixels.data();
 }
 
 void BmpLoader::Clear()
 {
-    if (_pixels) 
-    {
-        delete[] _pixels;
-        _pixels = NULL;
-    }
+    _pixels.clear();
 }
