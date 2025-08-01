@@ -93,7 +93,7 @@ void Engine::Draw()
     SDL_SetRenderDrawColor(_renderer, 0, 162, 232, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(_renderer);
 
-    SDL_Texture* texture = _spriteManager->GetImage("Adv_engine_0_0_0.bmp");
+    SDL_Texture* texture = _spriteManager->GetImage("Adv_engine.bmp");
 
     SDL_FRect dst_rect;
     dst_rect.x = 0.0f;

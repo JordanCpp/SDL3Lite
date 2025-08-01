@@ -46,7 +46,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     /* SDL_Surface is pixel data the CPU can access. SDL_Texture is pixel data the GPU can access.
        Load a .bmp into a surface, move it to a texture from there. */
 
-    surface = SDL_LoadBMP("sample.bmp");
+    surface = SDL_LoadBMP("sample24.bmp");
     if (!surface)
     {
         SDL_Log("Couldn't load bitmap: %s", SDL_GetError());

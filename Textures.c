@@ -58,7 +58,7 @@ int main()
         return 1;
     }
     
-    surface = SDL_LoadBMP("sample.bmp");
+    surface = SDL_LoadBMP("sample24.bmp");
     if (surface == NULL)
     {
         SDL_Log("Load bmp error: %s\n", SDL_GetError());
