@@ -33,6 +33,8 @@ DEALINGS IN THE SOFTWARE.
 extern "C" {
 #endif
 
+typedef Uint32 SDL_WindowID;
+
 /**
  * The flags on a window.
  *

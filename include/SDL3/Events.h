@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define SDL3Lite_Events_h
 
 #include <SDL3/StdInc.h>
+#include <SDL3/Mouse.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -263,6 +264,36 @@ extern "C" {
         Sint32 data2;       /**< event dependent data */
     } SDL_DisplayEvent;
 
+
+    typedef struct SDL_MouseMotionEvent
+    {
+        SDL_EventType type; /**< SDL_EVENT_MOUSE_MOTION */
+        Uint32 reserved;
+        Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
+        SDL_WindowID windowID; /**< The window with mouse focus, if any */
+        SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, or 0 */
+        SDL_MouseButtonFlags state;       /**< The current button state */
+        float x;            /**< X coordinate, relative to window */
+        float y;            /**< Y coordinate, relative to window */
+        float xrel;         /**< The relative motion in the X direction */
+        float yrel;         /**< The relative motion in the Y direction */
+    } SDL_MouseMotionEvent;
+
+    typedef struct SDL_MouseButtonEvent
+    {
+        SDL_EventType type; /**< SDL_EVENT_MOUSE_BUTTON_DOWN or SDL_EVENT_MOUSE_BUTTON_UP */
+        Uint32 reserved;
+        Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
+        SDL_WindowID windowID; /**< The window with mouse focus, if any */
+        SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, or 0 */
+        Uint8 button;       /**< The mouse button index */
+        bool down;          /**< true if the button is pressed */
+        Uint8 clicks;       /**< 1 for single-click, 2 for double-click, etc. */
+        Uint8 padding;
+        float x;            /**< X coordinate, relative to window */
+        float y;            /**< Y coordinate, relative to window */
+    } SDL_MouseButtonEvent;
+
     /**
      * General event structure
      *
@@ -272,6 +303,8 @@ extern "C" {
     typedef union SDL_Event
     {
         Uint32 type;                            /**< Event type, shared with all events */
+        SDL_MouseMotionEvent motion;
+        SDL_MouseButtonEvent button;
         SDL_QuitEvent quit;                     /**< Quit request event data */
     } SDL_Event;
 
