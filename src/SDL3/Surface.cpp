@@ -27,16 +27,22 @@ DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 #include <SDL3/New.hpp>
 #include <SDL3/Surface.hpp>
+#include <SDL3/Pixels.hpp>
 
 Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_bpp(0),
 	_size(size)
 {
 	flags    = 0;
 	format   = pixelFormat;
 	w        = _size.x;
 	h        = _size.y;
-	pitch    = 3;
-	_pixels.resize(w * h * pitch);
+
+	_bpp     = PixelFormatToBytesPerPixels(format);
+	pitch    = w * _bpp;
+
+	_pixels.resize(w * h * _bpp);
+
 	pixels   = &_pixels[0];
 	refcount = 0;
 	reserved = NULL;
@@ -47,6 +53,11 @@ Surface::~Surface()
 }
 
 int Surface::GetBpp()
+{
+	return _bpp;
+}
+
+int Surface::GetPitch()
 {
 	return pitch;
 }

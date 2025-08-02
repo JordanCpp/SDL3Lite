@@ -29,4 +29,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/Pixels.h>
 
+int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat);
+
 #endif

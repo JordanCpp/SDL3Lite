@@ -37,10 +37,12 @@ public:
 	Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
 	~Surface();
 	int GetBpp();
+	int GetPitch();
 	SDL_PixelFormat GetPixelFormat();
 	const Vec2i& GetSize();
 	Uint8* GetPixels();
 private:
+	Uint8         _bpp;
 	Vec2i         _size;
 	Vector<Uint8> _pixels;
 };

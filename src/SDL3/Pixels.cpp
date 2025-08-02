@@ -26,6 +26,38 @@ DEALINGS IN THE SOFTWARE.
 
 #include <SDL3/Pixels.hpp>
 
+int PixelFormatToBytesPerPixels(const SDL_PixelFormat pixelFormat)
+{
+    int result = SDL_PIXELFORMAT_UNKNOWN;
+
+    switch (pixelFormat)
+    {
+    case SDL_PIXELFORMAT_INDEX8:
+        result = 1;
+        break;
+    case SDL_PIXELFORMAT_RGB24:
+        result = 3;
+        break;
+    case SDL_PIXELFORMAT_BGR24:
+        result = 3;
+        break;
+    case SDL_PIXELFORMAT_BGRA32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_ABGR32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_RGBA32:
+        result = 4;
+        break;
+    case SDL_PIXELFORMAT_ARGB32:
+        result = 4;
+        break;
+    }
+
+    return result;
+}
+
 Uint32 SDL_MapRGB(const SDL_PixelFormatDetails* format, const SDL_Palette* palette, Uint8 r, Uint8 g, Uint8 b)
 {
     Uint32 result = 0;
@@ -51,3 +83,5 @@ Uint32 SDL_MapRGB(const SDL_PixelFormatDetails* format, const SDL_Palette* palet
 
     return result;
 }
+
+

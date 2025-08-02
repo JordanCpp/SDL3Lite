@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/Renderer.hpp>
 #include <SDL3/Renders/OpenGL1/GL1Tex.hpp>
 #include <SDL3/SoftTex.hpp>
+#include <SDL3/Pixels.hpp>
 
 SDL_Texture* SDL_CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h)
 {
@@ -68,7 +69,7 @@ SDL_Texture* SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* s
 	rect.w = surface->w;
 	rect.h = surface->h;
 
-	SDL_UpdateTexture(result, &rect, surface->pixels, surface->pitch);
+	SDL_UpdateTexture(result, &rect, surface->pixels, PixelFormatToBytesPerPixels(surface->format));
 		
 	return result;
 }
