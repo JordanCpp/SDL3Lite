@@ -166,13 +166,13 @@ HDC MainWindow::GetHdc()
 	return _hdc;
 }
 
-LRESULT CALLBACK MainWindow::Handler(UINT Message, WPARAM WParam, LPARAM LParam)
+LRESULT CALLBACK MainWindow::Handler(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	SDL_Event event;
+	SDL_Event    event;
+	SDL_WindowID windowId = GetWindowThreadProcessId(_hwnd, NULL);
 
-	switch (Message)
+	switch (message)
 	{
-
 	case WM_DESTROY:
 		event.type = SDL_EVENT_QUIT;
 		_eventHandler->Push(event);
@@ -180,6 +180,8 @@ LRESULT CALLBACK MainWindow::Handler(UINT Message, WPARAM WParam, LPARAM LParam)
 		break;
 
 	case WM_CLOSE:
+		event.type = SDL_EVENT_QUIT;
+		_eventHandler->Push(event);
 		break;
 
 	case WM_ERASEBKGND:
@@ -187,28 +189,86 @@ LRESULT CALLBACK MainWindow::Handler(UINT Message, WPARAM WParam, LPARAM LParam)
 
 	case WM_PALETTECHANGED:
 		break;
+
+	case WM_MOUSEMOVE:
+		event.type = SDL_EVENT_MOUSE_MOTION;
+		event.motion.x = LOWORD(lParam);
+		event.motion.y = HIWORD(lParam);
+		event.motion.windowID = windowId;
+		event.motion.which = 0;
+		event.motion.state = 0;
+		_eventHandler->Push(event);
+		break;
+
+	case WM_LBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+	case WM_MBUTTONDOWN:
+		event.type            = SDL_EVENT_MOUSE_BUTTON_DOWN;
+		event.button.x        = LOWORD(lParam);
+		event.button.y        = HIWORD(lParam);
+		event.button.windowID = windowId;
+		event.button.which    = 0;
+
+		switch (message)
+		{
+		case WM_LBUTTONDOWN:
+			event.button.button = SDL_BUTTON_LEFT;
+			break;
+		case WM_RBUTTONDOWN:
+			event.button.button = SDL_BUTTON_RIGHT;
+			break;
+		case WM_MBUTTONDOWN:
+			event.button.button = SDL_BUTTON_MIDDLE;
+			break;
+		}
+		_eventHandler->Push(event);
+		break;
+
+	case WM_LBUTTONUP:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONUP:
+		event.type            = SDL_EVENT_MOUSE_BUTTON_UP;
+		event.button.x        = LOWORD(lParam);
+		event.button.y        = HIWORD(lParam);
+		event.button.windowID = windowId;
+		event.button.which    = 0;
+
+		switch (message)
+		{
+		case WM_LBUTTONUP:
+			event.button.button = SDL_BUTTON_LEFT;
+			break;
+		case WM_RBUTTONUP:
+			event.button.button = SDL_BUTTON_RIGHT;
+			break;
+		case WM_MBUTTONUP:
+			event.button.button = SDL_BUTTON_MIDDLE;
+			break;
+		}
+		_eventHandler->Push(event);
+		break;
 	}
 
-	return DefWindowProc(_hwnd, Message, WParam, LParam);
+	return DefWindowProc(_hwnd, message, wParam, lParam);
 }
 
-LRESULT CALLBACK MainWindow::WndProc(HWND Hwnd, UINT Message, WPARAM WParam, LPARAM LParam)
+LRESULT CALLBACK MainWindow::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT result;
 
 #if defined(_WIN64)
-	MainWindow* This = (MainWindow*)GetWindowLongPtr(Hwnd, GWLP_USERDATA);
+	MainWindow* This = (MainWindow*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 #elif defined(_WIN32)
-	MainWindow* This = (MainWindow*)GetWindowLong(Hwnd, GWL_USERDATA);
+	MainWindow* This = (MainWindow*)GetWindowLong(hwnd, GWL_USERDATA);
 #endif  
 
 	if (This != NULL)
 	{
-		result = This->Handler(Message, WParam, LParam);
+		result = This->Handler(message, wParam, lParam);
 	}
 	else
 	{
-		result = DefWindowProc(Hwnd, Message, WParam, LParam);
+		result = DefWindowProc(hwnd, message, wParam, lParam);
 	}
 
 	return result;

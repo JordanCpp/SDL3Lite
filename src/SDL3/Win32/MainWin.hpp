@@ -52,10 +52,10 @@ public:
 	HWND GetHwnd();
 	HDC GetHdc();
 private:
-	LRESULT CALLBACK Handler(UINT Message, WPARAM WParam, LPARAM LParam);
-	static LRESULT CALLBACK WndProc(HWND Hwnd, UINT Message, WPARAM WParam, LPARAM LParam);
-	Result* _result;
-	EventHandler* _eventHandler;
+	LRESULT CALLBACK Handler(UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+	Result*         _result;
+	EventHandler*   _eventHandler;
 	HWND            _hwnd;
 	HDC             _hdc;
 	WindowError     _windowError;
