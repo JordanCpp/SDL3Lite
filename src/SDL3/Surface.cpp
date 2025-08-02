@@ -30,7 +30,9 @@ DEALINGS IN THE SOFTWARE.
 #include <SDL3/Pixels.hpp>
 
 Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
+	_colorKeyEnabled(false),
 	_bpp(0),
+	_colorKey(0),
 	_size(size)
 {
 	flags    = 0;
@@ -50,6 +52,26 @@ Surface::Surface(const Vec2i& size, SDL_PixelFormat pixelFormat) :
 
 Surface::~Surface()
 {
+}
+
+bool Surface::IsColorKey()
+{
+	return _colorKeyEnabled;
+}
+
+void Surface::SetColorKey(bool enabled)
+{
+	_colorKeyEnabled = enabled;
+}
+
+Uint32 Surface::GetColorKey()
+{
+	return _colorKey;
+}
+
+void Surface::SetColorKey(Uint32 colorKey)
+{
+	_colorKey = colorKey;
 }
 
 int Surface::GetBpp()
@@ -97,6 +119,11 @@ void SDL_DestroySurface(SDL_Surface* surface)
 bool SDL_SetSurfaceColorKey(SDL_Surface* surface, bool enabled, Uint32 key)
 {
 	assert(surface);
+
+	Surface* surf = (Surface*)surface;
+
+	surf->SetColorKey(enabled);
+	surf->SetColorKey(key);
 
 	return true;
 }

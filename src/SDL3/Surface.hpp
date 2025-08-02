@@ -36,13 +36,19 @@ class Surface : public SDL_Surface
 public:
 	Surface(const Vec2i& size, SDL_PixelFormat pixelFormat = SDL_PIXELFORMAT_RGB24);
 	~Surface();
+	bool IsColorKey();
+	void SetColorKey(bool enabled);
+	Uint32 GetColorKey();
+	void SetColorKey(Uint32 colorKey);
 	int GetBpp();
 	int GetPitch();
 	SDL_PixelFormat GetPixelFormat();
 	const Vec2i& GetSize();
 	Uint8* GetPixels();
 private:
+	bool          _colorKeyEnabled;
 	Uint8         _bpp;
+	Uint32        _colorKey;
 	Vec2i         _size;
 	Vector<Uint8> _pixels;
 };
