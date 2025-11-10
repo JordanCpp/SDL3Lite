@@ -1,3 +1,11 @@
+# 🚨 Repository Moved!
+
+This repository has been moved to a new location:
+
+## ➡️ [LDL - Little Directmedia Layer](https://github.com/JordanCpp/LDL)
+
+Please update your links and use the new repository.
+
 # SDL3Lite - Simple Directmedia Layer Version 3 Lite
 
 This is a lightweight implementation of the SDL3 library. 
